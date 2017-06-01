@@ -14,6 +14,11 @@
 		603F99871EDA350E00BE7151 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 603F99851EDA350E00BE7151 /* LaunchScreen.storyboard */; };
 		603F99921EDA351000BE7151 /* CINEMA_iOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 603F99911EDA351000BE7151 /* CINEMA_iOSTests.swift */; };
 		603F999D1EDA351000BE7151 /* CINEMA_iOSUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 603F999C1EDA351000BE7151 /* CINEMA_iOSUITests.swift */; };
+		603F99AB1EDA361800BE7151 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 603F99AA1EDA361800BE7151 /* GoogleService-Info.plist */; };
+		603F99B11EDA3A3D00BE7151 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 603F99B01EDA3A3D00BE7151 /* TabBarController.swift */; };
+		603F99B31EDA3AA200BE7151 /* PSCTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 603F99B21EDA3AA200BE7151 /* PSCTableViewController.swift */; };
+		603F99B51EDA3ACB00BE7151 /* PSCTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 603F99B41EDA3ACB00BE7151 /* PSCTableViewCell.swift */; };
+		603F99B71EDA3EBC00BE7151 /* MenuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 603F99B61EDA3EBC00BE7151 /* MenuTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +52,11 @@
 		603F99981EDA351000BE7151 /* CINEMA iOSUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "CINEMA iOSUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		603F999C1EDA351000BE7151 /* CINEMA_iOSUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CINEMA_iOSUITests.swift; sourceTree = "<group>"; };
 		603F999E1EDA351000BE7151 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		603F99AA1EDA361800BE7151 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		603F99B01EDA3A3D00BE7151 /* TabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
+		603F99B21EDA3AA200BE7151 /* PSCTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PSCTableViewController.swift; sourceTree = "<group>"; };
+		603F99B41EDA3ACB00BE7151 /* PSCTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PSCTableViewCell.swift; sourceTree = "<group>"; };
+		603F99B61EDA3EBC00BE7151 /* MenuTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,8 +107,11 @@
 		603F997B1EDA350D00BE7151 /* CINEMA iOS */ = {
 			isa = PBXGroup;
 			children = (
+				603F99AF1EDA368000BE7151 /* Model */,
+				603F99AE1EDA367800BE7151 /* Controller */,
+				603F99AD1EDA366E00BE7151 /* View */,
+				603F99AA1EDA361800BE7151 /* GoogleService-Info.plist */,
 				603F997C1EDA350E00BE7151 /* AppDelegate.swift */,
-				603F997E1EDA350E00BE7151 /* ViewController.swift */,
 				603F99801EDA350E00BE7151 /* Main.storyboard */,
 				603F99831EDA350E00BE7151 /* Assets.xcassets */,
 				603F99851EDA350E00BE7151 /* LaunchScreen.storyboard */,
@@ -123,6 +136,32 @@
 				603F999E1EDA351000BE7151 /* Info.plist */,
 			);
 			path = "CINEMA iOSUITests";
+			sourceTree = "<group>";
+		};
+		603F99AD1EDA366E00BE7151 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				603F99B41EDA3ACB00BE7151 /* PSCTableViewCell.swift */,
+				603F99B21EDA3AA200BE7151 /* PSCTableViewController.swift */,
+				603F99B01EDA3A3D00BE7151 /* TabBarController.swift */,
+				603F997E1EDA350E00BE7151 /* ViewController.swift */,
+				603F99B61EDA3EBC00BE7151 /* MenuTableViewCell.swift */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		603F99AE1EDA367800BE7151 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		603F99AF1EDA368000BE7151 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -233,6 +272,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				603F99871EDA350E00BE7151 /* LaunchScreen.storyboard in Resources */,
+				603F99AB1EDA361800BE7151 /* GoogleService-Info.plist in Resources */,
 				603F99841EDA350E00BE7151 /* Assets.xcassets in Resources */,
 				603F99821EDA350E00BE7151 /* Main.storyboard in Resources */,
 			);
@@ -259,6 +299,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				603F99B31EDA3AA200BE7151 /* PSCTableViewController.swift in Sources */,
+				603F99B11EDA3A3D00BE7151 /* TabBarController.swift in Sources */,
+				603F99B71EDA3EBC00BE7151 /* MenuTableViewCell.swift in Sources */,
+				603F99B51EDA3ACB00BE7151 /* PSCTableViewCell.swift in Sources */,
 				603F997F1EDA350E00BE7151 /* ViewController.swift in Sources */,
 				603F997D1EDA350E00BE7151 /* AppDelegate.swift in Sources */,
 			);
@@ -415,6 +459,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = "CINEMA iOS/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.healer.CINEMA-iOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -427,6 +472,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = "CINEMA iOS/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.healer.CINEMA-iOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
