@@ -1,5 +1,5 @@
 //
-//  TabBarController.swift
+//  ViewController.swift
 //  CINEMA iOS
 //
 //  Created by healer on 5/27/17.
@@ -8,21 +8,35 @@
 
 import UIKit
 
-class TabBarController: UITabBarController, UITableViewDelegate, UITableViewDataSource {
+class HomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource{
 
+    
     var MenuButton: UIButton = UIButton()
     var ViewMenu: UIView = UIView()
     var TableViewMenu: UITableView = UITableView()
     var Menus: Array<String> = ["Home","Page 1","Page 2"]
+    var db = DataFilm()
+    var Films = [Film]()
 
+    @IBOutlet var tableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        // Do any additional setup after loading the view, typically from a nib.
         setMenuButton()
         setupViewMenu()
         setupTableViewMenu()
         swipeGesture()
-        // Do any additional setup after loading the view.
+        db.reloadFilmFromUrlApi(page: 1)
+        Films = db.getDataFromFireBase()
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+            self.tableView.setContentOffset(CGPoint.zero, animated: false)
+        }
+
+        print(Films.count)
+        
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -32,11 +46,11 @@ class TabBarController: UITabBarController, UITableViewDelegate, UITableViewData
     
     // init Swipe
     func swipeGesture(){
-        let right = UISwipeGestureRecognizer(target: self, action: #selector(TabBarController.swipeRight))
+        let right = UISwipeGestureRecognizer(target: self, action: #selector(HomeViewController.swipeRight))
         right.direction = .right
         view.addGestureRecognizer(right)
         
-        let left = UISwipeGestureRecognizer(target: self, action: #selector(TabBarController.swipeLeft))
+        let left = UISwipeGestureRecognizer(target: self, action: #selector(HomeViewController.swipeLeft))
         left.direction = .left
         view.addGestureRecognizer(left)
     }
@@ -61,7 +75,7 @@ class TabBarController: UITabBarController, UITableViewDelegate, UITableViewData
         
         // assign to navigationBar
         navigationController?.navigationBar.addSubview(MenuButton)
-        MenuButton.addTarget(self, action: #selector(TabBarController.showMenu), for: .touchUpInside)
+        MenuButton.addTarget(self, action: #selector(HomeViewController.showMenu), for: .touchUpInside)
     }
     
     func showMenu(){
@@ -94,26 +108,19 @@ class TabBarController: UITabBarController, UITableViewDelegate, UITableViewData
         TableViewMenu.dataSource = self
         TableViewMenu.register(MenuTableViewCell.self, forCellReuseIdentifier: "CellMenu")
     }
-    
+
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return Menus.count
+        return Films.count
     }
-    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = TableViewMenu.dequeueReusableCell(withIdentifier: "CellMenu", for: indexPath) as! MenuTableViewCell
-        cell.textLabel?.text = Menus[indexPath.row]
+        let cell = tableView.dequeueReusableCell(withIdentifier: "FilmCell") as! FilmTableViewCell
+        cell.TitleFilm.text = Films[indexPath.row].getTitle()
         return cell
-        
     }
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
+
