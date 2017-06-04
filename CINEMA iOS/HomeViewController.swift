@@ -7,6 +7,9 @@
 //
 
 import UIKit
+import Foundation
+import Firebase
+import FirebaseDatabase
 
 class HomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource{
 
@@ -17,28 +20,34 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     var Menus: Array<String> = ["Home","Page 1","Page 2"]
     var db = DataFilm()
     var Films = [Film]()
+    var ref: DatabaseReference!
+    var refHandler: UInt! 
 
     @IBOutlet var tableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        setMenuButton()
-        setupViewMenu()
-        setupTableViewMenu()
-        swipeGesture()
         db.reloadFilmFromUrlApi(page: 1)
-        Films = db.getDataFromFireBase()
-        DispatchQueue.main.async {
-            self.tableView.reloadData()
-            self.tableView.setContentOffset(CGPoint.zero, animated: false)
-        }
-
-        print(Films.count)
+        //db.getDataFromFireBase(tableView: self.tableView, Films: Films)
+        ref = Database.database().reference()
+        refHandler = ref.child("films").observe(.childAdded, with:{ (snapshot) in
+            
+            // Get user value
+            if let dictionary = snapshot.value as? [String: AnyObject]{
+                let overview = dictionary["overview"] as? String
+                let poster_path = dictionary["poster_path"] as? String
+                let release_date = dictionary["release_date"] as? String
+                let title = dictionary["title"] as? String
+                print(title!)	
+                self.Films.append(Film(title: title!, poster: poster_path!, overview: overview!, releaseDate: release_date!))
+         
+            }
+         self.tableView.reloadData()
         
-        
+        })
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -103,18 +112,20 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     // setup TableViewMenu
     func setupTableViewMenu(){
         TableViewMenu = UITableView(frame: CGRect(x: 0, y: 0, width: ViewMenu.frame.width, height: ViewMenu.frame.height))
-        ViewMenu.addSubview(TableViewMenu)
-        TableViewMenu.delegate = self
-        TableViewMenu.dataSource = self
-        TableViewMenu.register(MenuTableViewCell.self, forCellReuseIdentifier: "CellMenu")
+        //ViewMenu.addSubview(TableViewMenu)
+        //TableViewMenu.delegate = self
+        //TableViewMenu.dataSource = self
+        //TableViewMenu.register(MenuTableViewCell.self, forCellReuseIdentifier: "CellMenu")
     }
-
+    
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return Films.count
     }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "FilmCell") as! FilmTableViewCell
         cell.TitleFilm.text = Films[indexPath.row].getTitle()

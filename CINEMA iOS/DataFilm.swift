@@ -8,17 +8,18 @@
 
 import Foundation
 import UIKit
-import Firebase
+import FirebaseDatabase
 
 class DataFilm{
 
     
     var ref: DatabaseReference!
+    var refHandler: DatabaseHandle!
     var dataTask: URLSessionDataTask?
     var Api: String = "24b1973f805d7f765ee59e3481812a29"
     var Session = URLSession.shared
     var queue = OperationQueue()
-    var Films = [Film]()
+   
 
     
 
@@ -54,7 +55,7 @@ class DataFilm{
                     //self.updateSearchResults(data)
                     if(data?.count != 0){
                         //let responseJSON = try! JSONSerialization.jsonObject(with: data!, options: .allowFragments) as! NSDictionary
-                        self.updateSearchResults(data: data!)
+                        self.saveDataIntoFireBase(data: data!)
                     }
                 }
             }
@@ -64,7 +65,7 @@ class DataFilm{
     }
     
     // This helper method helps parse response JSON NSData into an array of Track objects.
-    private func updateSearchResults(data: Data?) {
+    private func saveDataIntoFireBase(data: Data?) {
         do {
             if let response = try JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions (rawValue: 0)) as? [String: AnyObject] {
                 
@@ -94,23 +95,22 @@ class DataFilm{
             print("Error parsing results: \(error.localizedDescription)")
         }
     }
-    func getDataFromFireBase() -> [Film]{
-            ref.child("films").observe(.childAdded, with:{ (snapshot) in
+    /*func getDataFromFireBase(tableView: UITableView, Films: [Film]){
+            refHandler = ref.child("films").observe(.childAdded, with:{ (snapshot) in
             
             // Get user value
-            let value = snapshot.value as? NSDictionary
-            let title = value?["title"] as? String
-            let poster_path = value?["poster_path"] as? String
-            let overview = value?["overview"] as? String
-            let release_date = value?["release_date"] as? String
-            self.Films.append(Film(title: title!, poster: poster_path!, overview: overview!, releaseDate: release_date!))
-
-            })
-            print(self.Films.count)
-
-        return Films
-
-    }
+            if let dictionary = snapshot.value as? [String: AnyObject]{
+                let overview = dictionary["overview"] as? String
+                let poster_path = dictionary["poster_path"] as? String
+                let release_date = dictionary["release_date"] as? String
+                let title = dictionary["title"] as? String
+                Films.append(Film(title: title!, poster: poster_path!, overview: overview!, releaseDate: release_date!))
+                tableView.reloadData()
+            }
+            
+        })
+        
+    }*/
 
 
 }

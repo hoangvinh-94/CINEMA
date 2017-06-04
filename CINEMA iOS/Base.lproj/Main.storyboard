@@ -86,7 +86,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="if you have not account?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2JC-TT-jUL">
-                                <rect key="frame" x="70" y="447" width="138" height="15.5"/>
+                                <rect key="frame" x="70" y="447" width="138" height="14.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -236,15 +236,16 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="GenreFilm" destination="fty-rZ-qNG" id="yZw-fc-9p3"/>
-                                            <outlet property="ImageViewPoster" destination="91x-HU-WOt" id="mvF-Ka-K1k"/>
-                                            <outlet property="LabelGenre" destination="fty-rZ-qNG" id="zOF-Vn-xvJ"/>
-                                            <outlet property="LabelTitle" destination="U0J-mJ-ehY" id="19l-Tn-brs"/>
-                                            <outlet property="PosterFilm" destination="91x-HU-WOt" id="Yfi-Sf-gC8"/>
-                                            <outlet property="TitleFilm" destination="U0J-mJ-ehY" id="HxG-o4-POM"/>
+                                            <outlet property="GenreFilm" destination="fty-rZ-qNG" id="qvS-CH-wat"/>
+                                            <outlet property="PosterFilm" destination="91x-HU-WOt" id="UOP-kN-CsP"/>
+                                            <outlet property="TitleFilm" destination="U0J-mJ-ehY" id="ErE-Zs-Prb"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="09v-LC-Aan" id="Maa-yE-JDb"/>
+                                    <outlet property="delegate" destination="09v-LC-Aan" id="muY-Rp-dMt"/>
+                                </connections>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -263,7 +264,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="CINEMA" id="IJB-IW-KXw"/>
                     <connections>
-                        <outlet property="tableView" destination="LcY-xo-ROb" id="B5T-ud-fl6"/>
+                        <outlet property="tableView" destination="LcY-xo-ROb" id="uFn-I5-7x6"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XI5-7R-21w" userLabel="First Responder" sceneMemberID="firstResponder"/>
