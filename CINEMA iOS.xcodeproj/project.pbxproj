@@ -22,6 +22,11 @@
 		60A2B5DE1EE152C100857EAC /* FilmTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60A2B5DD1EE152C100857EAC /* FilmTableViewCell.swift */; };
 		751C46D11EE2FB460007FC3C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 751C46D01EE2FB460007FC3C /* GoogleService-Info.plist */; };
 		7525D84F1EE4197300FF6FA5 /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7525D84D1EE4197300FF6FA5 /* SWRevealViewController.m */; };
+		7525D8521EE41A6C00FF6FA5 /* MenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7525D8501EE41A6C00FF6FA5 /* MenuCell.swift */; };
+		7525D8531EE41A6C00FF6FA5 /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7525D8511EE41A6C00FF6FA5 /* MenuViewController.swift */; };
+		7525D8551EE41FB400FF6FA5 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7525D8541EE41FB400FF6FA5 /* SignUpViewController.swift */; };
+		7525D8571EE41FE100FF6FA5 /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7525D8561EE41FE100FF6FA5 /* SignInViewController.swift */; };
+		7525D8591EE4533300FF6FA5 /* ForgotPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7525D8581EE4533300FF6FA5 /* ForgotPasswordViewController.swift */; };
 		7AAF2BA74B2083FECC0F815C /* Pods_CINEMA_iOSTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 596F5CE9635484B73D0055E6 /* Pods_CINEMA_iOSTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -68,6 +73,11 @@
 		7525D84C1EE4197100FF6FA5 /* CINEMA iOS-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CINEMA iOS-Bridging-Header.h"; sourceTree = "<group>"; };
 		7525D84D1EE4197300FF6FA5 /* SWRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWRevealViewController.m; sourceTree = "<group>"; };
 		7525D84E1EE4197300FF6FA5 /* SWRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWRevealViewController.h; sourceTree = "<group>"; };
+		7525D8501EE41A6C00FF6FA5 /* MenuCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuCell.swift; sourceTree = "<group>"; };
+		7525D8511EE41A6C00FF6FA5 /* MenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
+		7525D8541EE41FB400FF6FA5 /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
+		7525D8561EE41FE100FF6FA5 /* SignInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
+		7525D8581EE4533300FF6FA5 /* ForgotPasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForgotPasswordViewController.swift; sourceTree = "<group>"; };
 		887A7C68A3B716881D5405F3 /* Pods-CINEMA iOSUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CINEMA iOSUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-CINEMA iOSUITests/Pods-CINEMA iOSUITests.release.xcconfig"; sourceTree = "<group>"; };
 		8ACA4E4D7D19C9F429192B0E /* Pods-CINEMA iOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CINEMA iOSTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-CINEMA iOSTests/Pods-CINEMA iOSTests.release.xcconfig"; sourceTree = "<group>"; };
 		ACD0F97FD95CDF992EC443A9 /* Pods_CINEMA_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CINEMA_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -148,6 +158,9 @@
 				603F997C1EDA350E00BE7151 /* AppDelegate.swift */,
 				751C46D01EE2FB460007FC3C /* GoogleService-Info.plist */,
 				603F99801EDA350E00BE7151 /* Main.storyboard */,
+				7525D8581EE4533300FF6FA5 /* ForgotPasswordViewController.swift */,
+				7525D8541EE41FB400FF6FA5 /* SignUpViewController.swift */,
+				7525D8561EE41FE100FF6FA5 /* SignInViewController.swift */,
 				603F99831EDA350E00BE7151 /* Assets.xcassets */,
 				603F99851EDA350E00BE7151 /* LaunchScreen.storyboard */,
 			);
@@ -181,6 +194,8 @@
 				7525D84D1EE4197300FF6FA5 /* SWRevealViewController.m */,
 				7525D84E1EE4197300FF6FA5 /* SWRevealViewController.h */,
 				7525D84C1EE4197100FF6FA5 /* CINEMA iOS-Bridging-Header.h */,
+				7525D8501EE41A6C00FF6FA5 /* MenuCell.swift */,
+				7525D8511EE41A6C00FF6FA5 /* MenuViewController.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -494,12 +509,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7525D8571EE41FE100FF6FA5 /* SignInViewController.swift in Sources */,
 				7525D84F1EE4197300FF6FA5 /* SWRevealViewController.m in Sources */,
 				60A2B5DA1EE112C100857EAC /* DataFilm.swift in Sources */,
 				603F99B71EDA3EBC00BE7151 /* MenuTableViewCell.swift in Sources */,
 				603F997F1EDA350E00BE7151 /* HomeViewController.swift in Sources */,
+				7525D8551EE41FB400FF6FA5 /* SignUpViewController.swift in Sources */,
+				7525D8531EE41A6C00FF6FA5 /* MenuViewController.swift in Sources */,
 				60A2B5DE1EE152C100857EAC /* FilmTableViewCell.swift in Sources */,
+				7525D8591EE4533300FF6FA5 /* ForgotPasswordViewController.swift in Sources */,
 				603F997D1EDA350E00BE7151 /* AppDelegate.swift in Sources */,
+				7525D8521EE41A6C00FF6FA5 /* MenuCell.swift in Sources */,
 				60A2B5DC1EE1143B00857EAC /* Film.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
