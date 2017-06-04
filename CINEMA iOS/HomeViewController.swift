@@ -21,9 +21,18 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     var db = DataFilm()
     var Films = [Film]()
     var ref: DatabaseReference!
-    var refHandler: UInt! 
+    var refHandler: UInt!
+    var prefixImg: String = "https://image.tmdb.org/t/p/w320"
 
     @IBOutlet var tableView: UITableView!
+    
+    class Downloader {
+        class func downloadImageWithURL(_ url:String) -> UIImage! {
+            let data = try? Data(contentsOf: URL(string: url)!)
+            return UIImage(data: data!)
+        }
+    }
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -129,6 +138,17 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "FilmCell") as! FilmTableViewCell
         cell.TitleFilm.text = Films[indexPath.row].getTitle()
+        //cell.PosterFilm?.image = Downloader.downloadImageWithURL("\(self.prefixImg)\(Films[indexPath.row].getPoster())")
+        
+        let url = URL(string: "https://image.tmdb.org/t/p/w640/" + Films[indexPath.row].getPoster())
+        
+        DispatchQueue.global().async {
+            let data = try? Data(contentsOf: url!)
+            DispatchQueue.main.async {
+                cell.PosterFilm.image = UIImage(data: data!)
+            
+            }
+        }
         return cell
     }
 

@@ -17,6 +17,7 @@ class DataFilm{
     var refHandler: DatabaseHandle!
     var dataTask: URLSessionDataTask?
     var Api: String = "24b1973f805d7f765ee59e3481812a29"
+    
     var Session = URLSession.shared
     var queue = OperationQueue()
    
@@ -95,6 +96,9 @@ class DataFilm{
             print("Error parsing results: \(error.localizedDescription)")
         }
     }
+    
+   
+    
     /*func getDataFromFireBase(tableView: UITableView, Films: [Film]){
             refHandler = ref.child("films").observe(.childAdded, with:{ (snapshot) in
             
