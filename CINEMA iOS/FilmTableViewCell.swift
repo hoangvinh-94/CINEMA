@@ -13,4 +13,13 @@ class FilmTableViewCell: UITableViewCell {
     @IBOutlet var PosterFilm: UIImageView!
     @IBOutlet var TitleFilm: UILabel!
     @IBOutlet var GenreFilm: UILabel!
+    
+    
+    
+    @IBAction func bookFilm(_ sender: Any) {
+        
+        
+    }
+    
+    
 }

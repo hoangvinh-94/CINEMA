@@ -17,6 +17,11 @@ class DataFilm{
     var refHandler: DatabaseHandle!
     var dataTask: URLSessionDataTask?
     var Api: String = "24b1973f805d7f765ee59e3481812a29"
+    var Room: Dictionary = ["R1": "Room 1","R2": "Room 2","R3": "Room 3","R4": "Room 4","R5": "Room 5","R6": "Room 6"]
+    var Seats = "1_2_3_4_5"
+    var Rooms : [String] = ["Room 1","Room 2","Room 3"]
+    var Days: [String] = ["12-03-2017","04-06-2017"]
+    var Time: [String] = ["7:00","12:30","17:00","20:30"]
     
     var Session = URLSession.shared
     var queue = OperationQueue()
@@ -97,7 +102,23 @@ class DataFilm{
         }
     }
     
-   
+    func createDataBookFilm(){
+        var str = "BF"
+        var count = 0
+    
+        refHandler = ref.child("films").observe(.childAdded, with:{ (snapshot) in
+            count += 1
+            str += String(count)
+            let room = Int(arc4random_uniform(UInt32(self.Room.count)))
+            let day = Int(arc4random_uniform(UInt32(self.Days.count)))
+            let time = Int(arc4random_uniform(UInt32(self.Time.count)))
+
+            let idFilm = snapshot.key
+            //self.ref.child("books").child(str).setValue(["idFilm": idFilm,"rooms": Room[room],"days":Days[day],"times": Time[time],"seats": self.Seats])
+            str = "BF"
+        })
+        
+    }
     
     /*func getDataFromFireBase(tableView: UITableView, Films: [Film]){
             refHandler = ref.child("films").observe(.childAdded, with:{ (snapshot) in

@@ -38,6 +38,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         db.reloadFilmFromUrlApi(page: 1)
+        db.createDataBookFilm()
         //db.getDataFromFireBase(tableView: self.tableView, Films: Films)
         ref = Database.database().reference()
         refHandler = ref.child("films").observe(.childAdded, with:{ (snapshot) in
