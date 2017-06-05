@@ -12,7 +12,7 @@ import Firebase
 import FirebaseDatabase
 
 class HomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource{
-
+    
     
     var MenuButton: UIButton = UIButton()
     var ViewMenu: UIView = UIView()
@@ -22,45 +22,76 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     var Films = [Film]()
     var ref: DatabaseReference!
     var refHandler: UInt!
-    var prefixImg: String = "https://image.tmdb.org/t/p/w320"
+    var prefixImg: String = "https://image.tmdb.org/t/p/w320/"
+    var queue = OperationQueue()
 
     @IBOutlet var tableView: UITableView!
     
+    @IBOutlet var segmentControl: UISegmentedControl!
+
     class Downloader {
         class func downloadImageWithURL(_ url:String) -> UIImage! {
             let data = try? Data(contentsOf: URL(string: url)!)
             return UIImage(data: data!)
         }
     }
-
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        db.reloadFilmFromUrlApi(page: 1)
-        db.createDataBookFilm()
-        //db.getDataFromFireBase(tableView: self.tableView, Films: Films)
+       loadDataToTableView(type: "popular")
+        
+    }
+    
+    func loadDataToTableView(type: String){
+        Films = [Film]()
+         db.reloadFilmFromUrlApi(page: 1, filmType: type)
         ref = Database.database().reference()
         refHandler = ref.child("films").observe(.childAdded, with:{ (snapshot) in
-            
             // Get user value
             if let dictionary = snapshot.value as? [String: AnyObject]{
+                let typeFilm = dictionary["type"] as? String
                 let overview = dictionary["overview"] as? String
                 let poster_path = dictionary["poster_path"] as? String
                 let release_date = dictionary["release_date"] as? String
                 let title = dictionary["title"] as? String
-                print(title!)	
-                self.Films.append(Film(title: title!, poster: poster_path!, overview: overview!, releaseDate: release_date!))
-         
+                //print(type!)
+                if(typeFilm?.isEqual(type))!{
+                    self.Films.append(Film(title: title!, poster: poster_path!, overview: overview!, releaseDate: release_date!))
+                    DispatchQueue.main.async {
+                        self.tableView.reloadData()
+                        self.tableView.setContentOffset(CGPoint.zero, animated: false)
+                    }
+                }
+                
+                
             }
-         self.tableView.reloadData()
-        
+            
+            
         })
+
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    @IBAction func indexChanged(_ sender: Any) {
+        switch segmentControl.selectedSegmentIndex{
+        case 0:
+            loadDataToTableView(type: "popular")
+
+            break
+        case 1:
+             loadDataToTableView(type: "now_playing")
+            break
+        case 2:
+             loadDataToTableView(type: "upcoming")
+            break
+        default: break
+        }
+        
+        
     }
     
     // init Swipe
@@ -138,16 +169,17 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "FilmCell") as! FilmTableViewCell
-        cell.TitleFilm.text = Films[indexPath.row].getTitle()
-        //cell.PosterFilm?.image = Downloader.downloadImageWithURL("\(self.prefixImg)\(Films[indexPath.row].getPoster())")
+        var film: Film
+        film = Films[indexPath.row]
         
-        let url = URL(string: "https://image.tmdb.org/t/p/w640/" + Films[indexPath.row].getPoster())
-        
-        DispatchQueue.global().async {
-            let data = try? Data(contentsOf: url!)
-            DispatchQueue.main.async {
-                cell.PosterFilm.image = UIImage(data: data!)
-            
+        queue.addOperation { () -> Void in
+            if film.getPoster() != "" {
+                if let img = Downloader.downloadImageWithURL("\(self.prefixImg)\(film.getPoster())") {
+                    OperationQueue.main.addOperation({
+                        cell.PosterFilm.image = img
+                        cell.TitleFilm.text = film.getTitle()
+                    })
+                }
             }
         }
         return cell

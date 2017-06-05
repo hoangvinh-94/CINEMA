@@ -86,7 +86,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="if you have not account?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2JC-TT-jUL">
-                                <rect key="frame" x="70" y="447" width="138" height="15"/>
+                                <rect key="frame" x="70" y="447" width="138" height="15.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -204,6 +204,9 @@
                                     <segment title="PHIM ĐANG CHIẾU"/>
                                     <segment title="PHIM SẮP CHIẾU"/>
                                 </segments>
+                                <connections>
+                                    <action selector="indexChanged:" destination="09v-LC-Aan" eventType="valueChanged" id="xCW-jc-vlO"/>
+                                </connections>
                             </segmentedControl>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="171" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="LcY-xo-ROb">
                                 <rect key="frame" x="2" y="285" width="371" height="382"/>
@@ -304,6 +307,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="CINEMA" id="IJB-IW-KXw"/>
                     <connections>
+                        <outlet property="segmentControl" destination="l7D-sZ-Efs" id="JsL-Nu-69D"/>
                         <outlet property="tableView" destination="LcY-xo-ROb" id="uFn-I5-7x6"/>
                     </connections>
                 </viewController>

@@ -17,6 +17,8 @@ class DataFilm{
     var refHandler: DatabaseHandle!
     var dataTask: URLSessionDataTask?
     var Api: String = "24b1973f805d7f765ee59e3481812a29"
+    
+   
     var Room: Dictionary = ["R1": "Room 1","R2": "Room 2","R3": "Room 3","R4": "Room 4","R5": "Room 5","R6": "Room 6"]
     var Seats = "1_2_3_4_5"
     var Rooms : [String] = ["Room 1","Room 2","Room 3"]
@@ -25,7 +27,8 @@ class DataFilm{
     
     var Session = URLSession.shared
     var queue = OperationQueue()
-   
+    var url : String = ""
+    var typeFilm : String?
 
     
 
@@ -35,15 +38,16 @@ class DataFilm{
         ref = Database.database().reference()
     }
     // Get data from Url Api and Set data into FireBase
-    func reloadFilmFromUrlApi(page : Int) {
+    func reloadFilmFromUrlApi(page : Int, filmType: String) {
         //  if the data task is already initialized. you cancel this task
+        typeFilm = filmType
         if dataTask != nil {
             dataTask?.cancel()
         }
         // You enable the network activity indicator on the status bar to indicate to the user that a network process is running.
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
-      
-        let url = URL(string: "https://api.themoviedb.org/3/movie/now_playing?api_key=\(Api)&language=en-US&page=\(page)")
+        let url = URL(string: "https://api.themoviedb.org/3/movie/\(filmType)?api_key=\(Api)&language=en-US&page=\(page)")
+        print(url!)
         let request = NSMutableURLRequest(url: url! as URL)
         
         // 5
@@ -87,7 +91,7 @@ class DataFilm{
                             let id = filmDictonary["id"] as! Int
                             //let genres = filmDictonary["genre_ids"] as? [Int]
                             // add data to FireBase
-                            self.ref.child("films").child(String(describing: id)).setValue(["title": title!,"poster_path": posterPath!,"overview": overview!,"release_date": release_date!])
+                            self.ref.child("films").child(String(describing: id)).setValue(["title": title!,"poster_path": posterPath!,"overview": overview!,"release_date": release_date!,"type": typeFilm!])
                             
                         } else {
                             print("Not a dictionary")
