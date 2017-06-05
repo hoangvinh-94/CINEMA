@@ -15,7 +15,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     
     var MenuButton: UIButton = UIButton()
-    var ViewMenu: UIView = UIView()
+       var ViewMenu: UIView = UIView()
     var TableViewMenu: UITableView = UITableView()
     var Menus: Array<String> = ["Home","Page 1","Page 2"]
     var db = DataFilm()
@@ -183,6 +183,19 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             }
         }
         return cell
+    }
+    
+    @IBAction func logOutAction(_ sender: Any) {
+        if Auth.auth().currentUser != nil {
+            do {
+                try Auth.auth().signOut()
+                let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "SignInViewController")
+                present(vc, animated: true, completion: nil)
+                
+            } catch let error as NSError {
+                print(error.localizedDescription)
+            }
+        }
     }
 
 
