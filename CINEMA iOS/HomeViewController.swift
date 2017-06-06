@@ -14,10 +14,6 @@ import FirebaseDatabase
 class HomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource{
     
     
-    var MenuButton: UIButton = UIButton()
-       var ViewMenu: UIView = UIView()
-    var TableViewMenu: UITableView = UITableView()
-    var Menus: Array<String> = ["Home","Page 1","Page 2"]
     var db = DataFilm()
     var Films = [Film]()
     var ref: DatabaseReference!
@@ -29,6 +25,8 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     @IBOutlet var segmentControl: UISegmentedControl!
 
+    @IBOutlet var menuButton: UIBarButtonItem!
+    
     class Downloader {
         class func downloadImageWithURL(_ url:String) -> UIImage! {
             let data = try? Data(contentsOf: URL(string: url)!)
@@ -39,14 +37,20 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-       loadDataToTableView(type: "popular")
+     ref = Database.database().reference()
+        menuButton.target = revealViewController()
+        menuButton.action = Selector(("revealToogle:"))
+        db.reloadFilmFromUrlApi(page: 1	, filmType: "popular")
+        
         
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        loadDataToTableView(type: "popular")
+    }
+    
     func loadDataToTableView(type: String){
-        Films = [Film]()
-         db.reloadFilmFromUrlApi(page: 1, filmType: type)
-        ref = Database.database().reference()
+        self.Films = [Film]()
         refHandler = ref.child("films").observe(.childAdded, with:{ (snapshot) in
             // Get user value
             if let dictionary = snapshot.value as? [String: AnyObject]{
@@ -55,13 +59,14 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                 let poster_path = dictionary["poster_path"] as? String
                 let release_date = dictionary["release_date"] as? String
                 let title = dictionary["title"] as? String
-                //print(type!)
-                if(typeFilm?.isEqual(type))!{
-                    self.Films.append(Film(title: title!, poster: poster_path!, overview: overview!, releaseDate: release_date!))
+                if(typeFilm != "" && typeFilm == type){
+                                         self.Films.append(Film(title: title!, poster: poster_path!, overview: overview!, releaseDate: release_date!))
                     DispatchQueue.main.async {
                         self.tableView.reloadData()
                         self.tableView.setContentOffset(CGPoint.zero, animated: false)
                     }
+                }else{
+                    return
                 }
                 
                 
@@ -79,13 +84,15 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     @IBAction func indexChanged(_ sender: Any) {
         switch segmentControl.selectedSegmentIndex{
         case 0:
+            db.reloadFilmFromUrlApi(page: 1	, filmType: "popular")
             loadDataToTableView(type: "popular")
-
             break
         case 1:
+            db.reloadFilmFromUrlApi(page: 1	, filmType: "now_playing")
              loadDataToTableView(type: "now_playing")
             break
         case 2:
+            db.reloadFilmFromUrlApi(page: 1	, filmType: "upcoming")
              loadDataToTableView(type: "upcoming")
             break
         default: break
@@ -93,7 +100,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         
     }
-    
+    /*
     // init Swipe
     func swipeGesture(){
         let right = UISwipeGestureRecognizer(target: self, action: #selector(HomeViewController.swipeRight))
@@ -158,7 +165,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         //TableViewMenu.dataSource = self
         //TableViewMenu.register(MenuTableViewCell.self, forCellReuseIdentifier: "CellMenu")
     }
-    
+    */
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }

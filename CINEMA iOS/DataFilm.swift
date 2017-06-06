@@ -15,7 +15,7 @@ class DataFilm{
     
     var ref: DatabaseReference!
     var refHandler: DatabaseHandle!
-    var dataTask: URLSessionDataTask?
+    
     var Api: String = "24b1973f805d7f765ee59e3481812a29"
     
    
@@ -25,11 +25,12 @@ class DataFilm{
     var Days: [String] = ["12-03-2017","04-06-2017"]
     var Time: [String] = ["7:00","12:30","17:00","20:30"]
     
-    var Session = URLSession.shared
-    var queue = OperationQueue()
-    var url : String = ""
+   
     var typeFilm : String?
-
+    
+    let Session = URLSession.shared
+    var dataTask: URLSessionDataTask?
+    
     
 
 
@@ -39,6 +40,7 @@ class DataFilm{
     }
     // Get data from Url Api and Set data into FireBase
     func reloadFilmFromUrlApi(page : Int, filmType: String) {
+       
         //  if the data task is already initialized. you cancel this task
         typeFilm = filmType
         if dataTask != nil {
@@ -71,7 +73,7 @@ class DataFilm{
             }
         }
         // 8
-        self.dataTask?.resume()
+        dataTask?.resume()
     }
     
     // This helper method helps parse response JSON NSData into an array of Track objects.
@@ -84,6 +86,7 @@ class DataFilm{
                     for filmDictonary in array as! [AnyObject] {
                         if let filmDictonary = filmDictonary as? [String: AnyObject]{
                             // Parse the search result
+                            print(filmDictonary)
                             let posterPath = filmDictonary["poster_path"] as? String
                             let overview = filmDictonary["overview"] as? String
                             let title = filmDictonary["title"] as? String
@@ -113,11 +116,13 @@ class DataFilm{
         refHandler = ref.child("films").observe(.childAdded, with:{ (snapshot) in
             count += 1
             str += String(count)
+            /*
             let room = Int(arc4random_uniform(UInt32(self.Room.count)))
             let day = Int(arc4random_uniform(UInt32(self.Days.count)))
             let time = Int(arc4random_uniform(UInt32(self.Time.count)))
 
             let idFilm = snapshot.key
+ */
             //self.ref.child("books").child(str).setValue(["idFilm": idFilm,"rooms": Room[room],"days":Days[day],"times": Time[time],"seats": self.Seats])
             str = "BF"
         })
