@@ -21,8 +21,6 @@
 		6058B9531EE5260A00C5A5E1 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6058B9521EE5260A00C5A5E1 /* SignUpViewController.swift */; };
 		6058B9551EE5266600C5A5E1 /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6058B9541EE5266600C5A5E1 /* SignInViewController.swift */; };
 		60608AF21EE724110034FA3E /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60608AF11EE724110034FA3E /* MenuViewController.swift */; };
-		60608AF61EE792750034FA3E /* RoomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60608AF51EE792750034FA3E /* RoomViewController.swift */; };
-		60608AF81EE792B60034FA3E /* RoomCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60608AF71EE792B60034FA3E /* RoomCollectionViewCell.swift */; };
 		60608AFA1EE7A8060034FA3E /* SeatCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60608AF91EE7A8060034FA3E /* SeatCollectionViewController.swift */; };
 		60608AFC1EE7A84E0034FA3E /* SeatCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60608AFB1EE7A84E0034FA3E /* SeatCollectionViewCell.swift */; };
 		60A2B5DA1EE112C100857EAC /* DataFilm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60A2B5D91EE112C100857EAC /* DataFilm.swift */; };
@@ -74,8 +72,6 @@
 		6058B9521EE5260A00C5A5E1 /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		6058B9541EE5266600C5A5E1 /* SignInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
 		60608AF11EE724110034FA3E /* MenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
-		60608AF51EE792750034FA3E /* RoomViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoomViewController.swift; sourceTree = "<group>"; };
-		60608AF71EE792B60034FA3E /* RoomCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoomCollectionViewCell.swift; sourceTree = "<group>"; };
 		60608AF91EE7A8060034FA3E /* SeatCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SeatCollectionViewController.swift; sourceTree = "<group>"; };
 		60608AFB1EE7A84E0034FA3E /* SeatCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SeatCollectionViewCell.swift; sourceTree = "<group>"; };
 		60A2B5D91EE112C100857EAC /* DataFilm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataFilm.swift; sourceTree = "<group>"; };
@@ -197,8 +193,6 @@
 			children = (
 				60608AFB1EE7A84E0034FA3E /* SeatCollectionViewCell.swift */,
 				60608AF91EE7A8060034FA3E /* SeatCollectionViewController.swift */,
-				60608AF71EE792B60034FA3E /* RoomCollectionViewCell.swift */,
-				60608AF51EE792750034FA3E /* RoomViewController.swift */,
 				60608AF11EE724110034FA3E /* MenuViewController.swift */,
 				6058B9541EE5266600C5A5E1 /* SignInViewController.swift */,
 				6058B9521EE5260A00C5A5E1 /* SignUpViewController.swift */,
@@ -526,7 +520,6 @@
 			files = (
 				7525D84F1EE4197300FF6FA5 /* SWRevealViewController.m in Sources */,
 				60A2B5DA1EE112C100857EAC /* DataFilm.swift in Sources */,
-				60608AF81EE792B60034FA3E /* RoomCollectionViewCell.swift in Sources */,
 				605804A41EE4A0FB00E7BF53 /* BookFilmTableViewController.swift in Sources */,
 				603F997F1EDA350E00BE7151 /* HomeViewController.swift in Sources */,
 				60608AFC1EE7A84E0034FA3E /* SeatCollectionViewCell.swift in Sources */,
@@ -536,7 +529,6 @@
 				60608AF21EE724110034FA3E /* MenuViewController.swift in Sources */,
 				60608AFA1EE7A8060034FA3E /* SeatCollectionViewController.swift in Sources */,
 				60A2B5DE1EE152C100857EAC /* FilmTableViewCell.swift in Sources */,
-				60608AF61EE792750034FA3E /* RoomViewController.swift in Sources */,
 				7525D8591EE4533300FF6FA5 /* ForgotPasswordViewController.swift in Sources */,
 				603F997D1EDA350E00BE7151 /* AppDelegate.swift in Sources */,
 				7525D8521EE41A6C00FF6FA5 /* MenuCell.swift in Sources */,

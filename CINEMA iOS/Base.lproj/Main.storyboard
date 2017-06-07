@@ -176,7 +176,7 @@
                                     </subviews>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <segue destination="MqQ-ck-LwY" kind="show" id="JQJ-MQ-X1r"/>
+                                    <segue destination="U7S-WN-gKR" kind="show" id="SIf-17-Uwm"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -188,54 +188,6 @@
                 </tableViewController>
             </objects>
             <point key="canvasLocation" x="-2386" y="734"/>
-        </scene>
-        <!--CHOICE ROOM-->
-        <scene sceneID="MEB-q8-8fZ">
-            <objects>
-                <viewController title="CHOICE ROOM" id="MqQ-ck-LwY" customClass="RoomViewController" customModule="CINEMA_iOS" customModuleProvider="target" sceneMemberID="viewController">
-                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="ywg-ap-EZ6">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="56H-0j-lb2">
-                            <size key="itemSize" width="140" height="140"/>
-                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                            <inset key="sectionInset" minX="10" minY="10" maxX="10" maxY="10"/>
-                        </collectionViewFlowLayout>
-                        <cells>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="RoomCell" id="JAV-Gs-KC9" customClass="RoomCollectionViewCell" customModule="CINEMA_iOS" customModuleProvider="target">
-                                <rect key="frame" x="10" y="10" width="140" height="140"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                    <rect key="frame" x="0.0" y="0.0" width="140" height="140"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="01" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GHl-1W-ahi">
-                                            <rect key="frame" x="43" y="47" width="55" height="46"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="40"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                    </subviews>
-                                </view>
-                                <color key="backgroundColor" red="0.40000000600000002" green="0.40000000600000002" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <connections>
-                                    <outlet property="numberOfRoom" destination="GHl-1W-ahi" id="ypn-NS-SyK"/>
-                                    <segue destination="U7S-WN-gKR" kind="show" id="Ggy-DR-0a9"/>
-                                </connections>
-                            </collectionViewCell>
-                        </cells>
-                        <connections>
-                            <outlet property="dataSource" destination="MqQ-ck-LwY" id="4mu-cY-Lp8"/>
-                            <outlet property="delegate" destination="MqQ-ck-LwY" id="M3H-BL-HHQ"/>
-                        </connections>
-                    </collectionView>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Qlh-KB-9B4" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-1127.2" y="761.46926536731644"/>
         </scene>
         <!--CHOICE SEATS-->
         <scene sceneID="qNq-ZT-oFS">
@@ -249,11 +201,11 @@
                             <size key="itemSize" width="50" height="50"/>
                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                            <inset key="sectionInset" minX="5" minY="5" maxX="5" maxY="5"/>
                         </collectionViewFlowLayout>
                         <cells>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="SeatCell" id="JIv-PI-fX3" customClass="SeatCollectionViewCell" customModule="CINEMA_iOS" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                <rect key="frame" x="5" y="5" width="50" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
@@ -278,7 +230,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Hkl-K4-1Zt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-212" y="790"/>
+            <point key="canvasLocation" x="-1545" y="765"/>
         </scene>
         <!--CINEMA-->
         <scene sceneID="yxJ-Wf-bnx">
@@ -383,7 +335,7 @@
                                             <outlet property="GenreFilm" destination="fty-rZ-qNG" id="qvS-CH-wat"/>
                                             <outlet property="PosterFilm" destination="91x-HU-WOt" id="UOP-kN-CsP"/>
                                             <outlet property="TitleFilm" destination="U0J-mJ-ehY" id="ErE-Zs-Prb"/>
-                                            <segue destination="4TO-Xq-5Q8" kind="show" id="fbB-7K-f27"/>
+                                            <segue destination="MyR-eo-DrJ" kind="show" id="MMO-Cf-xd9"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -653,7 +605,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="V0M-gC-kKq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1456.8" y="1396.5517241379312"/>
+            <point key="canvasLocation" x="-2386" y="1438"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="kWT-KX-8Va">
@@ -1004,24 +956,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9jh-Fs-FdU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-4410.3999999999996" y="319.79010494752629"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="dq5-RN-rfU">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="4TO-Xq-5Q8" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="bFR-KA-883">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="MyR-eo-DrJ" kind="relationship" relationship="rootViewController" id="klE-fa-i3o"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="h5x-ro-Brz" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-2396" y="1396.5517241379312"/>
         </scene>
     </scenes>
     <resources>
