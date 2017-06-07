@@ -2,21 +2,33 @@
 //  MenuViewController.swift
 //  CINEMA iOS
 //
-//  Created by TTB on 6/3/17.
+//  Created by healer on 6/6/17.
 //  Copyright © 2017 healer. All rights reserved.
 //
 
 import UIKit
 
-class MenuViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class MenuViewController: UIViewController, UITableViewDelegate, UITableViewDataSource{
 
-    var ManuNameArray:Array = [String]()
-    var iconArray:Array = [UIImage]()
+   var searchController = HomeViewController.searchController
     
+    var ManuNameArray: Array = [String]()
+    var iconArray: Array = [UIImage]()
+    
+    @IBOutlet var tableView: UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        //MenuViewController.searchController.searchResultsUpdater = self as? //UISearchResultsUpdating
+        //MenuViewController.searchController.dimsBackgroundDuringPresentation = false
+        //definesPresentationContext = true
+        tableView.tableHeaderView = searchController.searchBar
         ManuNameArray = ["Home","Phim Sap Chieu","Da Chieu","Setting"]
         iconArray = [UIImage(named:"home")!,UIImage(named:"message")!,UIImage(named:"map")!,UIImage(named:"setting")!]
+        // Do any additional setup after loading the view.
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        tableView.tableHeaderView = searchController.searchBar
     }
     
     override func didReceiveMemoryWarning() {
@@ -30,8 +42,8 @@ class MenuViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return ManuNameArray.count
-        
     }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MenuCell", for: indexPath) as! MenuCell
         
@@ -40,10 +52,8 @@ class MenuViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         return cell
     }
-
-   
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
         let revealviewcontroller:SWRevealViewController = self.revealViewController()
         
         let cell:MenuCell = tableView.cellForRow(at: indexPath) as! MenuCell
@@ -56,25 +66,6 @@ class MenuViewController: UIViewController, UITableViewDelegate, UITableViewData
             let newFrontController = UINavigationController.init(rootViewController: newViewcontroller)
             
             revealviewcontroller.pushFrontViewController(newFrontController, animated: true)
-            
-        }
-//        if cell.labelMenu.text! == "Message"
-//        {
-//            print("message Tapped")
-//            
-//            let mainstoryboard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-//            let newViewcontroller = mainstoryboard.instantiateViewController(withIdentifier: "MessageViewController") as! MessageViewController
-//            let newFrontController = UINavigationController.init(rootViewController: newViewcontroller)
-//            
-//            revealviewcontroller.pushFrontViewController(newFrontController, animated: true)
-//        }
-        if cell.labelMenu.text! == "Map"
-        {
-            print("Map Tapped")
-        }
-        if cell.labelMenu.text! == "Setting"
-        {
-            print("setting Tapped")
         }
     }
     /*
@@ -88,3 +79,4 @@ class MenuViewController: UIViewController, UITableViewDelegate, UITableViewData
     */
 
 }
+

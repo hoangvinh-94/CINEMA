@@ -86,7 +86,6 @@ class DataFilm{
                     for filmDictonary in array as! [AnyObject] {
                         if let filmDictonary = filmDictonary as? [String: AnyObject]{
                             // Parse the search result
-                            print(filmDictonary)
                             let posterPath = filmDictonary["poster_path"] as? String
                             let overview = filmDictonary["overview"] as? String
                             let title = filmDictonary["title"] as? String
