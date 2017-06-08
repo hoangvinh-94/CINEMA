@@ -10,6 +10,7 @@ import UIKit
 import Foundation
 import Firebase
 import FirebaseDatabase
+import Auk
 
 class HomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource{
     
@@ -20,6 +21,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     var ref: DatabaseReference!
     var refHandler: UInt!
     var prefixImg: String = "https://image.tmdb.org/t/p/w320/"
+    var prefixImgSlideshow: String = "https://image.tmdb.org/t/p/w1400_and_h450_bestv2"
     var queue = OperationQueue()
 
     @IBOutlet var tableView: UITableView!
@@ -28,6 +30,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
 
     @IBOutlet var menuButton: UIBarButtonItem!
     
+    @IBOutlet weak var mainScrollView: UIScrollView!
     class Downloader {
         class func downloadImageWithURL(_ url:String) -> UIImage! {
             let data = try? Data(contentsOf: URL(string: url)!)
@@ -45,17 +48,41 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         ref = Database.database().reference()
         menuButton.target = revealViewController()
         menuButton.action = #selector(SWRevealViewController.revealToggle(_:))
-        db.reloadFilmFromUrlApi(page: 1	, filmType: "popular")
-        
-        
+        //db.reloadFilmFromUrlApi(page: 1	, filmType: "popular")
+
     }
+    func imageResize (image:UIImage, sizeChange:CGSize)-> UIImage{
+        
+        let hasAlpha = true
+        let scale: CGFloat = 0.0 // Use scale factor of main screen
+        
+        UIGraphicsBeginImageContextWithOptions(sizeChange, !hasAlpha, scale)
+        image.draw(in: CGRect(origin: CGPoint.zero, size: sizeChange))
+        
+        let scaledImage = UIGraphicsGetImageFromCurrentImageContext()
+        return scaledImage!
+    }
+    
     
     override func viewWillAppear(_ animated: Bool) {
         loadDataToTableView(type: "popular")
+        
+    }
+    
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        
+        guard let pageIndex = mainScrollView.auk.currentPageIndex else { return }
+        let newScrollViewWidth = size.width // Assuming scroll view occupies 100% of the screen width
+        
+        coordinator.animate(alongsideTransition: { [weak self] _ in
+            self?.mainScrollView.auk.scrollToPage(atIndex: pageIndex, pageWidth: newScrollViewWidth, animated: false)
+            }, completion: nil)
     }
     
     func loadDataToTableView(type: String){
         self.Films = [Film]()
+        let size = CGSize(width: Int(self.mainScrollView.frame.width), height: Int(self.mainScrollView.frame.height))
         refHandler = ref.child("films").observe(.childAdded, with:{ (snapshot) in
             // Get user value
             if let dictionary = snapshot.value as? [String: AnyObject]{
@@ -69,11 +96,44 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                     DispatchQueue.main.async {
                         self.tableView.reloadData()
                         self.tableView.setContentOffset(CGPoint.zero, animated: false)
+                        
+                        
+                        
+                        print("This is slideshow url images: ttb \(self.Films.count) items.")
+                        //myImageView.image! = imageResize(myImageView.image!,sizeChange: size)
+                        
+                            print("This is slideshow url images: \(self.prefixImgSlideshow)\(poster_path)")
+                            self.queue.addOperation { () -> Void in
+                                if poster_path != "" {
+                                    if var img = Downloader.downloadImageWithURL("\(self.prefixImgSlideshow)\(poster_path ?? "https://image.tmdb.org/t/p/w1400_and_h450_bestv2/9EXnebqbb7dOhONLPV9Tg2oh2KD.jpg")") {
+                                        OperationQueue.main.addOperation({
+                                            img = self.imageResize(image: img,sizeChange: size)
+                                            self.mainScrollView.auk.show(image: img)
+                                        })
+                                    }
+                                }
+                                
+                            }
+                        // Scroll images automatically with the interval of 3 seconds
+                        self.mainScrollView.auk.startAutoScroll(delaySeconds: 3)
+                        
+                        // Return the number of pages in the scroll view
+                        print("Number of pages: \(self.mainScrollView.auk.numberOfPages)")
+                        
+                        // Get the index of the current page or nil if there are no pages
+                        print("Number of pages: \(String(describing: self.mainScrollView.auk.currentPageIndex))")
+                        
+                        // Return currently displayed images
+                        print("Number of pages: \(self.mainScrollView.auk.images)")
+                        
+                        // Stop auto-scrolling of the images
+                        // mainScrollView.auk.stopAutoScroll()
+                        
+                        
                     }
                 }else{
                     return
                 }
-                
                 
             }
             
@@ -89,15 +149,15 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     @IBAction func indexChanged(_ sender: Any) {
         switch segmentControl.selectedSegmentIndex{
         case 0:
-            db.reloadFilmFromUrlApi(page: 1	, filmType: "popular")
+           // db.reloadFilmFromUrlApi(page: 1	, filmType: "popular")
             loadDataToTableView(type: "popular")
             break
         case 1:
-            db.reloadFilmFromUrlApi(page: 1	, filmType: "now_playing")
+          //  db.reloadFilmFromUrlApi(page: 1	, filmType: "now_playing")
              loadDataToTableView(type: "now_playing")
             break
         case 2:
-            db.reloadFilmFromUrlApi(page: 1	, filmType: "upcoming")
+         //   db.reloadFilmFromUrlApi(page: 1	, filmType: "upcoming")
              loadDataToTableView(type: "upcoming")
             break
         default: break
@@ -194,6 +254,37 @@ extension HomeViewController: UISearchResultsUpdating{
     
     func updateSearchResults(for searchController: UISearchController) {
         filterContentForSearchText(searchText: searchController.searchBar.text!)
+    }
+    
+}
+extension UIImage {
+    
+    func resize(maxWidthHeight : Double)-> UIImage? {
+        
+        let actualHeight = Double(size.height)
+        let actualWidth = Double(size.width)
+        var maxWidth = 0.0
+        var maxHeight = 0.0
+        
+        if actualWidth > actualHeight {
+            maxWidth = maxWidthHeight
+            let per = (100.0 * maxWidthHeight / actualWidth)
+            maxHeight = (actualHeight * per) / 100.0
+        }else{
+            maxHeight = maxWidthHeight
+            let per = (100.0 * maxWidthHeight / actualHeight)
+            maxWidth = (actualWidth * per) / 100.0
+            maxWidth = actualWidth
+        }
+        
+        let hasAlpha = true
+        let scale: CGFloat = 0.0
+        
+        UIGraphicsBeginImageContextWithOptions(CGSize(width: maxWidth, height: maxHeight), !hasAlpha, scale)
+        self.draw(in: CGRect(origin: .zero, size: CGSize(width: maxWidth, height: maxHeight)))
+        
+        let scaledImage = UIGraphicsGetImageFromCurrentImageContext()
+        return scaledImage
     }
     
 }
