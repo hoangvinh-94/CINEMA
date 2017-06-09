@@ -24,7 +24,7 @@ class DetailViewController: UIViewController {
     @IBOutlet var cinemaLabel: UILabel!
     
     @IBOutlet var overviewLabel: UILabel!
-    var prefixImg: String = "https://image.tmdb.org/t/p/w320/"
+    var prefixImg: String = "https://image.tmdb.org/t/p/w320"
     var queue = OperationQueue()
 
     
@@ -84,16 +84,5 @@ class DetailViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
