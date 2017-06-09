@@ -10,7 +10,8 @@ pod 'Firebase/Core'
 pod ‘Firebase/Database’
 pod ‘Firebase/Auth’
 pod ‘Firebase/Storage’
-
+pod 'moa', '~> 8.0'
+pod 'Auk', '~> 7.0'
   # Pods for CINEMA iOS
 	
   target 'CINEMA iOSTests' do

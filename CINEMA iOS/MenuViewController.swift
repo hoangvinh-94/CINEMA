@@ -9,13 +9,15 @@
 import UIKit
 
 class MenuViewController: UIViewController, UITableViewDelegate, UITableViewDataSource{
-
+    // MARK: - Declaration variables
    var searchController = HomeViewController.searchController
     
     var ManuNameArray: Array = [String]()
     var iconArray: Array = [UIImage]()
     
     @IBOutlet var tableView: UITableView!
+    
+     // MARK: - Override funcs
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -23,7 +25,7 @@ class MenuViewController: UIViewController, UITableViewDelegate, UITableViewData
         //MenuViewController.searchController.dimsBackgroundDuringPresentation = false
         //definesPresentationContext = true
         tableView.tableHeaderView = searchController.searchBar
-        ManuNameArray = ["Home","Phim Sap Chieu","Da Chieu","Setting"]
+        ManuNameArray = ["Home","Phim Sap Chieu","Da Chieu","Change Password"]
         iconArray = [UIImage(named:"home")!,UIImage(named:"message")!,UIImage(named:"map")!,UIImage(named:"setting")!]
         // Do any additional setup after loading the view.
     }
@@ -35,7 +37,7 @@ class MenuViewController: UIViewController, UITableViewDelegate, UITableViewData
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
+     // MARK: - Life cycles
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -63,6 +65,15 @@ class MenuViewController: UIViewController, UITableViewDelegate, UITableViewData
             print("Home Tapped")
             let mainstoryboard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
             let newViewcontroller = mainstoryboard.instantiateViewController(withIdentifier: "HomeViewController") as! HomeViewController
+            let newFrontController = UINavigationController.init(rootViewController: newViewcontroller)
+            
+            revealviewcontroller.pushFrontViewController(newFrontController, animated: true)
+        }
+        if cell.labelMenu.text! == "Change Password"
+        {
+            print("Change Password Tapped")
+            let mainstoryboard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+            let newViewcontroller = mainstoryboard.instantiateViewController(withIdentifier: "ChangePasswordViewController") as! ChangePasswordViewController
             let newFrontController = UINavigationController.init(rootViewController: newViewcontroller)
             
             revealviewcontroller.pushFrontViewController(newFrontController, animated: true)
