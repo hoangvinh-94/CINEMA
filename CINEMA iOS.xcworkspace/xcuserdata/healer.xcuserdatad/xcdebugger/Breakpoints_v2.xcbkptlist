@@ -26,27 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CINEMA iOS/DataFilm.swift"
-            timestampString = "518464642.779098"
+            timestampString = "518644391.450372"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "93"
-            endingLineNumber = "93"
-            landmarkName = "saveDataIntoFireBase(data:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "CINEMA iOS/DataFilm.swift"
-            timestampString = "518464642.779098"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "96"
-            endingLineNumber = "96"
+            startingLineNumber = "78"
+            endingLineNumber = "78"
             landmarkName = "saveDataIntoFireBase(data:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -74,11 +58,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CINEMA iOS/DataFilm.swift"
-            timestampString = "518464642.779098"
+            timestampString = "518644391.450372"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "119"
-            endingLineNumber = "119"
+            startingLineNumber = "101"
+            endingLineNumber = "101"
             landmarkName = "createDataBookFilm()"
             landmarkType = "7">
          </BreakpointContent>
@@ -90,11 +74,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CINEMA iOS/DataFilm.swift"
-            timestampString = "518464642.779098"
+            timestampString = "518644391.450372"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "114"
-            endingLineNumber = "114"
+            startingLineNumber = "96"
+            endingLineNumber = "96"
             landmarkName = "createDataBookFilm()"
             landmarkType = "7">
             <Locations>
@@ -138,11 +122,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CINEMA iOS/DataFilm.swift"
-            timestampString = "518464642.779098"
+            timestampString = "518644391.450372"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "125"
-            endingLineNumber = "125"
+            startingLineNumber = "107"
+            endingLineNumber = "107"
             landmarkName = "createDataBookFilm()"
             landmarkType = "7">
          </BreakpointContent>
@@ -154,11 +138,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CINEMA iOS/DataFilm.swift"
-            timestampString = "518457377.538749"
+            timestampString = "518644391.450372"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "51"
-            endingLineNumber = "51"
+            startingLineNumber = "40"
+            endingLineNumber = "40"
             landmarkName = "reloadFilmFromUrlApi(page:filmType:)"
             landmarkType = "7">
             <Locations>
@@ -209,6 +193,228 @@
             endingLineNumber = "765"
             landmarkName = "-supportedInterfaceOrientations"
             landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CINEMA iOS/HomeViewController.swift"
+            timestampString = "518668348.433929"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "78"
+            endingLineNumber = "78"
+            landmarkName = "loadDataToTableView(type:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CINEMA iOS/HomeViewController.swift"
+            timestampString = "518667347.851762"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "52"
+            endingLineNumber = "52"
+            landmarkName = "viewDidLoad()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CINEMA iOS/HomeViewController.swift"
+            timestampString = "518668348.433929"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "76"
+            endingLineNumber = "76"
+            landmarkName = "loadDataToTableView(type:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "CINEMA_iOS.HomeViewController.(loadDataToTableView (type : Swift.String) -&gt; ()).(closure #1)"
+                  moduleName = "CINEMA iOS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/healer/Documents/IOS%20PROJECT/CINEMA%20iOS/CINEMA%20iOS/HomeViewController.swift"
+                  timestampString = "518654454.324967"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "75"
+                  endingLineNumber = "75"
+                  offsetFromSymbolStart = "6739">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "CINEMA_iOS.HomeViewController.(loadDataToTableView (type : Swift.String) -&gt; ()).(closure #1).(closure #1)"
+                  moduleName = "CINEMA iOS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/healer/Documents/IOS%20PROJECT/CINEMA%20iOS/CINEMA%20iOS/HomeViewController.swift"
+                  timestampString = "518654454.344263"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "75"
+                  endingLineNumber = "75"
+                  offsetFromSymbolStart = "423">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CINEMA iOS/Film.swift"
+            timestampString = "518663257.082172"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "18"
+            endingLineNumber = "18"
+            landmarkName = "Film"
+            landmarkType = "3">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "CINEMA_iOS.Film.init () -&gt; CINEMA_iOS.Film"
+                  moduleName = "CINEMA iOS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/healer/Documents/IOS%20PROJECT/CINEMA%20iOS/CINEMA%20iOS/Film.swift"
+                  timestampString = "518663258.88604"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "18"
+                  endingLineNumber = "18"
+                  offsetFromSymbolStart = "320">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "CINEMA_iOS.Film.init (id : Swift.Int, title : Swift.String, poster : Swift.String, overview : Swift.String, releaseDate : Swift.String, runtime : Swift.Int, genres : Swift.Array&lt;Any&gt;) -&gt; CINEMA_iOS.Film"
+                  moduleName = "CINEMA iOS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/healer/Documents/IOS%20PROJECT/CINEMA%20iOS/CINEMA%20iOS/Film.swift"
+                  timestampString = "518663258.899323"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "18"
+                  endingLineNumber = "18"
+                  offsetFromSymbolStart = "839">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "CINEMA_iOS.Film.(genres in _66FA56E575DE3073192DBBDF2DC71A56).getter : Swift.Optional&lt;Swift.Array&lt;Any&gt;&gt;"
+                  moduleName = "CINEMA iOS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/healer/Documents/IOS%20PROJECT/CINEMA%20iOS/CINEMA%20iOS/Film.swift"
+                  timestampString = "518663258.912547"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "18"
+                  endingLineNumber = "18"
+                  offsetFromSymbolStart = "38">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "CINEMA_iOS.Film.(genres in _66FA56E575DE3073192DBBDF2DC71A56).setter : Swift.Optional&lt;Swift.Array&lt;Any&gt;&gt;"
+                  moduleName = "CINEMA iOS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/healer/Documents/IOS%20PROJECT/CINEMA%20iOS/CINEMA%20iOS/Film.swift"
+                  timestampString = "518663258.926511"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "18"
+                  endingLineNumber = "18"
+                  offsetFromSymbolStart = "72">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CINEMA iOS/DetailViewController.swift"
+            timestampString = "518673390.098085"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "76"
+            endingLineNumber = "76"
+            landmarkName = "viewDidLoad()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CINEMA iOS/DetailViewController.swift"
+            timestampString = "518673390.098085"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "61"
+            endingLineNumber = "61"
+            landmarkName = "viewDidLoad()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "CINEMA_iOS.DetailViewController.(viewDidLoad () -&gt; ()).(closure #1)"
+                  moduleName = "CINEMA iOS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/healer/Documents/IOS%20PROJECT/CINEMA%20iOS/CINEMA%20iOS/DetailViewController.swift"
+                  timestampString = "518670804.634203"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "58"
+                  endingLineNumber = "58"
+                  offsetFromSymbolStart = "1039">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "CINEMA_iOS.DetailViewController.(viewDidLoad () -&gt; ()).(closure #1).(closure #1)"
+                  moduleName = "CINEMA iOS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/healer/Documents/IOS%20PROJECT/CINEMA%20iOS/CINEMA%20iOS/DetailViewController.swift"
+                  timestampString = "518670804.650341"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "58"
+                  endingLineNumber = "58"
+                  offsetFromSymbolStart = "2347">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
