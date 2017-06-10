@@ -10,18 +10,36 @@ import UIKit
 import Firebase
 class BookFilmTableViewController: UITableViewController {
     
-    var Day = [String]()
-    var Time = [String]()
+    var Days = [String]()
+    var Times = [String]()
     var ref: DatabaseReference!
     var refHandler: UInt!
     override func viewDidLoad() {
         super.viewDidLoad()
         
         ref = Database.database().reference()
-        refHandler = ref.child("bookfilm").observe(.childAdded, with:{ (snapshot) in
+        refHandler = ref.child("book1").observe(.childAdded, with:{ (snapshot) in
             // Get user value
-            self.Day.append(String(describing: snapshot))
+            //let idFilm = snapshot.key as? Int
+            //self.Day.append(String(describing: snapshot))
             if let dictionary = snapshot.value as? [String: AnyObject]{
+                let day = dictionary["day"] as? String
+                //let room = dictionary["room"] as? Int
+                //let seats = dictionary["seats"] as? String
+                let times = dictionary["times"] as? [Dictionary<String,Any>]
+                print(times!)
+                for t in times!{
+                    let time = t["time"] as? String
+                    self.Times.append(time!)
+                }
+                //self.Times.append(times?["time"]! as! String)
+                
+                self.Days.append(day!)
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                    self.tableView.setContentOffset(CGPoint.zero, animated: false)
+                }
+                /*
                 if let room1s = dictionary["room1"] as? [String: AnyObject]{
                     //let idFilm = room1s["film"] as? Int
                     if let time1s = room1s["time1"] as? [String: AnyObject]{
@@ -52,12 +70,9 @@ class BookFilmTableViewController: UITableViewController {
                     }
                     
                 }
-                DispatchQueue.main.async {
-                    self.tableView.reloadData()
-                    self.tableView.setContentOffset(CGPoint.zero, animated: false)
-                }
+               
                 
-                
+                */
             }
             
             
@@ -83,12 +98,12 @@ class BookFilmTableViewController: UITableViewController {
     
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return Day.count
+        return Days.count
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return Time.count
+        return Times.count
     }
     
     
@@ -96,13 +111,13 @@ class BookFilmTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "BookFilmCell", for: indexPath)
         
         // Configure the cell...
-        cell.textLabel?.text = Time[indexPath.row]
+        cell.textLabel?.text = Times[indexPath.row]
         
         return cell
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return Day[section]
+        return Days[section]
     }
     /*
      // Override to support conditional editing of the table view.
