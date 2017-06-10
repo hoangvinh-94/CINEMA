@@ -8,7 +8,6 @@
 
 import XCTest
 @testable import CINEMA_iOS
-
 class CINEMA_iOSTests: XCTestCase {
     
     override func setUp() {
