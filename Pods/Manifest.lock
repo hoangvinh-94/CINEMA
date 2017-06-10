@@ -1,4 +1,6 @@
 PODS:
+  - Auk (7.0.1):
+    - moa
   - Firebase (4.0.0):
     - Firebase/Core (= 4.0.0)
   - Firebase/Auth (4.0.0):
@@ -42,15 +44,19 @@ PODS:
     - GoogleToolboxForMac/NSString+URLArguments (= 2.1.1)
   - GoogleToolboxForMac/NSString+URLArguments (2.1.1)
   - GTMSessionFetcher/Core (1.1.10)
+  - moa (8.0.4)
 
 DEPENDENCIES:
+  - Auk (~> 7.0)
   - Firebase
   - Firebase/Auth
   - Firebase/Core
   - Firebase/Database
   - Firebase/Storage
+  - moa (~> 8.0)
 
 SPEC CHECKSUMS:
+  Auk: 6f8c4e93427d0d02641263776dd3b66ae4050903
   Firebase: 284eea779b73fdff309791817da7c68bff8dd572
   FirebaseAnalytics: 6f08e746f7d66f5452931bc2e822b5df9c66b64a
   FirebaseAuth: ebb6abcbabae00fc47446d690c19ce68d8484fde
@@ -60,7 +66,8 @@ SPEC CHECKSUMS:
   FirebaseStorage: 8110a1ed2034c8fbfd83890d2acc9cdbbd99afec
   GoogleToolboxForMac: 8e329f1b599f2512c6b10676d45736bcc2cbbeb0
   GTMSessionFetcher: 30d874b96d0d76028f61fbd122801e3f030d47db
+  moa: 954e2ad962886626d02c3486dd3a7bb5f0052d14
 
-PODFILE CHECKSUM: 7ee52448c1eded63652f005b489294921d9a117c
+PODFILE CHECKSUM: 24a4b1d8dc6ba978fe792d147a1e9c2ba9e0cb2d
 
 COCOAPODS: 1.2.1

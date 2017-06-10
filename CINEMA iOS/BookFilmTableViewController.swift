@@ -8,8 +8,11 @@
 
 import UIKit
 
-class TimeFilmTableViewController: UITableViewController {
+class BookFilmTableViewController: UITableViewController {
 
+    var Day: [String] = ["06/06/2017","06/06/2017","07/06/2017","08/06/2017","09/06/2017","10/06/2017","11/06/2017"]
+    var Time: [String] = ["7:00","9:00","16:00","18:00","20:00","21:30"]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -29,24 +32,27 @@ class TimeFilmTableViewController: UITableViewController {
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 0
+        return Day.count
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 0
+        return Time.count
     }
 
-    /*
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "BookFilmCell", for: indexPath)
 
         // Configure the cell...
+        cell.textLabel?.text = Time[indexPath.row]
 
         return cell
     }
-    */
-
+    
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return Day[section]
+    }
     /*
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {

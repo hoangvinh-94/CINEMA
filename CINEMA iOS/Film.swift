@@ -9,45 +9,53 @@
 import Foundation
 
 class Film: NSObject{
-    private var id: String?
+    
+    private var id: Int?
     private var title: String?
     private var poster: String?
     private var overview: String?
     private var releaseDate: String?
-    private var genres: [Int]?
+    private var genres: [Dictionary<String,Any>]?
+    private var runtime: Int?
     
     
+    override init(){
+        
+    }
     
-    init(title: String, poster: String, overview: String, releaseDate: String) {
+    init(id: Int, title: String, poster: String, overview: String, releaseDate: String, runtime: Int, genres: [Dictionary<String,Any>]) {
+        self.id = id
         self.title = title
         self.poster = poster
         self.overview = overview
         self.releaseDate = releaseDate
+        self.runtime = runtime
+        self.genres = genres
     }
+   
     
-    //init(dictionary: [String: AnyObject]) {
-        //super.init()
-        
-       // self.title = dictionary["title"] as? String
-       // self.poster = dictionary["poster"] as? String
-       // self.overview = dictionary["overview"] as? String
-       // self.releaseDate = dictionary["release_date"] as? String
-   // }
-    
-    func getId() -> String{
-        return id!;
+    func getId() -> Int{
+        return id!
     }
+
+    func getRuntime() -> Int{
+        return runtime!    }
+    
+    func getGenres() -> [Dictionary<String,Any>]{
+        return genres!
+    }
+
     func getTitle() -> String{
-        return title!;
+        return title!
     }
     func getPoster() -> String{
-        return poster!;
+        return poster!
     }
     func getOverview() -> String{
-        return overview!;
+        return overview!
     }
     func getReleaseDate() -> String{
-        return releaseDate!;
+        return releaseDate!
     }
     
 
