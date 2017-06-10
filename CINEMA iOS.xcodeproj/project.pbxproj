@@ -9,8 +9,8 @@
 /* Begin PBXBuildFile section */
 		006869D087227A3B663726BF /* Pods_CINEMA_iOSUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A4A6103FF1A35D31AD0FE85 /* Pods_CINEMA_iOSUITests.framework */; };
 		35F7F23BEDA623DE6415D2AE /* Pods_CINEMA_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ACD0F97FD95CDF992EC443A9 /* Pods_CINEMA_iOS.framework */; };
-		600B60921EEC747E00B306E6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 600B60901EEC747E00B306E6 /* Main.storyboard */; };
-		600B60941EEC76BD00B306E6 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 600B60931EEC76BD00B306E6 /* Reachability.swift */; };
+		600B60981EECAE5600B306E6 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 600B60971EECAE5600B306E6 /* Reachability.swift */; };
+		600B609B1EECAFDF00B306E6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 600B60991EECAFDF00B306E6 /* Main.storyboard */; };
 		603F997D1EDA350E00BE7151 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 603F997C1EDA350E00BE7151 /* AppDelegate.swift */; };
 		603F997F1EDA350E00BE7151 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 603F997E1EDA350E00BE7151 /* HomeViewController.swift */; };
 		603F99841EDA350E00BE7151 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 603F99831EDA350E00BE7151 /* Assets.xcassets */; };
@@ -57,8 +57,8 @@
 		1A4A6103FF1A35D31AD0FE85 /* Pods_CINEMA_iOSUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CINEMA_iOSUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		358AE7392051B48CC47B6BA7 /* Pods-CINEMA iOSUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CINEMA iOSUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CINEMA iOSUITests/Pods-CINEMA iOSUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		596F5CE9635484B73D0055E6 /* Pods_CINEMA_iOSTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CINEMA_iOSTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		600B60911EEC747E00B306E6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = "../../CINEMA-master/CINEMA iOS/Base.lproj/Main.storyboard"; sourceTree = "<group>"; };
-		600B60931EEC76BD00B306E6 /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Reachability.swift; path = "../../CINEMA-master/CINEMA iOS/Reachability.swift"; sourceTree = "<group>"; };
+		600B60971EECAE5600B306E6 /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
+		600B609A1EECAFDF00B306E6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		603F99791EDA350D00BE7151 /* CINEMA iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "CINEMA iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		603F997C1EDA350E00BE7151 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		603F997E1EDA350E00BE7151 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
@@ -169,7 +169,7 @@
 				603F99881EDA350E00BE7151 /* Info.plist */,
 				603F997C1EDA350E00BE7151 /* AppDelegate.swift */,
 				751C46D01EE2FB460007FC3C /* GoogleService-Info.plist */,
-				600B60901EEC747E00B306E6 /* Main.storyboard */,
+				600B60991EECAFDF00B306E6 /* Main.storyboard */,
 				603F99831EDA350E00BE7151 /* Assets.xcassets */,
 				603F99851EDA350E00BE7151 /* LaunchScreen.storyboard */,
 			);
@@ -219,7 +219,7 @@
 		603F99AE1EDA367800BE7151 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				600B60931EEC76BD00B306E6 /* Reachability.swift */,
+				600B60971EECAE5600B306E6 /* Reachability.swift */,
 				60A2B5D91EE112C100857EAC /* DataFilm.swift */,
 			);
 			name = Controller;
@@ -364,7 +364,7 @@
 				603F99871EDA350E00BE7151 /* LaunchScreen.storyboard in Resources */,
 				603F99841EDA350E00BE7151 /* Assets.xcassets in Resources */,
 				751C46D11EE2FB460007FC3C /* GoogleService-Info.plist in Resources */,
-				600B60921EEC747E00B306E6 /* Main.storyboard in Resources */,
+				600B609B1EECAFDF00B306E6 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -541,7 +541,7 @@
 				60608AFA1EE7A8060034FA3E /* SeatCollectionViewController.swift in Sources */,
 				60A2B5DE1EE152C100857EAC /* FilmTableViewCell.swift in Sources */,
 				75D0B7F61EE7F87800A3A5BF /* ChangePasswordViewController.swift in Sources */,
-				600B60941EEC76BD00B306E6 /* Reachability.swift in Sources */,
+				600B60981EECAE5600B306E6 /* Reachability.swift in Sources */,
 				603F997D1EDA350E00BE7151 /* AppDelegate.swift in Sources */,
 				7525D8521EE41A6C00FF6FA5 /* MenuCell.swift in Sources */,
 				60A2B5DC1EE1143B00857EAC /* Film.swift in Sources */,
@@ -580,10 +580,10 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		600B60901EEC747E00B306E6 /* Main.storyboard */ = {
+		600B60991EECAFDF00B306E6 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				600B60911EEC747E00B306E6 /* Base */,
+				600B609A1EECAFDF00B306E6 /* Base */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
