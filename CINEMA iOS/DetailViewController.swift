@@ -79,6 +79,14 @@ class DetailViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
 
+    @IBAction func bookFilm(_ sender: Any) {
+        
+        let id = film.getId()
+        let book = storyboard?.instantiateViewController(withIdentifier: "BFILM") as! BookFilmTableViewController
+        book.idFilmCurrent = id
+        //print(book.idFilmCurrent!)
+        navigationController?.pushViewController(book, animated: true)
+    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

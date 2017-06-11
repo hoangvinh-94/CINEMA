@@ -11,71 +11,23 @@ import Firebase
 
 private let reuseIdentifier = "Cell"
 
+
 class SeatCollectionViewController: UICollectionViewController {
     
     var ref: DatabaseReference!
     var refHandler: UInt!
-    var Seats = [String: [Int]]()
+    var Seats = [String]()
+    var Seat : String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        ref = Database.database().reference()
-        refHandler = ref.child("bookfilm").observe(.childAdded, with:{ (snapshot) in
-            // Get user value
-            /*
-            if let dictionary = snapshot.value as? [String: AnyObject]{
-                if let room1s = dictionary["room1"] as? [String: AnyObject]{
-                    let idFilm = room1s["film"] as? Int
-                    if let time1s = room1s["time1"] as? [String: AnyObject]{
-                        let a = time1s["seat"] as? String
-                        let A = (a?.components(separatedBy: "_"))!
-                    }
-                    if let time2s = room1s["time2"] as? [String: AnyObject]{
-                        //let time1 = time1s["id"] as? String
-                        self.Seats = time1s["seat"] as? String
-                    }
-                    
-                    if let time3s = room1s["time3"] as? [String: AnyObject]{
-                        self.Seats = time1s["seat"] as? String
-                    }
-                    
-                }
-                if let room2s = dictionary["room2"] as? [String: AnyObject]{
-                    let idFilm = room2s["film"] as? Int
-                    if let time1s = room2s["time1"] as? [String: AnyObject]{
-                        self.Seats = time1s["seat"] as? String
-                    }
-                    if let time2s = room2s["time2"] as? [String: AnyObject]{
-                        //let time1 = time1s["id"] as? String
-                        self.Seats = time1s["seat"] as? String
-                    }
-                    
-                    if let time3s = room2s["time3"] as? [String: AnyObject]{
-                        self.Seats = time1s["seat"] as? String
-                    }
-                    
-                }
-                DispatchQueue.main.async {
-                    self.tableView.reloadData()
-                    self.tableView.setContentOffset(CGPoint.zero, animated: false)
-                }
-                
- 
-            }
-            */
-            
-        })
-        
-        
-        
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-        
+        print(Seat!)
+        Seats = (Seat?.components(separatedBy: "_"))!
+        collectionView?.reloadData()
+
         // Register cell classes
         self.collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
-        
-        // Do any additional setup after loading the view.
+                // Do any additional setup after loading the view.
     }
     
     override func didReceiveMemoryWarning() {
@@ -83,17 +35,6 @@ class SeatCollectionViewController: UICollectionViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using [segue destinationViewController].
-     // Pass the selected object to the new view controller.
-     }
-     */
-    
-    // MARK: UICollectionViewDataSource
     
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
         // #warning Incomplete implementation, return the number of sections
@@ -103,13 +44,23 @@ class SeatCollectionViewController: UICollectionViewController {
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of items
-        return 25
+        return Seats.count
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier:"SeatCell", for: indexPath) as! SeatCollectionViewCell
+        let c = Int(Seats[indexPath.row])
+        
+        if c == 0 {
+            cell.backgroundColor = UIColor.green
+        }
+        else{
+            cell.backgroundColor = UIColor.red
+        }
+        
         var i = 1
-        while i <= 25 {
+        while i <= Seats.count {
             cell.numberOfSeat.text = "0"+String(indexPath.row + 1)
             i = i + 1
         }
@@ -117,6 +68,27 @@ class SeatCollectionViewController: UICollectionViewController {
         // Configure the cell
         
         return cell
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+         var selectedCell: UICollectionViewCell!
+        selectedCell = collectionView.cellForItem(at: indexPath)!
+        let c = Int(Seats[indexPath.row])
+        collectionView.allowsSelection = false
+        if(c == 0){
+            selectedCell.contentView.backgroundColor = UIColor.red
+            collectionView.allowsSelection = true
+            collectionView.allowsMultipleSelection = true
+            Seats[indexPath.row] = String(1)
+        }
+        else{
+            selectedCell.contentView.backgroundColor = UIColor.green
+            collectionView.allowsSelection = true
+            collectionView.allowsMultipleSelection = true
+            Seats[indexPath.row] = String(0)
+        }
+        
+        
     }
     
     

@@ -12,81 +12,46 @@ class BookFilmTableViewController: UITableViewController {
     
     var Days = [String]()
     var Times = [String]()
+    var Rooms = [String]()
     var ref: DatabaseReference!
     var refHandler: UInt!
+    var idFilmCurrent: Int?
+    var bookFilm = [Book]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         ref = Database.database().reference()
         refHandler = ref.child("book1").observe(.childAdded, with:{ (snapshot) in
-            // Get user value
-            //let idFilm = snapshot.key as? Int
-            //self.Day.append(String(describing: snapshot))
+            
+            // Get id film
+            let idFilm = Int(snapshot.key)
+            if idFilm == self.idFilmCurrent{
             if let dictionary = snapshot.value as? [String: AnyObject]{
                 let day = dictionary["day"] as? String
                 //let room = dictionary["room"] as? Int
-                //let seats = dictionary["seats"] as? String
+                let seats = "1_0_1_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0"
                 let times = dictionary["times"] as? [Dictionary<String,Any>]
                 print(times!)
                 for t in times!{
                     let time = t["time"] as? String
                     self.Times.append(time!)
                 }
-                //self.Times.append(times?["time"]! as! String)
-                
+            
                 self.Days.append(day!)
+                self.bookFilm.append(Book(id: idFilm!, days: self.Days, rooms: self.Rooms, times: self.Times, seats: seats))
                 DispatchQueue.main.async {
                     self.tableView.reloadData()
                     self.tableView.setContentOffset(CGPoint.zero, animated: false)
                 }
-                /*
-                if let room1s = dictionary["room1"] as? [String: AnyObject]{
-                    //let idFilm = room1s["film"] as? Int
-                    if let time1s = room1s["time1"] as? [String: AnyObject]{
-                        self.Time.append((time1s["id"] as? String)!)
-                    }
-                    if let time2s = room1s["time2"] as? [String: AnyObject]{
-                        //let time1 = time1s["id"] as? String
-                        self.Time.append((time2s["id"] as? String)!)
-                    }
-                    
-                    if let time3s = room1s["time3"] as? [String: AnyObject]{
-                        self.Time.append((time3s["id"] as? String)!)
-                    }
-                    
-                }
-                if let room2s = dictionary["room2"] as? [String: AnyObject]{
-                    //let idFilm = room2s["film"] as? Int
-                    if let time1s = room2s["time1"] as? [String: AnyObject]{
-                        self.Time.append((time1s["id"] as? String)!)
-                    }
-                    if let time2s = room2s["time2"] as? [String: AnyObject]{
-                        //let time1 = time1s["id"] as? String
-                        self.Time.append((time2s["id"] as? String)!)
-                    }
-                    
-                    if let time3s = room2s["time3"] as? [String: AnyObject]{
-                        self.Time.append((time3s["id"] as? String)!)
-                    }
-                    
-                }
-               
-                
-                */
             }
+            else{
+                return
+                }
+        }
             
             
         })
         
-        
-        
-        
-        
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-        
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
     
     override func didReceiveMemoryWarning() {
@@ -98,12 +63,12 @@ class BookFilmTableViewController: UITableViewController {
     
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return Days.count
+        return bookFilm.count
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return Times.count
+        return bookFilm[section].getTimes().count
     }
     
     
@@ -118,6 +83,14 @@ class BookFilmTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return Days[section]
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let BSeat = storyboard?.instantiateViewController(withIdentifier: "BSEAT") as! SeatCollectionViewController
+        BSeat.Seat = bookFilm[indexPath.row].getSeats()
+        //print(bookFilm[indexPath.row].getSeats())
+        navigationController?.pushViewController(BSeat, animated: true)
+
     }
     /*
      // Override to support conditional editing of the table view.
