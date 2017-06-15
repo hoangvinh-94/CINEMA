@@ -266,17 +266,8 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
 extension HomeViewController : UISearchBarDelegate{
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         if(!(searchBar.text?.isEmpty)!){
-            /*let revealviewcontroller:SWRevealViewController = self.revealViewController()
-             
-             let mainstoryboard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-             let newViewcontroller = mainstoryboard.instantiateViewController(withIdentifier: "HomeViewController") as! HomeViewController
-             let newFrontController = UINavigationController.init(rootViewController: newViewcontroller)
-             revealviewcontroller.pushFrontViewController(newFrontController, animated: true)*/
             tableView?.reloadData()
             self.revealViewController().revealToggle(animated: true)
-            
-            
-            
         }
     }
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {

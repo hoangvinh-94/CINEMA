@@ -20,13 +20,10 @@ class MenuViewController: UIViewController, UITableViewDelegate, UITableViewData
      // MARK: - Override funcs
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        //MenuViewController.searchController.searchResultsUpdater = self as? //UISearchResultsUpdating
-        //MenuViewController.searchController.dimsBackgroundDuringPresentation = false
-        //definesPresentationContext = true
+         
         tableView.tableHeaderView = searchController.searchBar
-        ManuNameArray = ["Home","Phim Sap Chieu","Da Chieu","Change Password"]
-        iconArray = [UIImage(named:"home")!,UIImage(named:"message")!,UIImage(named:"map")!,UIImage(named:"setting")!]
+        ManuNameArray = ["Home","Phim Sắp Chiếu","Phim Đã Chiếu","Phim Đang Chiếu","Change Password"]
+        iconArray = [UIImage(named:"home")!,UIImage(named:"message")!,UIImage(named:"message")!,UIImage(named:"map")!,UIImage(named:"setting")!]
         // Do any additional setup after loading the view.
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -78,16 +75,35 @@ class MenuViewController: UIViewController, UITableViewDelegate, UITableViewData
             
             revealviewcontroller.pushFrontViewController(newFrontController, animated: true)
         }
+        if cell.labelMenu.text! == "Phim Đã Chiếu"
+        {
+            let mainstoryboard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+            let PDC = mainstoryboard.instantiateViewController(withIdentifier: "PDC") as! FilmTypeTableViewController
+            PDC.typeFilm = 0
+            
+            let newFrontController = UINavigationController.init(rootViewController: PDC)
+            revealviewcontroller.pushFrontViewController(newFrontController, animated: true)
+            
+        }
+        if cell.labelMenu.text! == "Phim Đang Chiếu"
+        {
+            let mainstoryboard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+            let PDC = mainstoryboard.instantiateViewController(withIdentifier: "PDC") as! FilmTypeTableViewController
+            PDC.typeFilm = 1
+            
+            let newFrontController = UINavigationController.init(rootViewController: PDC)
+            revealviewcontroller.pushFrontViewController(newFrontController, animated: true)
+        }
+        if cell.labelMenu.text! == "Phim Sắp Chiếu"
+        {
+            let mainstoryboard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+            let PDC = mainstoryboard.instantiateViewController(withIdentifier: "PDC") as! FilmTypeTableViewController
+            PDC.typeFilm = 2
+            
+            let newFrontController = UINavigationController.init(rootViewController: PDC)
+            revealviewcontroller.pushFrontViewController(newFrontController, animated: true)
+        }
     }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
 
