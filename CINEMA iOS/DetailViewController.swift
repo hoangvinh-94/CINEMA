@@ -44,7 +44,6 @@ class DetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         queue.addOperation { () -> Void in
             if self.film.getPoster() != "" {
                 if let img = Downloader.downloadImageWithURL("\(self.prefixImg)\(self.film.getPoster())") {
@@ -53,7 +52,7 @@ class DetailViewController: UIViewController {
                         self.titleLabel.text = self.film.getTitle().uppercased()
                         self.releaseDateLabel.text = self.film.getReleaseDate()
                         self.runtimeLabel.text = String(self.film.getRuntime()) + " minutes"
-                        self.overviewLabel.text = self.film.getOverview()
+                        //self.overviewLabel.text = self.film.getOverview()
                         let count = self.film.getGenres().count
                         var c = 0
                         for genre in self.film.getGenres(){
@@ -82,6 +81,7 @@ class DetailViewController: UIViewController {
     @IBAction func bookFilm(_ sender: Any) {
         
         let id = film.getId()
+        let title = film.getTitle()
         let book = storyboard?.instantiateViewController(withIdentifier: "BFILM") as! BookFilmTableViewController
         book.idFilmCurrent = id
         print("Phim hien tai \(book.idFilmCurrent!)")
