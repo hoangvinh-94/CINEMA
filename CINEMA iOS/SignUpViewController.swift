@@ -17,11 +17,14 @@ class SignUpViewController: UIViewController {
     
     @IBOutlet weak var passwordTextField: UITextField!
     
+    @IBOutlet weak var menuButton: UIBarButtonItem!
     @IBOutlet weak var confirmPasswordTextField: UITextField!
     // MARK: - Override funcs
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        menuButton.target = revealViewController()
+        menuButton.action = #selector(SWRevealViewController.revealToggle(_:))
         // Do any additional setup after loading the view.
     }
     

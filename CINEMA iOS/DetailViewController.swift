@@ -84,7 +84,7 @@ class DetailViewController: UIViewController {
         let id = film.getId()
         let book = storyboard?.instantiateViewController(withIdentifier: "BFILM") as! BookFilmTableViewController
         book.idFilmCurrent = id
-        //print(book.idFilmCurrent!)
+        print("Phim hien tai \(book.idFilmCurrent!)")
         navigationController?.pushViewController(book, animated: true)
     }
     

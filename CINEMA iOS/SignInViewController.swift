@@ -15,9 +15,13 @@ class SignInViewController: UIViewController {
     
     @IBOutlet weak var passwordTextField: UITextField!
     
+    @IBOutlet weak var menuButton: UIBarButtonItem!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        menuButton.target = revealViewController()
+        menuButton.action = #selector(SWRevealViewController.revealToggle(_:))
         
         // Do any additional setup after loading the view.
     }

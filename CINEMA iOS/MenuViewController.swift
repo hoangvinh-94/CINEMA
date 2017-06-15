@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 class MenuViewController: UIViewController, UITableViewDelegate, UITableViewDataSource{
     // MARK: - Declaration variables
@@ -22,8 +23,15 @@ class MenuViewController: UIViewController, UITableViewDelegate, UITableViewData
         super.viewDidLoad()
          
         tableView.tableHeaderView = searchController.searchBar
-        ManuNameArray = ["Home","Phim Sắp Chiếu","Phim Đã Chiếu","Phim Đang Chiếu","Change Password"]
-        iconArray = [UIImage(named:"home")!,UIImage(named:"message")!,UIImage(named:"message")!,UIImage(named:"map")!,UIImage(named:"setting")!]
+        ManuNameArray = ["Home","Phim Sắp Chiếu","Phim Đã Chiếu","Phim Đang Chiếu", "Lich chieu hom nay"]
+        iconArray = [UIImage(named:"home")!,UIImage(named:"message")!,UIImage(named:"message")!,UIImage(named:"map")!, UIImage(named:"schedule")!]
+        
+        if Auth.auth().currentUser?.uid != nil {
+            ManuNameArray.append("Change Password")
+            iconArray.append(UIImage(named:"setting")!)
+            ManuNameArray.append("Log out")
+            iconArray.append(UIImage(named:"setting")!)
+        }
         // Do any additional setup after loading the view.
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -101,6 +109,37 @@ class MenuViewController: UIViewController, UITableViewDelegate, UITableViewData
             PDC.typeFilm = 2
             
             let newFrontController = UINavigationController.init(rootViewController: PDC)
+            revealviewcontroller.pushFrontViewController(newFrontController, animated: true)
+        }
+        if cell.labelMenu.text! == "Lich chieu hom nay"
+        {
+            print("Change Password Tapped")
+            let mainstoryboard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+            let newViewcontroller = mainstoryboard.instantiateViewController(withIdentifier: "ScheduleViewController") as! ScheduleViewController
+            let newFrontController = UINavigationController.init(rootViewController: newViewcontroller)
+            
+            revealviewcontroller.pushFrontViewController(newFrontController, animated: true)
+        }
+        if cell.labelMenu.text! == "Log out"
+        {
+            print("Log out Tapped")
+            do {
+                try Auth.auth().signOut()
+            }
+            catch let error {
+                print(error)
+            }
+            
+            ManuNameArray.remove(at: 5)
+            iconArray.remove(at: 5)
+            ManuNameArray.remove(at: 5)
+            iconArray.remove(at: 5)
+            
+            tableView.reloadData()
+            let mainstoryboard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+            let newViewcontroller = mainstoryboard.instantiateViewController(withIdentifier: "HomeViewController") as! HomeViewController
+            let newFrontController = UINavigationController.init(rootViewController: newViewcontroller)
+            
             revealviewcontroller.pushFrontViewController(newFrontController, animated: true)
         }
     }

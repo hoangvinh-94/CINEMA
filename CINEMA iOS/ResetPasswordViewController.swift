@@ -12,10 +12,13 @@ import Firebase
 class ResetPasswordViewController: UIViewController {
     // MARK: - IBOutlet
     @IBOutlet weak var emailTextField: UITextField!
+    @IBOutlet weak var menuButton: UIBarButtonItem!
      // MARK: - Override func
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        menuButton.target = revealViewController()
+        menuButton.action = #selector(SWRevealViewController.revealToggle(_:))
+
         // Do any additional setup after loading the view.
     }
     

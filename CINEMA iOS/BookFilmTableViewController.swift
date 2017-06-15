@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+
 class BookFilmTableViewController: UITableViewController {
     
    
@@ -108,8 +109,15 @@ class BookFilmTableViewController: UITableViewController {
         let idTime = indexPath.row
         BSeat.idDay = idDay
         BSeat.idTime = idTime
-        navigationController?.pushViewController(BSeat, animated: true)
-
+        if Auth.auth().currentUser?.uid == nil {
+            print("==nil")
+            let Login = storyboard?.instantiateViewController(withIdentifier: "SignInViewController") as! SignInViewController
+            navigationController?.pushViewController(Login, animated: true)
+        }
+        else {
+            print("!=nil \(String(describing: Auth.auth().currentUser?.uid))")
+            navigationController?.pushViewController(BSeat, animated: true)
+        }
     }
     
 }

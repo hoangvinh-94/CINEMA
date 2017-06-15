@@ -10,10 +10,11 @@ import UIKit
 
 class ScheduleCell: UITableViewCell {
     
-    @IBOutlet weak var titleLabel: UIView!
+    @IBOutlet weak var titleLabel: UILabel!
     
+    @IBOutlet weak var posterImage: UIImageView!
     
-    @IBOutlet weak var dateReleaseLabel: UILabel!
+    @IBOutlet weak var genreLabel: UILabel!
     
     @IBOutlet weak var timeLabel: UILabel!
 
