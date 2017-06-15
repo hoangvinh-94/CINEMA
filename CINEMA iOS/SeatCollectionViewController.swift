@@ -22,6 +22,10 @@ class SeatCollectionViewController: UICollectionViewController {
     var idFilm : Int?
     var idDay: Int?
     var idTime: Int?
+    var day: String?
+    var room: Int?
+    var time: String?
+    var titleFilm: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,8 +49,10 @@ class SeatCollectionViewController: UICollectionViewController {
         idRef1.queryOrdered(byChild: "seats").observe(.value, with: {snapshot in
             if let s = snapshot.value! as? [String: Any] {
                 let seat = s["seats"] as? String
+                self.time = s["time"] as? String
                 self.Seat = seat!
                 self.Seats = (self.Seat?.components(separatedBy: "_"))!
+                self.userSeat = (self.Seat?.components(separatedBy: "_"))!
             }
             
             DispatchQueue.main.async {
@@ -112,23 +118,56 @@ class SeatCollectionViewController: UICollectionViewController {
             collectionView.allowsSelection = true
             collectionView.allowsMultipleSelection = true
             Seats[indexPath.row] = String(indexPath.row +  1)
-            //userSeat[indexPath.row] = String(1)
         }
         else{
             collectionView.allowsSelection = true
             collectionView.allowsMultipleSelection = true
             selectedCell.contentView.backgroundColor = UIColor.green
             Seats[indexPath.row] = String(0)
-            //userSeat[indexPath.row] = String(0)
         }
         
         
     }
     @IBAction func saveSeat(_ sender: Any) {
         let seatString = Seats.joined(separator: "_")
-        let idRef = ref.child("bookfilm").child(String(idFilm!)).child("day").child(String(idDay!)).child("times").child(String(idTime!))
-        idRef.updateChildValues(["seats": seatString])
-        print(seatString)
+        if(seatString != self.Seat){
+          
+            let filter = Seats.filter{!userSeat.contains($0)}
+            print(filter)
+            let userSeatBooked = filter.joined(separator: ",")
+            do{
+                
+                let idRef = ref.child("bookfilm").child(String(idFilm!)).child("day").child(String(self.idDay!)).child("times").child(String(idTime!))
+                idRef.updateChildValues(["seats": seatString])
+                print(seatString)
+                //Tells the user that there is an error and then gets firebase to tell them the error
+                // create the alert
+                let alert = UIAlertController(title: "Succesful", message: "Would you like to my BookFilm information?", preferredStyle: UIAlertControllerStyle.alert)
+                
+                // add the actions (buttons)
+                alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: { action in
+                    let infBook = self.storyboard?.instantiateViewController(withIdentifier: "BookInformation") as! InformationBookViewController
+                    infBook.titleFilm = self.titleFilm
+                    infBook.day = self.day
+                    infBook.time = self.time
+                    infBook.room = self.room
+                    infBook.seat = userSeatBooked
+                    self.navigationController?.pushViewController(infBook, animated: true)
+                    
+                }))
+                alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: nil))
+                
+                // show the alert
+                self.present(alert, animated: true, completion: nil)
+            }catch
+            {
+                print(error.localizedDescription)
+            }
+
+        }
+        
+        
+       
     }
     
     

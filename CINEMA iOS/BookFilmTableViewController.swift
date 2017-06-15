@@ -14,6 +14,7 @@ class BookFilmTableViewController: UITableViewController {
     var ref: DatabaseReference!
     var refHandler: UInt!
     var idFilmCurrent: Int?
+    var titleFilm: String?
     var bookFilm = [Book]()
     
     override func viewDidLoad() {
@@ -35,15 +36,17 @@ class BookFilmTableViewController: UITableViewController {
                     for d in days!{
                         let day = d["day"] as? String
                         var Times = [String]()
-                        var Rooms = [String]()
+                        var Rooms = [Int]()
                         var Seats = [String]()
                         let times = (d["times"] as? [Dictionary<String,Any>])!
                         
                         for t in times{
                             let time = t["time"] as? String
                             let seat = t["seats"] as? String
+                            let room = t["room"] as? Int
                             Times.append(time!)
                             Seats.append(seat!)
+                            Rooms.append(room!)
                             
                         }
                         
@@ -108,6 +111,9 @@ class BookFilmTableViewController: UITableViewController {
         let idTime = indexPath.row
         BSeat.idDay = idDay
         BSeat.idTime = idTime
+        BSeat.titleFilm = self.titleFilm
+        BSeat.day = bookFilm[indexPath.section].getDays()
+        BSeat.room = bookFilm[indexPath.section].getRooms()[indexPath.row]
         navigationController?.pushViewController(BSeat, animated: true)
 
     }

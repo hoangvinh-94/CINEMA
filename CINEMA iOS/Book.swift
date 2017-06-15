@@ -12,12 +12,12 @@ class Book{
     
     private var idFilm: Int?
     private var Day: String?
-    private var Rooms: [String]?
+    private var Rooms: [Int]?
     private var Times: [String]?
     private var Seats: [String]?
     
 
-    init(id: Int, day: String, rooms: [String], times: [String], seats: [String]){
+    init(id: Int, day: String, rooms: [Int], times: [String], seats: [String]){
         self.idFilm = id
         self.Day = day
         self.Rooms = rooms
@@ -27,6 +27,10 @@ class Book{
     
     func getIdFilm() -> Int{
         return idFilm!
+    }
+    
+    func getRooms() -> [Int]{
+        return Rooms!
     }
     
     func getTimes() -> [String]{
