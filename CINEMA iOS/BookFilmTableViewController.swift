@@ -19,6 +19,11 @@ class BookFilmTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         ref = Database.database().reference()
+        loadBookFilm()
+        
+    }
+    
+    func loadBookFilm(){
         refHandler = ref.child("bookfilm").observe(.childAdded, with:{ (snapshot) in
             // Get id film
             let idFilm = Int(snapshot.key)
@@ -26,27 +31,27 @@ class BookFilmTableViewController: UITableViewController {
                 if let dictionary = snapshot.value as? [String: AnyObject]{
                     let days = dictionary["day"] as? [Dictionary<String,Any>]
                     //var room: Int?
-                   
+                    
                     for d in days!{
                         let day = d["day"] as? String
                         var Times = [String]()
                         var Rooms = [String]()
                         var Seats = [String]()
                         let times = (d["times"] as? [Dictionary<String,Any>])!
-                       
+                        
                         for t in times{
                             let time = t["time"] as? String
                             let seat = t["seats"] as? String
                             Times.append(time!)
                             Seats.append(seat!)
-
+                            
                         }
-                
+                        
                         self.bookFilm.append(Book(id: idFilm!, day: day!, rooms: Rooms, times: Times, seats: Seats))
-                       
+                        
                     }
-                   
-
+                    
+                    
                     DispatchQueue.main.async {
                         self.tableView.reloadData()
                         self.tableView.setContentOffset(CGPoint.zero, animated: false)
@@ -57,11 +62,11 @@ class BookFilmTableViewController: UITableViewController {
             else{
                 return
             }
-        
+            
             
         })
-        
     }
+    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -97,7 +102,7 @@ class BookFilmTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         let BSeat = storyboard?.instantiateViewController(withIdentifier: "BSEAT") as! SeatCollectionViewController
-        BSeat.Seat = bookFilm[indexPath.section].getSeats()[indexPath.row]
+       // BSeat.Seat = bookFilm[indexPath.section].getSeats()[indexPath.row]
         BSeat.idFilm = idFilmCurrent
         let idDay = indexPath.section
         let idTime = indexPath.row

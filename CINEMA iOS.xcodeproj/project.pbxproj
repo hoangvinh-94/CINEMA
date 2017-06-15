@@ -28,6 +28,8 @@
 		60A2B5DA1EE112C100857EAC /* DataFilm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60A2B5D91EE112C100857EAC /* DataFilm.swift */; };
 		60A2B5DC1EE1143B00857EAC /* Film.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60A2B5DB1EE1143B00857EAC /* Film.swift */; };
 		60A2B5DE1EE152C100857EAC /* FilmTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60A2B5DD1EE152C100857EAC /* FilmTableViewCell.swift */; };
+		60E10ABF1EF1E76100A34628 /* FilmTypeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60E10ABE1EF1E76100A34628 /* FilmTypeTableViewCell.swift */; };
+		60E10AC11EF1E7B000A34628 /* FilmTypeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60E10AC01EF1E7B000A34628 /* FilmTypeTableViewController.swift */; };
 		751C46D11EE2FB460007FC3C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 751C46D01EE2FB460007FC3C /* GoogleService-Info.plist */; };
 		7525D84F1EE4197300FF6FA5 /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7525D84D1EE4197300FF6FA5 /* SWRevealViewController.m */; };
 		7525D8521EE41A6C00FF6FA5 /* MenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7525D8501EE41A6C00FF6FA5 /* MenuCell.swift */; };
@@ -84,6 +86,8 @@
 		60A2B5D91EE112C100857EAC /* DataFilm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataFilm.swift; sourceTree = "<group>"; };
 		60A2B5DB1EE1143B00857EAC /* Film.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Film.swift; sourceTree = "<group>"; };
 		60A2B5DD1EE152C100857EAC /* FilmTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilmTableViewCell.swift; sourceTree = "<group>"; };
+		60E10ABE1EF1E76100A34628 /* FilmTypeTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilmTypeTableViewCell.swift; sourceTree = "<group>"; };
+		60E10AC01EF1E7B000A34628 /* FilmTypeTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilmTypeTableViewController.swift; sourceTree = "<group>"; };
 		71DC90CFAD60B88AAC48A138 /* Pods-CINEMA iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CINEMA iOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-CINEMA iOS/Pods-CINEMA iOS.release.xcconfig"; sourceTree = "<group>"; };
 		751C46D01EE2FB460007FC3C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		7525D84C1EE4197100FF6FA5 /* CINEMA iOS-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CINEMA iOS-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -201,6 +205,8 @@
 		603F99AD1EDA366E00BE7151 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				60E10AC01EF1E7B000A34628 /* FilmTypeTableViewController.swift */,
+				60E10ABE1EF1E76100A34628 /* FilmTypeTableViewCell.swift */,
 				60608AFD1EE7B5540034FA3E /* DetailViewController.swift */,
 				60608AFB1EE7A84E0034FA3E /* SeatCollectionViewCell.swift */,
 				60608AF91EE7A8060034FA3E /* SeatCollectionViewController.swift */,
@@ -535,6 +541,7 @@
 			files = (
 				7525D84F1EE4197300FF6FA5 /* SWRevealViewController.m in Sources */,
 				60A2B5DA1EE112C100857EAC /* DataFilm.swift in Sources */,
+				60E10ABF1EF1E76100A34628 /* FilmTypeTableViewCell.swift in Sources */,
 				605804A41EE4A0FB00E7BF53 /* BookFilmTableViewController.swift in Sources */,
 				75D0B7F41EE7F6D200A3A5BF /* ResetPasswordViewController.swift in Sources */,
 				603F997F1EDA350E00BE7151 /* HomeViewController.swift in Sources */,
@@ -549,6 +556,7 @@
 				60A2B5DE1EE152C100857EAC /* FilmTableViewCell.swift in Sources */,
 				755CBE171EF19F8000CAD1FC /* ScheduleCell.swift in Sources */,
 				75D0B7F61EE7F87800A3A5BF /* ChangePasswordViewController.swift in Sources */,
+				60E10AC11EF1E7B000A34628 /* FilmTypeTableViewController.swift in Sources */,
 				600B60981EECAE5600B306E6 /* Reachability.swift in Sources */,
 				603F997D1EDA350E00BE7151 /* AppDelegate.swift in Sources */,
 				7525D8521EE41A6C00FF6FA5 /* MenuCell.swift in Sources */,

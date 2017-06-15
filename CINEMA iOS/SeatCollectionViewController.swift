@@ -25,15 +25,37 @@ class SeatCollectionViewController: UICollectionViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print(Seat!)
-        Seats = (Seat?.components(separatedBy: "_"))!
         
+        ref = Database.database().reference()
+        loadSeat()
         
-        collectionView?.reloadData()
-
+       
         // Register cell classes
         self.collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
                 // Do any additional setup after loading the view.
+    }
+    
+    override func viewWillAppear(_ animated: Bool)
+        {
+    }
+    
+    func loadSeat(){
+        let idRef1 = ref.child("bookfilm").child(String(idFilm!)).child("day").child(String(idDay!)).child("times").child(String(idTime!))
+        
+        idRef1.queryOrdered(byChild: "seats").observe(.value, with: {snapshot in
+            if let s = snapshot.value! as? [String: Any] {
+                let seat = s["seats"] as? String
+                self.Seat = seat!
+                self.Seats = (self.Seat?.components(separatedBy: "_"))!
+            }
+            
+            DispatchQueue.main.async {
+                self.collectionView?.reloadData()
+                self.collectionView?.setContentOffset(CGPoint.zero, animated: false)
+            }
+            
+        })
+
     }
     
     override func didReceiveMemoryWarning() {
@@ -104,7 +126,6 @@ class SeatCollectionViewController: UICollectionViewController {
     }
     @IBAction func saveSeat(_ sender: Any) {
         let seatString = Seats.joined(separator: "_")
-        ref = Database.database().reference()
         let idRef = ref.child("bookfilm").child(String(idFilm!)).child("day").child(String(idDay!)).child("times").child(String(idTime!))
         idRef.updateChildValues(["seats": seatString])
         print(seatString)
