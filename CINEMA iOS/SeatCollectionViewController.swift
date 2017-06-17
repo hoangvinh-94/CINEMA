@@ -40,6 +40,7 @@ class SeatCollectionViewController: UICollectionViewController {
     
     override func viewWillAppear(_ animated: Bool)
         {
+            
     }
     
     func loadSeat(){
@@ -51,7 +52,18 @@ class SeatCollectionViewController: UICollectionViewController {
                 self.time = s["time"] as? String
                 self.Seat = seat!
                 self.Seats = (self.Seat?.components(separatedBy: "_"))!
+                
                 self.userSeat = (self.Seat?.components(separatedBy: "_"))!
+            }
+            if !self.Seats.contains("0") {
+                 let alert = UIAlertController(title: "Information", message: "Room is full\nplease choice others time", preferredStyle: UIAlertControllerStyle.alert)
+                alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: { action in
+                    
+                   _ = self.navigationController?.popViewController(animated: true)
+                }))
+                
+                // show the alert
+                self.present(alert, animated: true, completion: nil)
             }
             
             DispatchQueue.main.async {
@@ -72,6 +84,11 @@ class SeatCollectionViewController: UICollectionViewController {
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 1
+    }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let backItem = UIBarButtonItem()
+        backItem.title = "OK"
+        navigationItem.backBarButtonItem = backItem
     }
     
     

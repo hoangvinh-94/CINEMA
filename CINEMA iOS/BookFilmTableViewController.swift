@@ -23,6 +23,8 @@ class BookFilmTableViewController: UITableViewController {
         super.viewDidLoad()
         ref = Database.database().reference()
         loadBookFilm()
+    }
+    override func viewDidAppear(_ animated: Bool) {
         
     }
     

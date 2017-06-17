@@ -179,9 +179,9 @@
 		603F997B1EDA350D00BE7151 /* CINEMA iOS */ = {
 			isa = PBXGroup;
 			children = (
+				603F99AD1EDA366E00BE7151 /* View */,
 				603F99AF1EDA368000BE7151 /* Model */,
 				603F99AE1EDA367800BE7151 /* Controller */,
-				603F99AD1EDA366E00BE7151 /* View */,
 				603F99881EDA350E00BE7151 /* Info.plist */,
 				603F997C1EDA350E00BE7151 /* AppDelegate.swift */,
 				751C46D01EE2FB460007FC3C /* GoogleService-Info.plist */,
