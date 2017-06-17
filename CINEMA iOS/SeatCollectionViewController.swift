@@ -68,7 +68,7 @@ class SeatCollectionViewController: UICollectionViewController {
             
             DispatchQueue.main.async {
                 self.collectionView?.reloadData()
-                self.collectionView?.setContentOffset(CGPoint.zero, animated: false)
+//                self.collectionView?.setContentOffset(CGPoint.zero, animated: false)
             }
             
         })
@@ -99,16 +99,20 @@ class SeatCollectionViewController: UICollectionViewController {
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
+        var seats = ""
+        for s in Seats {
+            seats = seats + " " + s
+        }
+        print("\(seats)\n")
+        
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier:"SeatCell", for: indexPath) as! SeatCollectionViewCell
         
         cell.numberOfSeat.text = "0" + String(indexPath.row + 1)
         
-        let c = Int(Seats[indexPath.row])
-        
-        if c == 0 {
+        if (Seats[indexPath.row] == "0") {
             cell.backgroundColor = UIColor.green
         }
-        else{
+        else {
             cell.backgroundColor = UIColor.red
             cell.isUserInteractionEnabled = false
         }
@@ -127,10 +131,10 @@ class SeatCollectionViewController: UICollectionViewController {
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
          var selectedCell: UICollectionViewCell!
         selectedCell = collectionView.cellForItem(at: indexPath)!
-        let c = Int(Seats[indexPath.row])
         collectionView.allowsSelection = false
-        if(c == 0){
-            selectedCell.contentView.backgroundColor = UIColor.red
+        print("Set color")
+        if(Seats[indexPath.row] == "0"){
+            selectedCell.backgroundColor = UIColor.red
             collectionView.allowsSelection = true
             collectionView.allowsMultipleSelection = true
             Seats[indexPath.row] = String(indexPath.row +  1)
@@ -138,9 +142,11 @@ class SeatCollectionViewController: UICollectionViewController {
         else{
             collectionView.allowsSelection = true
             collectionView.allowsMultipleSelection = true
-            selectedCell.contentView.backgroundColor = UIColor.green
+            selectedCell.backgroundColor = UIColor.green
             Seats[indexPath.row] = String(0)
         }
+        
+        
         
         
     }
@@ -161,8 +167,6 @@ class SeatCollectionViewController: UICollectionViewController {
             
             let bookRef = ref.child("bookfilm").child(String(idFilm!)).child("day").child(String(self.idDay!)).child("times").child(String(idTime!))
                 bookRef.updateChildValues(["seats": seatString])
-            print(seatString)
-
                 //Tells the user that there is an error and then gets firebase to tell them the error
                 // create the alert
             let alert = UIAlertController(title: "Succesful", message: "Would you like to my Ticket information?", preferredStyle: UIAlertControllerStyle.alert)

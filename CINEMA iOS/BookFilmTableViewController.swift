@@ -36,7 +36,6 @@ class BookFilmTableViewController: UITableViewController {
                 if let dictionary = snapshot.value as? [String: AnyObject]{
                     let days = dictionary["day"] as? [Dictionary<String,Any>]
                     //var room: Int?
-                    
                     for d in days!{
                         let day = d["day"] as? String
                         var Times = [String]()
