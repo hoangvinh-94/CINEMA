@@ -33,6 +33,13 @@ class SignUpViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    @IBAction func signInAction(_ sender: Any) {
+        let revealviewcontroller:SWRevealViewController = self.revealViewController()
+        
+        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "SignInViewController")
+        let newFrontController = UINavigationController.init(rootViewController:vc)
+        revealviewcontroller.pushFrontViewController(newFrontController, animated: true)
+    }
     //MARK: - Main func
     @IBAction func signUpAction(_ sender: Any) {
         if emailTextField.text == "" {
@@ -88,8 +95,11 @@ class SignUpViewController: UIViewController {
                         
                         
                         
-                        let vc = self.storyboard?.instantiateViewController(withIdentifier: "SignInViewController")
-                        self.present(vc!, animated: true, completion: nil)
+                        let revealviewcontroller:SWRevealViewController = self.revealViewController()
+                        
+                        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "SignInViewController")
+                        let newFrontController = UINavigationController.init(rootViewController:vc)
+                        revealviewcontroller.pushFrontViewController(newFrontController, animated: true)
                         
                     } else {
                         let alertController = UIAlertController(title: "Error", message: error?.localizedDescription,   preferredStyle: .alert)

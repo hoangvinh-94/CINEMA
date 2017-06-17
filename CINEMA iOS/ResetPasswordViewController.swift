@@ -22,6 +22,13 @@ class ResetPasswordViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
     
+    @IBAction func signInAction(_ sender: Any) {
+        let revealviewcontroller:SWRevealViewController = self.revealViewController()
+        
+        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "SignInViewController")
+        let newFrontController = UINavigationController.init(rootViewController:vc)
+        revealviewcontroller.pushFrontViewController(newFrontController, animated: true)
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

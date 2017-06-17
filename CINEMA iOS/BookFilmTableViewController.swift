@@ -19,6 +19,7 @@ class BookFilmTableViewController: UITableViewController {
     var bookFilm = [Book]()
     
     override func viewDidLoad() {
+        
         super.viewDidLoad()
         ref = Database.database().reference()
         loadBookFilm()
@@ -110,15 +111,21 @@ class BookFilmTableViewController: UITableViewController {
         BSeat.idFilm = idFilmCurrent
         let idDay = indexPath.section
         let idTime = indexPath.row
+        let day = bookFilm[indexPath.section].getDays()
+        let time = bookFilm[indexPath.section].getTimes()[indexPath.row]
+        let room = bookFilm[indexPath.section].getRooms()[indexPath.row]
         BSeat.idDay = idDay
         BSeat.idTime = idTime
+        BSeat.titleFilm = self.titleFilm
+        BSeat.room = room
+        BSeat.time = time
+        BSeat.day = day
         if Auth.auth().currentUser?.uid == nil {
             print("==nil")
             let Login = storyboard?.instantiateViewController(withIdentifier: "SignInViewController") as! SignInViewController
             navigationController?.pushViewController(Login, animated: true)
         }
         else {
-            print("!=nil \(String(describing: Auth.auth().currentUser?.uid))")
             navigationController?.pushViewController(BSeat, animated: true)
         }
     }

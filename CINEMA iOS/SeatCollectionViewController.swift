@@ -15,7 +15,6 @@ private let reuseIdentifier = "Cell"
 class SeatCollectionViewController: UICollectionViewController {
     
     var ref: DatabaseReference!
-    var refHandler: UInt!
     var Seats = [String]()
     var Seat : String?
     var userSeat = [String]()
@@ -29,7 +28,7 @@ class SeatCollectionViewController: UICollectionViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+     
         ref = Database.database().reference()
         loadSeat()
         
@@ -129,46 +128,41 @@ class SeatCollectionViewController: UICollectionViewController {
         
     }
     @IBAction func saveSeat(_ sender: Any) {
+        var tickets = [Ticket]()
+        let uid = Auth.auth().currentUser?.uid
+
         let seatString = Seats.joined(separator: "_")
         if(seatString != self.Seat){
-          
             let filter = Seats.filter{!userSeat.contains($0)}
-            print(filter)
-            let userSeatBooked = filter.joined(separator: ",")
-            do{
+            for i in filter{
+                let t = Ticket(titleFilm: titleFilm!, day: day!, time: time!, seat: Int(i)!, room: room!)
+                tickets.append(t)
+                ref.child("tickets").childByAutoId().setValue(["idFilm": idFilm!, "titleFilm": titleFilm!, "day": day!, "time": time!, "room": room!, "seat": i, "idUser": uid!])
                 
-                let idRef = ref.child("bookfilm").child(String(idFilm!)).child("day").child(String(self.idDay!)).child("times").child(String(idTime!))
-                idRef.updateChildValues(["seats": seatString])
-                print(seatString)
+            }
+            
+            
+            let bookRef = ref.child("bookfilm").child(String(idFilm!)).child("day").child(String(self.idDay!)).child("times").child(String(idTime!))
+                bookRef.updateChildValues(["seats": seatString])
+            print(seatString)
+
                 //Tells the user that there is an error and then gets firebase to tell them the error
                 // create the alert
-                let alert = UIAlertController(title: "Succesful", message: "Would you like to my BookFilm information?", preferredStyle: UIAlertControllerStyle.alert)
+            let alert = UIAlertController(title: "Succesful", message: "Would you like to my Ticket information?", preferredStyle: UIAlertControllerStyle.alert)
                 
                 // add the actions (buttons)
-                alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: { action in
-                    let infBook = self.storyboard?.instantiateViewController(withIdentifier: "BookInformation") as! InformationBookViewController
-                    infBook.titleFilm = self.titleFilm
-                    infBook.day = self.day
-                    infBook.time = self.time
-                    infBook.room = self.room
-                    infBook.seat = userSeatBooked
-                    self.navigationController?.pushViewController(infBook, animated: true)
+            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: { action in
                     
-                }))
-                alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: nil))
+                let infTicket = self.storyboard?.instantiateViewController(withIdentifier: "TicketInformation") as! TicketInformationTableViewController
+                infTicket.tickets = tickets
+                self.navigationController?.pushViewController(infTicket, animated: true)
+                    
+            }))
+            alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: nil))
                 
                 // show the alert
-                self.present(alert, animated: true, completion: nil)
-            }catch
-            {
-                print(error.localizedDescription)
-            }
-
+            self.present(alert, animated: true, completion: nil)
         }
-        
-        
-       
     }
-    
     
 }

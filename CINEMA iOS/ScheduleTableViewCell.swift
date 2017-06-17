@@ -8,7 +8,8 @@
 
 import UIKit
 
-class ScheduleCell: UITableViewCell {
+class ScheduleTableViewCell: UITableViewCell {
+    
     
     @IBOutlet weak var titleLabel: UILabel!
     

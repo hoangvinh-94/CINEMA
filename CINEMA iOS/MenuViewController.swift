@@ -12,7 +12,7 @@ import Firebase
 class MenuViewController: UIViewController, UITableViewDelegate, UITableViewDataSource{
     // MARK: - Declaration variables
    var searchController = HomeViewController.searchController
-    
+    var ref : DatabaseReference!
     var ManuNameArray: Array = [String]()
     var iconArray: Array = [UIImage]()
     
@@ -21,13 +21,27 @@ class MenuViewController: UIViewController, UITableViewDelegate, UITableViewData
      // MARK: - Override funcs
     override func viewDidLoad() {
         super.viewDidLoad()
-         
+        
+        ref = Database.database().reference()
+        if(Auth.auth().currentUser?.uid != nil){
+            let uid = Auth.auth().currentUser?.uid
+            ref.child("users").child(uid!).observe(.value, with: {(snapshot) in
+                let user = snapshot.value as? [String: Any]
+                self.navigationItem.title = user?["userName"] as? String
+                
+            })
+        }
+        else{
+            self.navigationItem.title = "Current User"
+        }
         tableView.tableHeaderView = searchController.searchBar
         ManuNameArray = ["Home","Phim Sắp Chiếu","Phim Đã Chiếu","Phim Đang Chiếu", "Lich chieu hom nay"]
         iconArray = [UIImage(named:"home")!,UIImage(named:"message")!,UIImage(named:"message")!,UIImage(named:"map")!, UIImage(named:"schedule")!]
         
         if Auth.auth().currentUser?.uid != nil {
             ManuNameArray.append("Change Password")
+            iconArray.append(UIImage(named:"setting")!)
+             ManuNameArray.append("Profile")
             iconArray.append(UIImage(named:"setting")!)
             ManuNameArray.append("Log out")
             iconArray.append(UIImage(named:"setting")!)
@@ -115,7 +129,7 @@ class MenuViewController: UIViewController, UITableViewDelegate, UITableViewData
         {
             print("Change Password Tapped")
             let mainstoryboard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-            let newViewcontroller = mainstoryboard.instantiateViewController(withIdentifier: "ScheduleViewController") as! ScheduleViewController
+            let newViewcontroller = mainstoryboard.instantiateViewController(withIdentifier: "ScheduleViewController") as! ScheduleTableViewController
             let newFrontController = UINavigationController.init(rootViewController: newViewcontroller)
             
             revealviewcontroller.pushFrontViewController(newFrontController, animated: true)
@@ -134,12 +148,14 @@ class MenuViewController: UIViewController, UITableViewDelegate, UITableViewData
             iconArray.remove(at: 5)
             ManuNameArray.remove(at: 5)
             iconArray.remove(at: 5)
+            ManuNameArray.remove(at: 5)
+            iconArray.remove(at: 5)
             
             tableView.reloadData()
             let mainstoryboard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
             let newViewcontroller = mainstoryboard.instantiateViewController(withIdentifier: "HomeViewController") as! HomeViewController
             let newFrontController = UINavigationController.init(rootViewController: newViewcontroller)
-            
+            navigationItem.title = "Current User"
             revealviewcontroller.pushFrontViewController(newFrontController, animated: true)
         }
     }

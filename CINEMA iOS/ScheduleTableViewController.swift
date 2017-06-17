@@ -1,15 +1,15 @@
 //
-//  ScheduleViewController.swift
+//  ScheduleTableViewController.swift
 //  CINEMA iOS
 //
-//  Created by TTB on 6/14/17.
+//  Created by healer on 6/15/17.
 //  Copyright © 2017 healer. All rights reserved.
 //
 
 import UIKit
 import Firebase
 
-class ScheduleViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class ScheduleTableViewController: UITableViewController {
 
     var db = DataFilm()
     var Films = [Film]()
@@ -20,10 +20,7 @@ class ScheduleViewController: UIViewController, UITableViewDataSource, UITableVi
     var prefixImgSlideshow: String = "https://image.tmdb.org/t/p/w1400_and_h450_bestv2"
     var queue = OperationQueue()
     
-    @IBOutlet var tableView: UITableView!
-    
-    
-    
+    @IBOutlet var menuMain: UIBarButtonItem!
     class Downloader {
         class func downloadImageWithURL(_ url:String) -> UIImage! {
             let data = try? Data(contentsOf: URL(string: url)!)
@@ -33,20 +30,25 @@ class ScheduleViewController: UIViewController, UITableViewDataSource, UITableVi
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        menuMain.target = revealViewController()
+        menuMain.action = #selector(SWRevealViewController.revealToggle(_:))
         ref = Database.database().reference()
         loadDataToTableView()
-        // Do any additional setup after loading the view.
+      
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+
+    // MARK: - Table view data source
+
     func loadDataToTableView(){
         
         let date = Date()
         let formatter = DateFormatter()
-        formatter.dateFormat = "dd/MM/yyy"
+        formatter.dateFormat = "dd/MM/yyyy"
         let today = formatter.string(from: date)
         
         self.Films = [Film]()
@@ -54,20 +56,17 @@ class ScheduleViewController: UIViewController, UITableViewDataSource, UITableVi
         
         ref.child("bookfilm").observe(.childAdded, with: { (snapshot) in
             
-        let filmId = Int(snapshot.key)
-            print("key book: \(filmId)")
+            let filmId = Int(snapshot.key)
             if let dictionary1 = snapshot.value as? [String: AnyObject]{
                 if (filmId != nil) {
                     self.ref.child("films5").observe(.childAdded, with: { (snapshot1) in
                         let days = dictionary1["day"] as? [Dictionary<String,Any>]
                         if Int(snapshot1.key) == filmId {
-                            print("key films5: \(snapshot1.key)")
                             //var room: Int?
                             
                             for d in days!{
                                 let day = d["day"] as? String
-                                print("Ngay \(day)")
-                                if day == "09/06/2017" {
+                                if day == today {
                                     print(" Bang")
                                     if let dictionary = snapshot1.value as? [String: AnyObject]{
                                         
@@ -79,16 +78,16 @@ class ScheduleViewController: UIViewController, UITableViewDataSource, UITableVi
                                         let runtime = dictionary["runtime"] as? Int
                                         let genres = dictionary["genres"] as? [Dictionary<String,Any>]
                                         
-                        
+                                        
                                         self.Films.append(Film(id: id!,title: title!, poster: poster_path!, overview: overview!, releaseDate: release_date!, runtime: runtime!, genres: genres!))
-                                            DispatchQueue.main.async {
-                                                self.tableView.reloadData()
-                                                self.tableView.setContentOffset(CGPoint.zero, animated: false)
-                                            }
-                                       
+                                        DispatchQueue.main.async {
+                                            self.tableView.reloadData()
+                                            self.tableView.setContentOffset(CGPoint.zero, animated: false)
+                                        }
+                                        
                                         
                                     }
-
+                                    
                                 }
                                 else {
                                     print("KHong Bang")
@@ -103,57 +102,24 @@ class ScheduleViewController: UIViewController, UITableViewDataSource, UITableVi
         })
         
         
-        
-        
-        
-        
-        
-        
-        
-//        self.Films = [Film]()
-//        queue.cancelAllOperations()
-//        refHandler = ref.child("films5").observe(.childAdded, with:{ (snapshot) in
-//            // Get user value
-//            if let dictionary = snapshot.value as? [String: AnyObject]{
-//                
-//                let id = dictionary["idFilm"] as? Int
-//                let typeFilm = dictionary["type"] as? String
-//                let overview = dictionary["overview"] as? String
-//                let poster_path = dictionary["poster_path"] as? String
-//                let release_date = dictionary["release_date"] as? String
-//                let title = dictionary["title"] as? String
-//                let runtime = dictionary["runtime"] as? Int
-//                let genres = dictionary["genres"] as? [Dictionary<String,Any>]
-//                
-//                if(typeFilm != "" && typeFilm == type){
-//                    self.Films.append(Film(id: id!,title: title!, poster: poster_path!, overview: overview!, releaseDate: release_date!, runtime: runtime!, genres: genres!))
-//                    DispatchQueue.main.async {
-//                        self.tableView.reloadData()
-//                        self.tableView.setContentOffset(CGPoint.zero, animated: false)
-//                    }
-//                }else{
-//                    return
-//                }
-//                
-//            }
-//            
-//            
-//        })
-        
     }
 
-    func numberOfSections(in tableView: UITableView) -> Int {
+    
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        // #warning Incomplete implementation, return the number of sections
         return 1
     }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        // #warning Incomplete implementation, return the number of rows
         return Films.count
     }
+
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "ScheduleCell") as! ScheduleCell
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "ScheduleFilmCell") as! ScheduleTableViewCell
         var film: Film
-       
+        
         film = Films[indexPath.row]
         
         
@@ -187,6 +153,42 @@ class ScheduleViewController: UIViewController, UITableViewDataSource, UITableVi
 
     }
     
+
+    /*
+    // Override to support conditional editing of the table view.
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        // Return false if you do not want the specified item to be editable.
+        return true
+    }
+    */
+
+    /*
+    // Override to support editing the table view.
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            // Delete the row from the data source
+            tableView.deleteRows(at: [indexPath], with: .fade)
+        } else if editingStyle == .insert {
+            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+        }    
+    }
+    */
+
+    /*
+    // Override to support rearranging the table view.
+    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
+
+    }
+    */
+
+    /*
+    // Override to support conditional rearranging of the table view.
+    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
+        // Return false if you do not want the item to be re-orderable.
+        return true
+    }
+    */
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if(segue.identifier == "ScheduleDetail"){
             if let index = self.tableView.indexPathForSelectedRow{
@@ -197,16 +199,5 @@ class ScheduleViewController: UIViewController, UITableViewDataSource, UITableVi
             }
         }
     }
-
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

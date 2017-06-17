@@ -30,6 +30,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     @IBOutlet var menuButton: UIBarButtonItem!
     
+    @IBOutlet var signIn: UIBarButtonItem!
     var LoadView : UIView = UIView()
     
     @IBOutlet weak var mainScrollView: UIScrollView!
@@ -48,12 +49,18 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             segmentControl.setTitleTextAttributes([NSFontAttributeName: font],
                                                   for: .normal)
             
+            ref = Database.database().reference()
+            if(Auth.auth().currentUser?.uid != nil){
+                    self.signIn.isEnabled = false
+                    
+            }
+            
             // Do any additional setup after loading the view, typically from a nib.
             HomeViewController.searchController.searchResultsUpdater = self
             definesPresentationContext = true
             HomeViewController.searchController.dimsBackgroundDuringPresentation = true
             HomeViewController.searchController.searchBar.delegate = self
-            ref = Database.database().reference()
+            
             menuButton.target = revealViewController()
             menuButton.action = #selector(SWRevealViewController.revealToggle(_:))
             //db.reloadFilmFromUrlApi(page: 1	, filmType: "popular")
@@ -247,19 +254,14 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
     }
     
-    @IBAction func logOutAction(_ sender: Any) {
-        if Auth.auth().currentUser != nil {
-            do {
-                try Auth.auth().signOut()
-                let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "SignInViewController")
-                present(vc, animated: true, completion: nil)
-                
-            } catch let error as NSError {
-                print(error.localizedDescription)
-            }
-        }
+    @IBAction func signInAction(_ sender: Any) {
+        let revealviewcontroller:SWRevealViewController = self.revealViewController()
+        
+            let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "SignInViewController")
+            let newFrontController = UINavigationController.init(rootViewController:vc)
+            revealviewcontroller.pushFrontViewController(newFrontController, animated: true)
+        
     }
-    
     
 }
 

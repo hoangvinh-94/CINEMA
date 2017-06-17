@@ -92,25 +92,6 @@
             }
         }
         
-        func createDataBookFilm(){
-            var str = "BF"
-            var count = 0
-            
-            refHandler = ref.child("films").observe(.childAdded, with:{ (snapshot) in
-                count += 1
-                str += String(count)
-                /*
-                 let room = Int(arc4random_uniform(UInt32(self.Room.count)))
-                 let day = Int(arc4random_uniform(UInt32(self.Days.count)))
-                 let time = Int(arc4random_uniform(UInt32(self.Time.count)))
-                 
-                 let idFilm = snapshot.key
-                 */
-                //self.ref.child("books").child(str).setValue(["idFilm": idFilm,"rooms": Room[room],"days":Days[day],"times": Time[time],"seats": self.Seats])
-                str = "BF"
-            })
-            
-        }
         
         func getMovieDetail(id: String?) {
             if let movieId = id {

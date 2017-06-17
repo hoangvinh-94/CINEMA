@@ -72,12 +72,23 @@ class SignInViewController: UIViewController {
         }
     }
     
+    @IBAction func forgotPassword(_ sender: Any) {
+        let revealviewcontroller:SWRevealViewController = self.revealViewController()
+        
+        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ResetPasswordViewController")
+        let newFrontController = UINavigationController.init(rootViewController:vc)
+        revealviewcontroller.pushFrontViewController(newFrontController, animated: true)
+    }
     @IBAction func singInFacebookAction(_ sender: Any) {
         
     }
     
     @IBAction func signUpAction(_ sender: Any) {
+        let revealviewcontroller:SWRevealViewController = self.revealViewController()
         
+        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "SignUpViewController")
+        let newFrontController = UINavigationController.init(rootViewController:vc)
+        revealviewcontroller.pushFrontViewController(newFrontController, animated: true)
     }
     
 }

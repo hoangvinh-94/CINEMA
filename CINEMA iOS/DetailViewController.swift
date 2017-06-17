@@ -24,6 +24,7 @@ class DetailViewController: UIViewController {
     @IBOutlet var cinemaLabel: UILabel!
     
     @IBOutlet var overviewLabel: UILabel!
+    
     var prefixImg: String = "https://image.tmdb.org/t/p/w320"
     var queue = OperationQueue()
 
@@ -52,7 +53,7 @@ class DetailViewController: UIViewController {
                         self.titleLabel.text = self.film.getTitle().uppercased()
                         self.releaseDateLabel.text = self.film.getReleaseDate()
                         self.runtimeLabel.text = String(self.film.getRuntime()) + " minutes"
-                        //self.overviewLabel.text = self.film.getOverview()
+                        self.overviewLabel.text = self.film.getOverview()
                         let count = self.film.getGenres().count
                         var c = 0
                         for genre in self.film.getGenres(){
@@ -84,7 +85,7 @@ class DetailViewController: UIViewController {
         let title = film.getTitle()
         let book = storyboard?.instantiateViewController(withIdentifier: "BFILM") as! BookFilmTableViewController
         book.idFilmCurrent = id
-        print("Phim hien tai \(book.idFilmCurrent!)")
+        book.titleFilm = title
         navigationController?.pushViewController(book, animated: true)
     }
     
