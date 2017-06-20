@@ -14,7 +14,7 @@ class Ticket: NSObject{
     private var titleFilm: String?
     private var day: String?
     private var time: String?
-    private var seat: Int?
+    private var seat: String?
     private var room: Int?
     
     
@@ -22,7 +22,7 @@ class Ticket: NSObject{
         
     }
     
-    init(titleFilm: String, day: String, time: String, seat: Int, room: Int){
+    init(titleFilm: String, day: String, time: String, seat: String, room: Int){
         self.titleFilm = titleFilm
         self.day = day
         self.time = time
@@ -42,7 +42,7 @@ class Ticket: NSObject{
     func getTime() -> String{
         return time!
     }
-    func getSeat() -> Int{
+    func getSeat() -> String{
         return seat!
     }
     func getRoom() -> Int{

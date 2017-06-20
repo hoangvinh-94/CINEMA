@@ -158,7 +158,7 @@ class SeatCollectionViewController: UICollectionViewController {
         if(seatString != self.Seat){
             let filter = Seats.filter{!userSeat.contains($0)}
             for i in filter{
-                let t = Ticket(titleFilm: titleFilm!, day: day!, time: time!, seat: Int(i)!, room: room!)
+                let t = Ticket(titleFilm: titleFilm!, day: day!, time: time!, seat: i, room: room!)
                 tickets.append(t)
                 ref.child("tickets").childByAutoId().setValue(["idFilm": idFilm!, "titleFilm": titleFilm!, "day": day!, "time": time!, "room": room!, "seat": i, "idUser": uid!])
                 

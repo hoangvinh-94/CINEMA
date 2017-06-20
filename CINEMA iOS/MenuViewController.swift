@@ -41,7 +41,7 @@ class MenuViewController: UIViewController, UITableViewDelegate, UITableViewData
         if Auth.auth().currentUser?.uid != nil {
             ManuNameArray.append("Change Password")
             iconArray.append(UIImage(named:"setting")!)
-             ManuNameArray.append("Profile")
+             ManuNameArray.append("My Profile")
             iconArray.append(UIImage(named:"setting")!)
             ManuNameArray.append("Log out")
             iconArray.append(UIImage(named:"setting")!)
@@ -79,6 +79,7 @@ class MenuViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         let cell:MenuCell = tableView.cellForRow(at: indexPath) as! MenuCell
         print(cell.labelMenu.text!)
+        
         if cell.labelMenu.text! == "Home"
         {
             print("Home Tapped")
@@ -88,6 +89,7 @@ class MenuViewController: UIViewController, UITableViewDelegate, UITableViewData
             
             revealviewcontroller.pushFrontViewController(newFrontController, animated: true)
         }
+        
         if cell.labelMenu.text! == "Change Password"
         {
             print("Change Password Tapped")
@@ -97,6 +99,7 @@ class MenuViewController: UIViewController, UITableViewDelegate, UITableViewData
             
             revealviewcontroller.pushFrontViewController(newFrontController, animated: true)
         }
+        
         if cell.labelMenu.text! == "Phim Đã Chiếu"
         {
             let mainstoryboard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
@@ -107,6 +110,7 @@ class MenuViewController: UIViewController, UITableViewDelegate, UITableViewData
             revealviewcontroller.pushFrontViewController(newFrontController, animated: true)
             
         }
+        
         if cell.labelMenu.text! == "Phim Đang Chiếu"
         {
             let mainstoryboard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
@@ -116,6 +120,7 @@ class MenuViewController: UIViewController, UITableViewDelegate, UITableViewData
             let newFrontController = UINavigationController.init(rootViewController: PDC)
             revealviewcontroller.pushFrontViewController(newFrontController, animated: true)
         }
+        
         if cell.labelMenu.text! == "Phim Sắp Chiếu"
         {
             let mainstoryboard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
@@ -125,6 +130,7 @@ class MenuViewController: UIViewController, UITableViewDelegate, UITableViewData
             let newFrontController = UINavigationController.init(rootViewController: PDC)
             revealviewcontroller.pushFrontViewController(newFrontController, animated: true)
         }
+        
         if cell.labelMenu.text! == "Lich chieu hom nay"
         {
             print("Change Password Tapped")
@@ -134,6 +140,17 @@ class MenuViewController: UIViewController, UITableViewDelegate, UITableViewData
             
             revealviewcontroller.pushFrontViewController(newFrontController, animated: true)
         }
+        
+        if cell.labelMenu.text! == "My Profile"
+        {
+            print("My Profile Tapped")
+            let mainstoryboard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+            let newViewcontroller = mainstoryboard.instantiateViewController(withIdentifier: "ProfileViewController") as! ProfileViewController
+            let newFrontController = UINavigationController.init(rootViewController: newViewcontroller)
+            
+            revealviewcontroller.pushFrontViewController(newFrontController, animated: true)
+        }
+        
         if cell.labelMenu.text! == "Log out"
         {
             print("Log out Tapped")
