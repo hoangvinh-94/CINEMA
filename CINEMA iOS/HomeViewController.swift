@@ -51,7 +51,14 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             
             ref = Database.database().reference()
             if(Auth.auth().currentUser?.uid != nil){
-                    self.signIn.isEnabled = false
+                let uid = Auth.auth().currentUser?.uid
+                ref.child("users").child(uid!).observe(.value, with: {(snapshot) in
+                    let user = snapshot.value as? [String: Any]
+                    self.signIn.title = "Hi, " + (user?["userName"] as? String)!
+                    self.signIn.image = nil
+                    self.signIn.action = #selector(self.toProfileViewController)
+
+                })
                     
             }
             
@@ -75,6 +82,11 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         self.segmentControl.selectedSegmentIndex = 0
         loadDataToTableView(type: "popular")
+    }
+    
+    func toProfileViewController() {
+        let profile = storyboard?.instantiateViewController(withIdentifier: "ProfileViewController") as! ProfileViewController
+        self.navigationController?.pushViewController(profile, animated: true)
     }
     
     func imageResize (image:UIImage, sizeChange:CGSize)-> UIImage{

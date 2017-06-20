@@ -35,16 +35,16 @@ class MenuViewController: UIViewController, UITableViewDelegate, UITableViewData
             self.navigationItem.title = "Current User"
         }
         tableView.tableHeaderView = searchController.searchBar
-        ManuNameArray = ["Home","Phim Sắp Chiếu","Phim Đã Chiếu","Phim Đang Chiếu", "Lich chieu hom nay"]
-        iconArray = [UIImage(named:"home")!,UIImage(named:"message")!,UIImage(named:"message")!,UIImage(named:"map")!, UIImage(named:"schedule")!]
+        ManuNameArray = ["Home","Coming Soon","Movie Store","Now Showing", "Schedule Today"]
+        iconArray = [UIImage(named:"home2")!,UIImage(named:"played1")!,UIImage(named:"oldmovie")!,UIImage(named:"dangchieu")!, UIImage(named:"schedule")!]
         
         if Auth.auth().currentUser?.uid != nil {
             ManuNameArray.append("Change Password")
-            iconArray.append(UIImage(named:"setting")!)
+            iconArray.append(UIImage(named:"changepassword")!)
              ManuNameArray.append("My Profile")
-            iconArray.append(UIImage(named:"setting")!)
+            iconArray.append(UIImage(named:"userinfor")!)
             ManuNameArray.append("Log out")
-            iconArray.append(UIImage(named:"setting")!)
+            iconArray.append(UIImage(named:"logout")!)
         }
         // Do any additional setup after loading the view.
     }
@@ -100,7 +100,7 @@ class MenuViewController: UIViewController, UITableViewDelegate, UITableViewData
             revealviewcontroller.pushFrontViewController(newFrontController, animated: true)
         }
         
-        if cell.labelMenu.text! == "Phim Đã Chiếu"
+        if cell.labelMenu.text! == "Movie Store"
         {
             let mainstoryboard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
             let PDC = mainstoryboard.instantiateViewController(withIdentifier: "PDC") as! FilmTypeTableViewController
@@ -111,7 +111,7 @@ class MenuViewController: UIViewController, UITableViewDelegate, UITableViewData
             
         }
         
-        if cell.labelMenu.text! == "Phim Đang Chiếu"
+        if cell.labelMenu.text! == "Now Showing"
         {
             let mainstoryboard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
             let PDC = mainstoryboard.instantiateViewController(withIdentifier: "PDC") as! FilmTypeTableViewController
@@ -121,7 +121,7 @@ class MenuViewController: UIViewController, UITableViewDelegate, UITableViewData
             revealviewcontroller.pushFrontViewController(newFrontController, animated: true)
         }
         
-        if cell.labelMenu.text! == "Phim Sắp Chiếu"
+        if cell.labelMenu.text! == "Coming Soon"
         {
             let mainstoryboard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
             let PDC = mainstoryboard.instantiateViewController(withIdentifier: "PDC") as! FilmTypeTableViewController
@@ -131,7 +131,7 @@ class MenuViewController: UIViewController, UITableViewDelegate, UITableViewData
             revealviewcontroller.pushFrontViewController(newFrontController, animated: true)
         }
         
-        if cell.labelMenu.text! == "Lich chieu hom nay"
+        if cell.labelMenu.text! == "Schedule Today"
         {
             print("Change Password Tapped")
             let mainstoryboard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
