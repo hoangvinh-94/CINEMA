@@ -74,7 +74,6 @@ class FilmTypeTableViewController: UITableViewController {
                     self.Films.append(Film(id: id!,title: title!, poster: poster_path!, overview: overview!, releaseDate: release_date!, runtime: runtime!, genres: genres!))
                     DispatchQueue.main.async {
                         self.tableView.reloadData()
-                        self.tableView.setContentOffset(CGPoint.zero, animated: false)
                     }
                 }else{
                     return

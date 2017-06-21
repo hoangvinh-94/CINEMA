@@ -60,7 +60,6 @@ class BookFilmTableViewController: UITableViewController {
                     
                     DispatchQueue.main.async {
                         self.tableView.reloadData()
-                        self.tableView.setContentOffset(CGPoint.zero, animated: false)
                     }
                 }
                 

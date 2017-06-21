@@ -133,12 +133,14 @@ class SeatCollectionViewController: UICollectionViewController {
         selectedCell = collectionView.cellForItem(at: indexPath)!
         collectionView.allowsSelection = false
         print("Set color")
+        
         if(Seats[indexPath.row] == "0"){
             selectedCell.backgroundColor = UIColor.red
             collectionView.allowsSelection = true
             collectionView.allowsMultipleSelection = true
             Seats[indexPath.row] = String(indexPath.row +  1)
         }
+            
         else{
             collectionView.allowsSelection = true
             collectionView.allowsMultipleSelection = true
@@ -155,8 +157,10 @@ class SeatCollectionViewController: UICollectionViewController {
         let uid = Auth.auth().currentUser?.uid
 
         let seatString = Seats.joined(separator: "_")
+        
         if(seatString != self.Seat){
             let filter = Seats.filter{!userSeat.contains($0)}
+            
             for i in filter{
                 let t = Ticket(titleFilm: titleFilm!, day: day!, time: time!, seat: i, room: room!)
                 tickets.append(t)
@@ -164,11 +168,11 @@ class SeatCollectionViewController: UICollectionViewController {
                 
             }
             
-            
             let bookRef = ref.child("bookfilm").child(String(idFilm!)).child("day").child(String(self.idDay!)).child("times").child(String(idTime!))
                 bookRef.updateChildValues(["seats": seatString])
                 //Tells the user that there is an error and then gets firebase to tell them the error
                 // create the alert
+            
             let alert = UIAlertController(title: "Succesful", message: "Would you like to my Ticket information?", preferredStyle: UIAlertControllerStyle.alert)
                 
                 // add the actions (buttons)
@@ -179,6 +183,7 @@ class SeatCollectionViewController: UICollectionViewController {
                 self.navigationController?.pushViewController(infTicket, animated: true)
                     
             }))
+            
             alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: nil))
                 
                 // show the alert

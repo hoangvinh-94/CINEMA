@@ -35,15 +35,18 @@ class MenuViewController: UIViewController, UITableViewDelegate, UITableViewData
             self.navigationItem.title = "Current User"
         }
         tableView.tableHeaderView = searchController.searchBar
-        ManuNameArray = ["Home","Coming Soon","Movie Store","Now Showing", "Schedule Today"]
-        iconArray = [UIImage(named:"home2")!,UIImage(named:"played1")!,UIImage(named:"oldmovie")!,UIImage(named:"dangchieu")!, UIImage(named:"schedule")!]
+        ManuNameArray = ["Home","Coming Soon","Movie Store","Now Showing", "Schedule Today", "Sign In"]
+        iconArray = [UIImage(named:"home2")!,UIImage(named:"played1")!,UIImage(named:"oldmovie")!,UIImage(named:"dangchieu")!, UIImage(named:"schedule")!, UIImage(named:"signin")!]
         
         if Auth.auth().currentUser?.uid != nil {
+            ManuNameArray.remove(at: 5)
+            iconArray.remove(at: 5)
+            
             ManuNameArray.append("Change Password")
             iconArray.append(UIImage(named:"changepassword")!)
              ManuNameArray.append("My Profile")
             iconArray.append(UIImage(named:"userinfor")!)
-            ManuNameArray.append("Log out")
+            ManuNameArray.append("Sign Out")
             iconArray.append(UIImage(named:"logout")!)
         }
         // Do any additional setup after loading the view.
@@ -152,7 +155,18 @@ class MenuViewController: UIViewController, UITableViewDelegate, UITableViewData
             
         }
         
-        if cell.labelMenu.text! == "Log out"
+        if cell.labelMenu.text! == "Sign In"
+        {
+            print("My Profile Tapped")
+            let mainstoryboard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+            let newViewcontroller = mainstoryboard.instantiateViewController(withIdentifier: "SignInViewController") as! SignInViewController
+            let newFrontController = UINavigationController.init(rootViewController: newViewcontroller)
+            
+            revealviewcontroller.pushFrontViewController(newFrontController, animated: true)
+            
+        }
+        
+        if cell.labelMenu.text! == "Sign Out"
         {
             print("Log out Tapped")
             do {
@@ -168,6 +182,9 @@ class MenuViewController: UIViewController, UITableViewDelegate, UITableViewData
             iconArray.remove(at: 5)
             ManuNameArray.remove(at: 5)
             iconArray.remove(at: 5)
+            
+            ManuNameArray.append("Sign In")
+            iconArray.append(UIImage(named:"signin")!)
             
             tableView.reloadData()
             let mainstoryboard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
