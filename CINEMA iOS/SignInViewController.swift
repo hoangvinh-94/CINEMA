@@ -23,6 +23,16 @@ class SignInViewController: UIViewController {
         menuButton.target = revealViewController()
         menuButton.action = #selector(SWRevealViewController.revealToggle(_:))
         
+        passwordTextField.backgroundColor = .clear
+        passwordTextField.layer.cornerRadius = 5
+        passwordTextField.layer.borderWidth = 1
+        passwordTextField.layer.borderColor = UIColor.blue.cgColor
+        
+        userNameTextField.backgroundColor = .clear
+        userNameTextField.layer.cornerRadius = 5
+        userNameTextField.layer.borderWidth = 1
+        userNameTextField.layer.borderColor = UIColor.blue.cgColor
+        
         // Do any additional setup after loading the view.
     }
     

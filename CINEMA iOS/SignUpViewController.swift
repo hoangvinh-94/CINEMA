@@ -25,6 +25,31 @@ class SignUpViewController: UIViewController {
         
         menuButton.target = revealViewController()
         menuButton.action = #selector(SWRevealViewController.revealToggle(_:))
+        
+        confirmPasswordTextField.backgroundColor = .clear
+        confirmPasswordTextField.layer.cornerRadius = 5
+        confirmPasswordTextField.layer.borderWidth = 1
+        confirmPasswordTextField.layer.borderColor = UIColor.blue.cgColor
+        
+        passwordTextField.backgroundColor = .clear
+        passwordTextField.layer.cornerRadius = 5
+        passwordTextField.layer.borderWidth = 1
+        passwordTextField.layer.borderColor = UIColor.blue.cgColor
+        
+        emailTextField.backgroundColor = .clear
+        emailTextField.layer.cornerRadius = 5
+        emailTextField.layer.borderWidth = 1
+        emailTextField.layer.borderColor = UIColor.blue.cgColor
+        
+        
+        userNameTextField.backgroundColor = .clear
+        userNameTextField.layer.cornerRadius = 5
+        userNameTextField.layer.borderWidth = 1
+        userNameTextField.layer.borderColor = UIColor.blue.cgColor
+        
+        
+        
+        
         // Do any additional setup after loading the view.
     }
     

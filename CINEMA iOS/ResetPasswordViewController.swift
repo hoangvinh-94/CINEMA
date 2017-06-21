@@ -19,6 +19,11 @@ class ResetPasswordViewController: UIViewController {
         menuButton.target = revealViewController()
         menuButton.action = #selector(SWRevealViewController.revealToggle(_:))
 
+        emailTextField.backgroundColor = .clear
+        emailTextField.layer.cornerRadius = 5
+        emailTextField.layer.borderWidth = 1
+        emailTextField.layer.borderColor = UIColor.blue.cgColor
+        
         // Do any additional setup after loading the view.
     }
     
@@ -55,16 +60,22 @@ class ResetPasswordViewController: UIViewController {
                     message = (error?.localizedDescription)!
                 } else {
                     title = "Success!"
-                    message = "Password reset email sent."
+                    message = "Password reset email sent. Check your inbox!"
                     self.emailTextField.text = ""
                 }
                 
                 let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
                 
-                let defaultAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
-                alertController.addAction(defaultAction)
-                
+                // add the actions (buttons)
+                alertController.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: { action in
+                    
+                    let homeView = self.storyboard?.instantiateViewController(withIdentifier: "SignInViewController") as! SignInViewController
+                    self.navigationController?.pushViewController(homeView, animated: true)
+                    
+                }))
                 self.present(alertController, animated: true, completion: nil)
+                
+                
             })
         }
     }

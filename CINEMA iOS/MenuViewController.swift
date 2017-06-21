@@ -149,6 +149,7 @@ class MenuViewController: UIViewController, UITableViewDelegate, UITableViewData
             let newFrontController = UINavigationController.init(rootViewController: newViewcontroller)
             
             revealviewcontroller.pushFrontViewController(newFrontController, animated: true)
+            
         }
         
         if cell.labelMenu.text! == "Log out"

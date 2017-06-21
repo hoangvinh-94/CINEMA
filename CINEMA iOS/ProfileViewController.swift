@@ -18,16 +18,22 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
     
     @IBOutlet weak var myOrdersTableView: UITableView!
     
+    @IBOutlet weak var menuButton: UIBarButtonItem!
+    
     // MARK: - Variables
     
     var tickets = [Ticket]()
     var ref: DatabaseReference!
     var refHandler: UInt!
+    let cellSpacingHeight: CGFloat = 5
     
     override func viewDidLoad() {
         super.viewDidLoad()
         ref = Database.database().reference()
-        self.myOrdersTableView.separatorColor = UIColor.red
+        
+        menuButton.target = revealViewController()
+        menuButton.action = #selector(SWRevealViewController.revealToggle(_:))
+        
         // Do any additional setup after loading the view.
     }
     
@@ -108,8 +114,11 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         return tickets.count
-        
-        
+    }
+    
+    // Set the spacing between sections
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return cellSpacingHeight
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -124,6 +133,12 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         cell.timeTicket.text = ticket.getTime()
         cell.seatTicket.text = String(ticket.getSeat())
         
+        // add border and color
+        cell.backgroundColor = UIColor.white
+        cell.layer.borderColor = UIColor.black.cgColor
+        cell.layer.borderWidth = 1
+        cell.layer.cornerRadius = 5
+        cell.clipsToBounds = true
         
         return cell
     }
