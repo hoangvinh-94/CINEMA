@@ -19,6 +19,7 @@ class ScheduleTableViewController: UITableViewController {
     var prefixImg: String = "https://image.tmdb.org/t/p/w320"
     var prefixImgSlideshow: String = "https://image.tmdb.org/t/p/w1400_and_h450_bestv2"
     var queue = OperationQueue()
+    var tableIndicator = UIActivityIndicatorView()
     
     @IBOutlet var menuMain: UIBarButtonItem!
     class Downloader {
@@ -30,8 +31,18 @@ class ScheduleTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         menuMain.target = revealViewController()
         menuMain.action = #selector(SWRevealViewController.revealToggle(_:))
+        
+        
+        tableIndicator.activityIndicatorViewStyle = .whiteLarge
+        tableIndicator.color = UIColor.orange
+        
+        tableView.backgroundView = tableIndicator
+        tableView.separatorStyle = UITableViewCellSeparatorStyle.none
+        
+        
         ref = Database.database().reference()
         loadDataToTableView()
       
@@ -45,6 +56,7 @@ class ScheduleTableViewController: UITableViewController {
     // MARK: - Table view data source
 
     func loadDataToTableView(){
+        tableIndicator.startAnimating()
         
         let date = Date()
         let formatter = DateFormatter()
@@ -67,7 +79,7 @@ class ScheduleTableViewController: UITableViewController {
                             for d in days!{
                                 let day = d["day"] as? String
                                 if day == today {
-                                    print(" Bang")
+                                    
                                     if let dictionary = snapshot1.value as? [String: AnyObject]{
                                         
                                         let id = dictionary["idFilm"] as? Int
@@ -81,16 +93,20 @@ class ScheduleTableViewController: UITableViewController {
                                         
                                         self.Films.append(Film(id: id!,title: title!, poster: poster_path!, overview: overview!, releaseDate: release_date!, runtime: runtime!, genres: genres!))
                                         DispatchQueue.main.async {
+                                            self.tableIndicator.stopAnimating()
                                             self.tableView.reloadData()
                                             self.tableView.setContentOffset(CGPoint.zero, animated: false)
                                         }
-                                        
-                                        
+                
                                     }
                                     
                                 }
                                 else {
-                                    print("KHong Bang")
+                                    self.tableIndicator.stopAnimating()
+                                    let alertError = UIAlertController(title: "Schedule Infor!", message: "There is no any schedule today!", preferredStyle: .alert)
+                                    let defaultAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+                                    alertError.addAction(defaultAction)
+                                    self.present(alertError, animated: true, completion: nil)
                                 }
                             }
                             
@@ -152,42 +168,6 @@ class ScheduleTableViewController: UITableViewController {
         return cell
 
     }
-    
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if(segue.identifier == "ScheduleDetail"){

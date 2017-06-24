@@ -136,7 +136,7 @@ class MenuViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         if cell.labelMenu.text! == "Schedule Today"
         {
-            print("Change Password Tapped")
+            print("Schedule Today Tapped")
             let mainstoryboard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
             let newViewcontroller = mainstoryboard.instantiateViewController(withIdentifier: "ScheduleViewController") as! ScheduleTableViewController
             let newFrontController = UINavigationController.init(rootViewController: newViewcontroller)
@@ -178,8 +178,10 @@ class MenuViewController: UIViewController, UITableViewDelegate, UITableViewData
             
             ManuNameArray.remove(at: 5)
             iconArray.remove(at: 5)
+            
             ManuNameArray.remove(at: 5)
             iconArray.remove(at: 5)
+            
             ManuNameArray.remove(at: 5)
             iconArray.remove(at: 5)
             

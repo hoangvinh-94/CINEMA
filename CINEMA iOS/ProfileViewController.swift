@@ -26,6 +26,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
     var ref: DatabaseReference!
     var refHandler: UInt!
     let cellSpacingHeight: CGFloat = 5
+    var tableIndicator = UIActivityIndicatorView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,6 +34,12 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         
         menuButton.target = revealViewController()
         menuButton.action = #selector(SWRevealViewController.revealToggle(_:))
+        
+        tableIndicator.activityIndicatorViewStyle = .whiteLarge
+        tableIndicator.color = UIColor.orange
+        
+        myOrdersTableView.backgroundView = tableIndicator
+        myOrdersTableView.separatorStyle = UITableViewCellSeparatorStyle.none
         
         // Do any additional setup after loading the view.
     }
@@ -51,6 +58,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
     
     //Load user infor
     func loadUserInfor() {
+        tableIndicator.startAnimating()
         if let uid = Auth.auth().currentUser?.uid {
             refHandler = ref.child("users").child(uid).observe(.value, with:{ (snapshot) in
                 if let userInforDic = snapshot.value as? [String: AnyObject] {
@@ -58,6 +66,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
                     let email = userInforDic["email"] as! String
                     self.userNameLabel.text = userName
                     self.emailLabel.text = email
+                    self.tableIndicator.stopAnimating()
                 }
             })
         }
@@ -66,7 +75,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
     //Load the tickets current user have ordered
     
     func loadDataToTableView(){
-        
+        tableIndicator.startAnimating()
         self.tickets = [Ticket]()
         let uid = Auth.auth().currentUser?.uid
         
@@ -89,6 +98,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
                     
                     self.tickets.append(Ticket(titleFilm: title!,day: date!, time: time!, seat: seat!, room: room!))
                     DispatchQueue.main.async {
+                        self.tableIndicator.stopAnimating()
                         self.myOrdersTableView.reloadData()
                         self.myOrdersTableView.setContentOffset(CGPoint.zero, animated: false)
                     }

@@ -33,7 +33,7 @@ class DetailViewController: UIViewController {
     var film = Film()
     var db = DataFilm()
     
-    
+    var tableIndicator = UIActivityIndicatorView()
    
     class Downloader {
         class func downloadImageWithURL(_ url:String) -> UIImage! {
@@ -45,10 +45,20 @@ class DetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        tableIndicator.center = self.view.center
+        tableIndicator.activityIndicatorViewStyle = .whiteLarge
+        tableIndicator.color = UIColor.orange
+        tableIndicator.hidesWhenStopped = true
+        
+        self.view.addSubview(tableIndicator)
+        
+        tableIndicator.startAnimating()
         queue.addOperation { () -> Void in
             if self.film.getPoster() != "" {
                 if let img = Downloader.downloadImageWithURL("\(self.prefixImg)\(self.film.getPoster())") {
                     OperationQueue.main.addOperation({
+                        self.tableIndicator.stopAnimating()
                         self.posterImage.image = img
                         self.titleLabel.text = self.film.getTitle().uppercased()
                         self.releaseDateLabel.text = self.film.getReleaseDate()

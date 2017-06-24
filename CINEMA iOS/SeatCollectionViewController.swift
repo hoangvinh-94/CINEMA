@@ -25,11 +25,19 @@ class SeatCollectionViewController: UICollectionViewController {
     var room: Int?
     var time: String?
     var titleFilm: String?
+    var tableIndicator = UIActivityIndicatorView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
      
+        tableIndicator.activityIndicatorViewStyle = .whiteLarge
+        tableIndicator.color = UIColor.orange
+        
+        collectionView?.backgroundView = tableIndicator
+        
+        
         ref = Database.database().reference()
+        
         loadSeat()
         
        
@@ -44,6 +52,8 @@ class SeatCollectionViewController: UICollectionViewController {
     }
     
     func loadSeat(){
+        
+        tableIndicator.startAnimating()
         let idRef1 = ref.child("bookfilm").child(String(idFilm!)).child("day").child(String(idDay!)).child("times").child(String(idTime!))
         
         idRef1.queryOrdered(byChild: "seats").observe(.value, with: {snapshot in
@@ -67,6 +77,7 @@ class SeatCollectionViewController: UICollectionViewController {
             }
             
             DispatchQueue.main.async {
+                self.tableIndicator.stopAnimating()
                 self.collectionView?.reloadData()
 //                self.collectionView?.setContentOffset(CGPoint.zero, animated: false)
             }
@@ -135,7 +146,7 @@ class SeatCollectionViewController: UICollectionViewController {
         print("Set color")
         
         if(Seats[indexPath.row] == "0"){
-            selectedCell.backgroundColor = UIColor.red
+            selectedCell.backgroundColor = UIColor.yellow
             collectionView.allowsSelection = true
             collectionView.allowsMultipleSelection = true
             Seats[indexPath.row] = String(indexPath.row +  1)
@@ -153,42 +164,55 @@ class SeatCollectionViewController: UICollectionViewController {
         
     }
     @IBAction func saveSeat(_ sender: Any) {
-        var tickets = [Ticket]()
-        let uid = Auth.auth().currentUser?.uid
-
-        let seatString = Seats.joined(separator: "_")
+    
+        let seatString = self.Seats.joined(separator: "_")
         
         if(seatString != self.Seat){
-            let filter = Seats.filter{!userSeat.contains($0)}
+            let alert = UIAlertController(title: "Succesful", message: "View Ticket information?", preferredStyle: UIAlertControllerStyle.alert)
             
-            for i in filter{
-                let t = Ticket(titleFilm: titleFilm!, day: day!, time: time!, seat: i, room: room!)
-                tickets.append(t)
-                ref.child("tickets").childByAutoId().setValue(["idFilm": idFilm!, "titleFilm": titleFilm!, "day": day!, "time": time!, "room": room!, "seat": i, "idUser": uid!])
-                
-            }
-            
-            let bookRef = ref.child("bookfilm").child(String(idFilm!)).child("day").child(String(self.idDay!)).child("times").child(String(idTime!))
-                bookRef.updateChildValues(["seats": seatString])
-                //Tells the user that there is an error and then gets firebase to tell them the error
-                // create the alert
-            
-            let alert = UIAlertController(title: "Succesful", message: "Would you like to my Ticket information?", preferredStyle: UIAlertControllerStyle.alert)
-                
-                // add the actions (buttons)
+            // add the actions (buttons)
             alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: { action in
-                    
+                
+                var tickets = [Ticket]()
+                
+                let filter = self.Seats.filter{!self.userSeat.contains($0)}
+                
+                for i in filter{
+                    let t = Ticket(titleFilm: self.titleFilm!, day: self.day!, time: self.time!, seat: i, room: self.room!)
+                    tickets.append(t)
+                }
+                
                 let infTicket = self.storyboard?.instantiateViewController(withIdentifier: "TicketInformation") as! TicketInformationTableViewController
                 infTicket.tickets = tickets
+                infTicket.Seats = self.Seats
+                infTicket.userSeat = self.userSeat
+                infTicket.idFilm = self.idFilm
+                infTicket.idDay = self.idDay
+                infTicket.idTime = self.idTime
+                infTicket.titleFilm = self.titleFilm
+                infTicket.room = self.room
+                infTicket.time = self.time
+                infTicket.day = self.day
                 self.navigationController?.pushViewController(infTicket, animated: true)
-                    
+                
             }))
             
             alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: nil))
-                
-                // show the alert
+            
+            // show the alert
             self.present(alert, animated: true, completion: nil)
         }
+        else {
+            let alert = UIAlertController(title: "Infor!", message: "Please choose seat!", preferredStyle: UIAlertControllerStyle.alert)
+            
+            // add the actions (buttons)
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.cancel, handler: nil))
+            
+            // show the alert
+            self.present(alert, animated: true, completion: nil)
+        }
+        
+        
     }
     
 }

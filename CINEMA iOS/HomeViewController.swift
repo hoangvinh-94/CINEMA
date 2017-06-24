@@ -14,6 +14,7 @@ import Auk
 
 class HomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource{
     
+    @IBOutlet weak var tableAcIndicator: UIActivityIndicatorView!
     public static var searchController = UISearchController(searchResultsController: nil)
     var db = DataFilm()
     var Films = [Film]()
@@ -73,7 +74,34 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             //db.reloadFilmFromUrlApi(page: 1	, filmType: "popular")
             //db.reloadFilmFromUrlApi(page: 1	, filmType: "upcoming")
             //db.reloadFilmFromUrlApi(page: 1	, filmType: "now_playing")
+            
+            
+            
         }
+        
+        //tableViewDidStartLoad(tableView)
+        //tableViewDidFinishLoad(tableView)
+        
+        // load time from internet
+        let myURLString = "https://www.timeanddate.com/worldclock/vietnam"
+        guard let myURL = URL(string: myURLString) else {
+            print("*****************************************Error: \(myURLString) doesn't seem to be a valid URL")
+            return
+        }
+        
+        do {
+            let myHTMLString = try String(contentsOf: myURL, encoding: .ascii)
+            print("*******************************************HTML : \(myHTMLString)")
+            let str = myHTMLString
+            let start = str.index(str.startIndex, offsetBy: 13846)
+            let end = str.index(str.endIndex, offsetBy: -6)
+            let range = start..<end
+            
+            print("1111111111111111111111111111111111111111111111111111111"+str.substring(with: range))
+        } catch let error {
+            print("****************************************Error: \(error)")
+        }
+      
         
     }
     
@@ -81,7 +109,16 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     override func viewWillAppear(_ animated: Bool) {
         
         self.segmentControl.selectedSegmentIndex = 0
+        
         loadDataToTableView(type: "popular")
+    }
+    
+    func tableViewDidStartLoad(_ : UITableView) {
+        tableAcIndicator.startAnimating()
+    }
+    
+    func tableViewDidFinishLoad(_ : UITableView) {
+        tableAcIndicator.stopAnimating()
     }
     
     func toProfileViewController() {
@@ -117,6 +154,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         self.Films = [Film]()
         queue.cancelAllOperations()
+        tableAcIndicator.startAnimating()
         refHandler = ref.child("films5").observe(.childAdded, with:{ (snapshot) in
             // Get user value
             if let dictionary = snapshot.value as? [String: AnyObject]{
@@ -133,6 +171,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                 if(typeFilm != "" && typeFilm == type){
                     self.Films.append(Film(id: id!,title: title!, poster: poster_path!, overview: overview!, releaseDate: release_date!, runtime: runtime!, genres: genres!))
                     DispatchQueue.main.async {
+                        self.tableAcIndicator.stopAnimating()
                         self.tableView.reloadData()
                         self.tableView.setContentOffset(CGPoint.zero, animated: false)
                         self.slideShow(poster_path: poster_path!)
@@ -275,6 +314,9 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         
     }
     
+
+    
+    
 }
 
 extension HomeViewController : UISearchBarDelegate{
@@ -336,3 +378,4 @@ extension UIImage {
     }
     
 }
+
