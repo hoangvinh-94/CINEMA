@@ -24,6 +24,8 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     var prefixImg: String = "https://image.tmdb.org/t/p/w320"
     var prefixImgSlideshow: String = "https://image.tmdb.org/t/p/w1400_and_h450_bestv2"
     var queue = OperationQueue()
+    var isSlideShowLoaded: Bool!
+    var isSlideShowDefaultDeleted: Bool!
     
     @IBOutlet var tableView: UITableView!
     
@@ -43,8 +45,9 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         if currentReachabilityStatus == .notReachable {
-            LoadView = UIView(frame: CGRect(x: 0, y: 20 + (navigationController?.navigationBar.frame.height)!	, width: 50, height: view.frame.height - 20 + (navigationController?.navigationBar.frame.height)!))
+            LoadView = UIView(frame: CGRect(x: 0, y: 20 + (navigationController?.navigationBar.frame.height)!, width: 50, height: view.frame.height - 20 + (navigationController?.navigationBar.frame.height)!))
         } else {
             let font = UIFont.systemFont(ofSize: 10)
             segmentControl.setTitleTextAttributes([NSFontAttributeName: font],
@@ -62,6 +65,9 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                 })
                     
             }
+            self.isSlideShowLoaded = false
+            self.isSlideShowDefaultDeleted = false
+            slideShowDefault()
             
             // Do any additional setup after loading the view, typically from a nib.
             HomeViewController.searchController.searchResultsUpdater = self
@@ -107,18 +113,16 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     
     override func viewWillAppear(_ animated: Bool) {
-        
+        AppUtility.lockOrientation(.portrait, andRotateTo: .portrait)
         self.segmentControl.selectedSegmentIndex = 0
+        loadDataToTableView(type: "now_playing")
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
         
-        loadDataToTableView(type: "popular")
-    }
-    
-    func tableViewDidStartLoad(_ : UITableView) {
-        tableAcIndicator.startAnimating()
-    }
-    
-    func tableViewDidFinishLoad(_ : UITableView) {
-        tableAcIndicator.stopAnimating()
+        // Don't forget to reset when view is being removed
+        AppUtility.lockOrientation(.all)
     }
     
     func toProfileViewController() {
@@ -158,7 +162,10 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         refHandler = ref.child("films5").observe(.childAdded, with:{ (snapshot) in
             // Get user value
             if let dictionary = snapshot.value as? [String: AnyObject]{
-                
+                if (type == "now_playing" && self.isSlideShowLoaded == false && self.isSlideShowDefaultDeleted == false) {
+                    self.mainScrollView.auk.removeAll()
+                    self.isSlideShowDefaultDeleted = true
+                }
                 let id = dictionary["idFilm"] as? Int
                 let typeFilm = dictionary["type"] as? String
                 let overview = dictionary["overview"] as? String
@@ -174,12 +181,16 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                         self.tableAcIndicator.stopAnimating()
                         self.tableView.reloadData()
                         self.tableView.setContentOffset(CGPoint.zero, animated: false)
-                        self.slideShow(poster_path: poster_path!)
+                        if (type == "now_playing" && self.isSlideShowLoaded == false) {
+                            self.slideShow(poster_path: poster_path!)
+                            if self.mainScrollView.auk.numberOfPages > 3 {
+                                self.isSlideShowLoaded = true
+                            }
+                        }
                     }
                 }else{
                     return
                 }
-                
             }
             
             
@@ -192,9 +203,9 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         let size = CGSize(width: Int(self.mainScrollView.frame.width), height: Int(self.mainScrollView.frame.height))
         self.queue.addOperation { () -> Void in
             if poster_path != "" {
-                if var img = Downloader.downloadImageWithURL("\(self.prefixImgSlideshow)\(poster_path )") {
+                if var img = Downloader.downloadImageWithURL("\(self.prefixImg)\(poster_path )") {
                     OperationQueue.main.addOperation({
-                        img = self.imageResize(image: img,sizeChange: size)
+                        img = self.imageResize(image: img, sizeChange: size)
                         self.mainScrollView.auk.show(image: img)
                     })
                 }
@@ -207,20 +218,35 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         
     }
     
+    func slideShowDefault() {
+        let size = CGSize(width: Int(self.mainScrollView.frame.width), height: Int(self.mainScrollView.frame.height))
+        //let image1 = imageResize(image: UIImage(named:"movietime1.jpg")!, sizeChange: size)
+        let image2 = imageResize(image: UIImage(named:"gameot.jpg")!, sizeChange: size)
+        //let image3 = imageResize(image: UIImage(named:"007.jpg")!, sizeChange: size)
+        //self.mainScrollView.auk.show(image: image1)
+        self.mainScrollView.auk.show(image: image2)
+        //self.mainScrollView.auk.show(image: image3)
+        
+        // Scroll images automatically with the interval of 3 seconds
+        self.mainScrollView.auk.startAutoScroll(delaySeconds: 3)
+
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
     @IBAction func indexChanged(_ sender: Any) {
         switch segmentControl.selectedSegmentIndex{
         case 0:
-            loadDataToTableView(type: "popular")
-            break
-        case 1:
             loadDataToTableView(type: "now_playing")
             break
-        case 2:
+        case 1:
             loadDataToTableView(type: "upcoming")
+            break
+        case 2:
+            loadDataToTableView(type: "popular")
             break
         default: break
         }
@@ -313,10 +339,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             revealviewcontroller.pushFrontViewController(newFrontController, animated: true)
         
     }
-    
-
-    
-    
 }
 
 extension HomeViewController : UISearchBarDelegate{
@@ -347,35 +369,3 @@ extension HomeViewController: UISearchResultsUpdating{
     }
     
 }
-extension UIImage {
-    
-    func resize(maxWidthHeight : Double)-> UIImage? {
-        
-        let actualHeight = Double(size.height)
-        let actualWidth = Double(size.width)
-        var maxWidth = 0.0
-        var maxHeight = 0.0
-        
-        if actualWidth > actualHeight {
-            maxWidth = maxWidthHeight
-            let per = (100.0 * maxWidthHeight / actualWidth)
-            maxHeight = (actualHeight * per) / 100.0
-        }else{
-            maxHeight = maxWidthHeight
-            let per = (100.0 * maxWidthHeight / actualHeight)
-            maxWidth = (actualWidth * per) / 100.0
-            maxWidth = actualWidth
-        }
-        
-        let hasAlpha = true
-        let scale: CGFloat = 0.0
-        
-        UIGraphicsBeginImageContextWithOptions(CGSize(width: maxWidth, height: maxHeight), !hasAlpha, scale)
-        self.draw(in: CGRect(origin: .zero, size: CGSize(width: maxWidth, height: maxHeight)))
-        
-        let scaledImage = UIGraphicsGetImageFromCurrentImageContext()
-        return scaledImage
-    }
-    
-}
-

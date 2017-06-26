@@ -155,6 +155,14 @@ class TicketInformationTableViewController: UITableViewController {
         cell.time.text = tickets?[indexPath.row].getTime()
         cell.seat.text = String((tickets?[indexPath.row].getSeat())!)
         cell.room.text = String((tickets?[indexPath.row].getRoom())!)
+        
+        // add border and color
+        cell.backgroundColor = UIColor.white
+        cell.layer.borderColor = UIColor.blue.cgColor
+        cell.layer.borderWidth = 1
+        cell.layer.cornerRadius = 5
+        cell.clipsToBounds = true
+        
         return cell
     }
     

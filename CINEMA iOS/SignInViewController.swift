@@ -17,6 +17,8 @@ class SignInViewController: UIViewController {
     
     @IBOutlet weak var menuButton: UIBarButtonItem!
     
+    var actIndicator = UIActivityIndicatorView()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -33,6 +35,13 @@ class SignInViewController: UIViewController {
         userNameTextField.layer.borderWidth = 1
         userNameTextField.layer.borderColor = UIColor.blue.cgColor
         
+        actIndicator.activityIndicatorViewStyle = .whiteLarge
+        actIndicator.color = UIColor.orange
+        actIndicator.center = self.view.center
+        
+        self.view.addSubview(actIndicator)
+        
+        
         // Do any additional setup after loading the view.
     }
     
@@ -43,10 +52,11 @@ class SignInViewController: UIViewController {
     
     
     @IBAction func singInAction(_ sender: Any) {
+        actIndicator.startAnimating()
         if self.userNameTextField.text == "" || self.passwordTextField.text == "" {
             
             //Alert to tell the user that there was an error because they didn't fill anything in the textfields because they didn't fill anything in
-            
+            actIndicator.stopAnimating()
             let alertController = UIAlertController(title: "Error", message: "Please enter an email and password.", preferredStyle: .alert)
             
             let defaultAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
@@ -59,7 +69,7 @@ class SignInViewController: UIViewController {
             Auth.auth().signIn(withEmail: self.userNameTextField.text!, password: self.passwordTextField.text!) { (user, error) in
                 
                 if error == nil {
-                    
+                    self.actIndicator.stopAnimating()
                     //Print into the console if successfully logged in
                     print("You have successfully logged in")
                     
@@ -69,7 +79,7 @@ class SignInViewController: UIViewController {
                     self.present(vc!, animated: true, completion: nil)
                     
                 } else {
-                    
+                    self.actIndicator.stopAnimating()
                     //Tells the user that there is an error and then gets firebase to tell them the error
                     let alertController = UIAlertController(title: "Error", message: error?.localizedDescription, preferredStyle: .alert)
                     

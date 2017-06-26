@@ -35,17 +35,18 @@ class MenuViewController: UIViewController, UITableViewDelegate, UITableViewData
             self.navigationItem.title = "Current User"
         }
         tableView.tableHeaderView = searchController.searchBar
-        ManuNameArray = ["Home","Coming Soon","Movie Store","Now Showing", "Schedule Today", "Sign In"]
-        iconArray = [UIImage(named:"home2")!,UIImage(named:"played1")!,UIImage(named:"oldmovie")!,UIImage(named:"dangchieu")!, UIImage(named:"schedule")!, UIImage(named:"signin")!]
+        ManuNameArray = ["Home", "Schedule Today", "Now Showing", "Coming Soon", "Had Shown", "Sign In"]
+        iconArray = [UIImage(named:"home2")!, UIImage(named:"schedule")!, UIImage(named:"dangchieu")!, UIImage(named:"played1")!,UIImage(named:"oldmovie")!, UIImage(named:"signin")!]
         
         if Auth.auth().currentUser?.uid != nil {
+            
             ManuNameArray.remove(at: 5)
             iconArray.remove(at: 5)
             
+            ManuNameArray.append("My Profile")
+            iconArray.append(UIImage(named:"userinfor")!)
             ManuNameArray.append("Change Password")
             iconArray.append(UIImage(named:"changepassword")!)
-             ManuNameArray.append("My Profile")
-            iconArray.append(UIImage(named:"userinfor")!)
             ManuNameArray.append("Sign Out")
             iconArray.append(UIImage(named:"logout")!)
         }
@@ -103,7 +104,7 @@ class MenuViewController: UIViewController, UITableViewDelegate, UITableViewData
             revealviewcontroller.pushFrontViewController(newFrontController, animated: true)
         }
         
-        if cell.labelMenu.text! == "Movie Store"
+        if cell.labelMenu.text! == "Had Shown"
         {
             let mainstoryboard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
             let PDC = mainstoryboard.instantiateViewController(withIdentifier: "PDC") as! FilmTypeTableViewController

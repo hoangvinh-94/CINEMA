@@ -49,7 +49,7 @@ class FilmTypeTableViewController: UITableViewController {
         
         
     }
-
+    
     override func viewWillAppear(_ animated: Bool) {
         // tableIndicator.startAnimating()
         switch typeFilm! {

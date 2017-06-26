@@ -114,11 +114,19 @@ class ChangePasswordViewController: UIViewController {
                             })
                         }
                         else {
-                            let alertError = UIAlertController(title: "Error!", message: "Please relogin and try again!", preferredStyle: .alert)
-                            let defaultAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-                            alertError.addAction(defaultAction)
-                            self.present(alertError, animated: true, completion: nil)
-                            print("Error when changing password!")
+                            if (self.newPasswordTextField.text?.characters.count)! < 6 {
+                                let alertError = UIAlertController(title: "Error!", message: "Password much more than 5 characters. Please try again!", preferredStyle: .alert)
+                                let defaultAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+                                alertError.addAction(defaultAction)
+                                self.present(alertError, animated: true, completion: nil)
+                                
+                            }
+                            else {
+                                let alertError1 = UIAlertController(title: "Error!", message: error.debugDescription, preferredStyle: .alert)
+                                let defaultAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+                                alertError1.addAction(defaultAction)
+                                self.present(alertError1, animated: true, completion: nil)
+                            }
                             
                         }
                     })

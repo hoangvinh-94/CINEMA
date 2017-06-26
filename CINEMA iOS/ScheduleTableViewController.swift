@@ -45,7 +45,10 @@ class ScheduleTableViewController: UITableViewController {
         
         ref = Database.database().reference()
         loadDataToTableView()
-      
+        if tableIndicator.isAnimating {
+            print("con quay")
+            tableIndicator.stopAnimating()
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -56,13 +59,12 @@ class ScheduleTableViewController: UITableViewController {
     // MARK: - Table view data source
 
     func loadDataToTableView(){
-        tableIndicator.startAnimating()
-        
+                
         let date = Date()
         let formatter = DateFormatter()
         formatter.dateFormat = "dd/MM/yyyy"
         let today = formatter.string(from: date)
-        
+        self.tableIndicator.startAnimating()
         self.Films = [Film]()
         queue.cancelAllOperations()
         
@@ -75,7 +77,6 @@ class ScheduleTableViewController: UITableViewController {
                         let days = dictionary1["day"] as? [Dictionary<String,Any>]
                         if Int(snapshot1.key) == filmId {
                             //var room: Int?
-                            
                             for d in days!{
                                 let day = d["day"] as? String
                                 if day == today {
@@ -95,19 +96,12 @@ class ScheduleTableViewController: UITableViewController {
                                         DispatchQueue.main.async {
                                             self.tableIndicator.stopAnimating()
                                             self.tableView.reloadData()
-                                            self.tableView.setContentOffset(CGPoint.zero, animated: false)
                                         }
                 
                                     }
                                     
                                 }
-                                else {
-                                    self.tableIndicator.stopAnimating()
-                                    let alertError = UIAlertController(title: "Schedule Infor!", message: "There is no any schedule today!", preferredStyle: .alert)
-                                    let defaultAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
-                                    alertError.addAction(defaultAction)
-                                    self.present(alertError, animated: true, completion: nil)
-                                }
+                                
                             }
                             
                             

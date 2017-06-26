@@ -30,6 +30,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         ref = Database.database().reference()
         
         menuButton.target = revealViewController()
@@ -50,8 +51,20 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        AppUtility.lockOrientation(.portrait, andRotateTo: .portrait)
         loadUserInfor()
         loadDataToTableView()
+        if tableIndicator.isAnimating {
+            tableIndicator.stopAnimating()
+        }
+
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        // Don't forget to reset when view is being removed
+        AppUtility.lockOrientation(.all)
     }
     
     // MARK: - LoadData

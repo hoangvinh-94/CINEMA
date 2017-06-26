@@ -42,6 +42,7 @@
 		755CBE171EF19F8000CAD1FC /* ScheduleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 755CBE161EF19F8000CAD1FC /* ScheduleTableViewCell.swift */; };
 		756C08F01EF8E0230014BB02 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 756C08EF1EF8E0220014BB02 /* ProfileViewController.swift */; };
 		756C08F21EF8E1960014BB02 /* MyOrderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 756C08F11EF8E1960014BB02 /* MyOrderCell.swift */; };
+		75751D111F00033E00F7372C /* AppUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75751D101F00033C00F7372C /* AppUtility.swift */; };
 		75D0B7F41EE7F6D200A3A5BF /* ResetPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75D0B7F31EE7F6D200A3A5BF /* ResetPasswordViewController.swift */; };
 		75D0B7F61EE7F87800A3A5BF /* ChangePasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75D0B7F51EE7F87800A3A5BF /* ChangePasswordViewController.swift */; };
 		7AAF2BA74B2083FECC0F815C /* Pods_CINEMA_iOSTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 596F5CE9635484B73D0055E6 /* Pods_CINEMA_iOSTests.framework */; };
@@ -110,6 +111,7 @@
 		755CBE161EF19F8000CAD1FC /* ScheduleTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduleTableViewCell.swift; sourceTree = "<group>"; };
 		756C08EF1EF8E0220014BB02 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		756C08F11EF8E1960014BB02 /* MyOrderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyOrderCell.swift; sourceTree = "<group>"; };
+		75751D101F00033C00F7372C /* AppUtility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppUtility.swift; sourceTree = "<group>"; };
 		75D0B7F31EE7F6D200A3A5BF /* ResetPasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResetPasswordViewController.swift; sourceTree = "<group>"; };
 		75D0B7F51EE7F87800A3A5BF /* ChangePasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangePasswordViewController.swift; sourceTree = "<group>"; };
 		887A7C68A3B716881D5405F3 /* Pods-CINEMA iOSUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CINEMA iOSUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-CINEMA iOSUITests/Pods-CINEMA iOSUITests.release.xcconfig"; sourceTree = "<group>"; };
@@ -239,8 +241,8 @@
 				75D0B7F31EE7F6D200A3A5BF /* ResetPasswordViewController.swift */,
 				75D0B7F51EE7F87800A3A5BF /* ChangePasswordViewController.swift */,
 				755CBE161EF19F8000CAD1FC /* ScheduleTableViewCell.swift */,
-				6054359C1EF30A7B00C98CFE /* ScheduleTableViewController.swift */,
 				756C08EF1EF8E0220014BB02 /* ProfileViewController.swift */,
+				6054359C1EF30A7B00C98CFE /* ScheduleTableViewController.swift */,
 				756C08F11EF8E1960014BB02 /* MyOrderCell.swift */,
 				75111D8F1EF9660200DD6F4C /* AdminViewController.swift */,
 			);
@@ -252,6 +254,7 @@
 			children = (
 				600B60971EECAE5600B306E6 /* Reachability.swift */,
 				60A2B5D91EE112C100857EAC /* DataFilm.swift */,
+				75751D101F00033C00F7372C /* AppUtility.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -562,6 +565,7 @@
 			files = (
 				6054359D1EF30A7B00C98CFE /* ScheduleTableViewController.swift in Sources */,
 				7525D84F1EE4197300FF6FA5 /* SWRevealViewController.m in Sources */,
+				75751D111F00033E00F7372C /* AppUtility.swift in Sources */,
 				60A2B5DA1EE112C100857EAC /* DataFilm.swift in Sources */,
 				60E10ABF1EF1E76100A34628 /* FilmTypeTableViewCell.swift in Sources */,
 				605804A41EE4A0FB00E7BF53 /* BookFilmTableViewController.swift in Sources */,
