@@ -42,39 +42,68 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        if currentReachabilityStatus == .notReachable {
-            LoadView = UIView(frame: CGRect(x: 0, y: 20 + (navigationController?.navigationBar.frame.height)!	, width: 50, height: view.frame.height - 20 + (navigationController?.navigationBar.frame.height)!))
-        } else {
-            let font = UIFont.systemFont(ofSize: 10)
-            segmentControl.setTitleTextAttributes([NSFontAttributeName: font],
-                                                  for: .normal)
+//        if currentReachabilityStatus == .notReachable {
+//            print("vinh")
+//        } else {
+//            return
+//            print("vinh1")
+//            let font = UIFont.systemFont(ofSize: 10)
+//            segmentControl.setTitleTextAttributes([NSFontAttributeName: font],
+//                                                  for: .normal)
+//            
+//            ref = Database.database().reference()
+//            if(Auth.auth().currentUser?.uid != nil){
+//                    self.signIn.isEnabled = false
+//                    
+//            }
+//        
+//            // Do any additional setup after loading the view, typically from a nib.
+//            HomeViewController.searchController.searchResultsUpdater = self
+//            definesPresentationContext = true
+//            HomeViewController.searchController.dimsBackgroundDuringPresentation = true
+//            HomeViewController.searchController.searchBar.delegate = self
+//            
+//            menuButton.target = revealViewController()
+//            menuButton.action = #selector(SWRevealViewController.revealToggle(_:))
+//            //db.reloadFilmFromUrlApi(page: 1	, filmType: "popular")
+//            //db.reloadFilmFromUrlApi(page: 1	, filmType: "upcoming")
+//            //db.reloadFilmFromUrlApi(page: 1	, filmType: "now_playing")
+//        }
+        ref = Database.database().reference()
+        if(Auth.auth().currentUser?.uid != nil){
+            self.signIn.isEnabled = false
             
-            ref = Database.database().reference()
-            if(Auth.auth().currentUser?.uid != nil){
-                    self.signIn.isEnabled = false
-                    
-            }
-            
-            // Do any additional setup after loading the view, typically from a nib.
-            HomeViewController.searchController.searchResultsUpdater = self
-            definesPresentationContext = true
-            HomeViewController.searchController.dimsBackgroundDuringPresentation = true
-            HomeViewController.searchController.searchBar.delegate = self
-            
-            menuButton.target = revealViewController()
-            menuButton.action = #selector(SWRevealViewController.revealToggle(_:))
-            //db.reloadFilmFromUrlApi(page: 1	, filmType: "popular")
-            //db.reloadFilmFromUrlApi(page: 1	, filmType: "upcoming")
-            //db.reloadFilmFromUrlApi(page: 1	, filmType: "now_playing")
         }
         
+        // Do any additional setup after loading the view, typically from a nib.
+        HomeViewController.searchController.searchResultsUpdater = self
+        definesPresentationContext = true
+        HomeViewController.searchController.dimsBackgroundDuringPresentation = true
+        HomeViewController.searchController.searchBar.delegate = self
+        
+        menuButton.target = revealViewController()
+        menuButton.action = #selector(SWRevealViewController.revealToggle(_:))
+        //db.reloadFilmFromUrlApi(page: 1	, filmType: "popular")
+        //db.reloadFilmFromUrlApi(page: 1	, filmType: "upcoming")
+        //db.reloadFilmFromUrlApi(page: 1	, filmType: "now_playing")
     }
     
     
     override func viewWillAppear(_ animated: Bool) {
         
         self.segmentControl.selectedSegmentIndex = 0
-        loadDataToTableView(type: "popular")
+    //    loadDataToTableView(type: "popular")
+        if currentReachabilityStatus == .notReachable {
+            print("vinh")
+        } else {
+            return
+            print("ttb")
+            print("ttb1")
+            let font = UIFont.systemFont(ofSize: 10)
+            segmentControl.setTitleTextAttributes([NSFontAttributeName: font],
+                                                  for: .normal)
+            //db.reloadFilmFromUrlApi(page: 1	, filmType: "now_playing")
+        }
     }
     
     func imageResize (image:UIImage, sizeChange:CGSize)-> UIImage{
