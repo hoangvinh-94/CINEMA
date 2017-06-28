@@ -18,6 +18,9 @@ class FilmTypeTableViewController: UITableViewController {
     var prefixImg: String = "https://image.tmdb.org/t/p/w320"
     var queue = OperationQueue()
     var typeFilm : Int?
+    
+    var tableIndicator = UIActivityIndicatorView()
+    
     @IBOutlet var menuButton: UIBarButtonItem!
     
     class Downloader {
@@ -37,9 +40,21 @@ class FilmTypeTableViewController: UITableViewController {
         menuButton.target = revealViewController()
         menuButton.action = #selector(SWRevealViewController.revealToggle(_:))
         
+        tableIndicator.activityIndicatorViewStyle = .whiteLarge
+        tableIndicator.color = UIColor.orange
+        
+        tableView.backgroundView = tableIndicator
+        tableView.separatorStyle = UITableViewCellSeparatorStyle.none
+        
+        
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        // tableIndicator.startAnimating()
         switch typeFilm! {
         case 0:
-             loadDataToTableView(type: "popular")
+            loadDataToTableView(type: "popular")
             break
         case 1:
             loadDataToTableView(type: "now_playing")
@@ -50,13 +65,13 @@ class FilmTypeTableViewController: UITableViewController {
         default:
             break
         }
-        
     }
 
     func loadDataToTableView(type: String){
         
         self.Films = [Film]()
         queue.cancelAllOperations()
+        tableIndicator.startAnimating()
         refHandler = ref.child("films5").observe(.childAdded, with:{ (snapshot) in
             // Get user value
             if let dictionary = snapshot.value as? [String: AnyObject]{
@@ -70,11 +85,12 @@ class FilmTypeTableViewController: UITableViewController {
                 let runtime = dictionary["runtime"] as? Int
                 let genres = dictionary["genres"] as? [Dictionary<String,Any>]
                 
+                
                 if(typeFilm != "" && typeFilm == type){
                     self.Films.append(Film(id: id!,title: title!, poster: poster_path!, overview: overview!, releaseDate: release_date!, runtime: runtime!, genres: genres!))
                     DispatchQueue.main.async {
+                        self.tableIndicator.stopAnimating()
                         self.tableView.reloadData()
-                        self.tableView.setContentOffset(CGPoint.zero, animated: false)
                     }
                 }else{
                     return

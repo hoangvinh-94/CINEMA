@@ -43,6 +43,8 @@
             print(url!)
             let request = NSMutableURLRequest(url: url! as URL)
             
+    
+            
             // 5
             dataTask = Session.dataTask(with: request as URLRequest) {
                 data, response, error in

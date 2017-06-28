@@ -25,11 +25,19 @@ class SeatCollectionViewController: UICollectionViewController {
     var room: Int?
     var time: String?
     var titleFilm: String?
+    var tableIndicator = UIActivityIndicatorView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
      
+        tableIndicator.activityIndicatorViewStyle = .whiteLarge
+        tableIndicator.color = UIColor.orange
+        
+        collectionView?.backgroundView = tableIndicator
+        
+        
         ref = Database.database().reference()
+        
         loadSeat()
         
        
@@ -40,9 +48,12 @@ class SeatCollectionViewController: UICollectionViewController {
     
     override func viewWillAppear(_ animated: Bool)
         {
+            
     }
     
     func loadSeat(){
+        
+        tableIndicator.startAnimating()
         let idRef1 = ref.child("bookfilm").child(String(idFilm!)).child("day").child(String(idDay!)).child("times").child(String(idTime!))
         
         idRef1.queryOrdered(byChild: "seats").observe(.value, with: {snapshot in
@@ -51,12 +62,24 @@ class SeatCollectionViewController: UICollectionViewController {
                 self.time = s["time"] as? String
                 self.Seat = seat!
                 self.Seats = (self.Seat?.components(separatedBy: "_"))!
+                
                 self.userSeat = (self.Seat?.components(separatedBy: "_"))!
+            }
+            if !self.Seats.contains("0") {
+                 let alert = UIAlertController(title: "Information", message: "Room is full\nplease choice others time", preferredStyle: UIAlertControllerStyle.alert)
+                alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: { action in
+                    
+                   _ = self.navigationController?.popViewController(animated: true)
+                }))
+                
+                // show the alert
+                self.present(alert, animated: true, completion: nil)
             }
             
             DispatchQueue.main.async {
+                self.tableIndicator.stopAnimating()
                 self.collectionView?.reloadData()
-                self.collectionView?.setContentOffset(CGPoint.zero, animated: false)
+//                self.collectionView?.setContentOffset(CGPoint.zero, animated: false)
             }
             
         })
@@ -73,6 +96,11 @@ class SeatCollectionViewController: UICollectionViewController {
         // #warning Incomplete implementation, return the number of sections
         return 1
     }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let backItem = UIBarButtonItem()
+        backItem.title = "OK"
+        navigationItem.backBarButtonItem = backItem
+    }
     
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -82,16 +110,20 @@ class SeatCollectionViewController: UICollectionViewController {
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
+        var seats = ""
+        for s in Seats {
+            seats = seats + " " + s
+        }
+        print("\(seats)\n")
+        
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier:"SeatCell", for: indexPath) as! SeatCollectionViewCell
         
         cell.numberOfSeat.text = "0" + String(indexPath.row + 1)
         
-        let c = Int(Seats[indexPath.row])
-        
-        if c == 0 {
+        if (Seats[indexPath.row] == "0") {
             cell.backgroundColor = UIColor.green
         }
-        else{
+        else {
             cell.backgroundColor = UIColor.red
             cell.isUserInteractionEnabled = false
         }
@@ -110,59 +142,77 @@ class SeatCollectionViewController: UICollectionViewController {
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
          var selectedCell: UICollectionViewCell!
         selectedCell = collectionView.cellForItem(at: indexPath)!
-        let c = Int(Seats[indexPath.row])
         collectionView.allowsSelection = false
-        if(c == 0){
-            selectedCell.contentView.backgroundColor = UIColor.red
+        print("Set color")
+        
+        if(Seats[indexPath.row] == "0"){
+            selectedCell.backgroundColor = UIColor.yellow
             collectionView.allowsSelection = true
             collectionView.allowsMultipleSelection = true
             Seats[indexPath.row] = String(indexPath.row +  1)
         }
+            
         else{
             collectionView.allowsSelection = true
             collectionView.allowsMultipleSelection = true
-            selectedCell.contentView.backgroundColor = UIColor.green
+            selectedCell.backgroundColor = UIColor.green
             Seats[indexPath.row] = String(0)
         }
         
         
+        
+        
     }
     @IBAction func saveSeat(_ sender: Any) {
-        var tickets = [Ticket]()
-        let uid = Auth.auth().currentUser?.uid
-
-        let seatString = Seats.joined(separator: "_")
+    
+        let seatString = self.Seats.joined(separator: "_")
+        
         if(seatString != self.Seat){
-            let filter = Seats.filter{!userSeat.contains($0)}
-            for i in filter{
-                let t = Ticket(titleFilm: titleFilm!, day: day!, time: time!, seat: Int(i)!, room: room!)
-                tickets.append(t)
-                ref.child("tickets").childByAutoId().setValue(["idFilm": idFilm!, "titleFilm": titleFilm!, "day": day!, "time": time!, "room": room!, "seat": i, "idUser": uid!])
-                
-            }
+            let alert = UIAlertController(title: "Succesful", message: "View Ticket information?", preferredStyle: UIAlertControllerStyle.alert)
             
-            
-            let bookRef = ref.child("bookfilm").child(String(idFilm!)).child("day").child(String(self.idDay!)).child("times").child(String(idTime!))
-                bookRef.updateChildValues(["seats": seatString])
-            print(seatString)
-
-                //Tells the user that there is an error and then gets firebase to tell them the error
-                // create the alert
-            let alert = UIAlertController(title: "Succesful", message: "Would you like to my Ticket information?", preferredStyle: UIAlertControllerStyle.alert)
-                
-                // add the actions (buttons)
+            // add the actions (buttons)
             alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: { action in
-                    
+                
+                var tickets = [Ticket]()
+                
+                let filter = self.Seats.filter{!self.userSeat.contains($0)}
+                
+                for i in filter{
+                    let t = Ticket(titleFilm: self.titleFilm!, day: self.day!, time: self.time!, seat: i, room: self.room!)
+                    tickets.append(t)
+                }
+                
                 let infTicket = self.storyboard?.instantiateViewController(withIdentifier: "TicketInformation") as! TicketInformationTableViewController
                 infTicket.tickets = tickets
+                infTicket.Seats = self.Seats
+                infTicket.userSeat = self.userSeat
+                infTicket.idFilm = self.idFilm
+                infTicket.idDay = self.idDay
+                infTicket.idTime = self.idTime
+                infTicket.titleFilm = self.titleFilm
+                infTicket.room = self.room
+                infTicket.time = self.time
+                infTicket.day = self.day
                 self.navigationController?.pushViewController(infTicket, animated: true)
-                    
-            }))
-            alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: nil))
                 
-                // show the alert
+            }))
+            
+            alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: nil))
+            
+            // show the alert
             self.present(alert, animated: true, completion: nil)
         }
+        else {
+            let alert = UIAlertController(title: "Infor!", message: "Please choose seat!", preferredStyle: UIAlertControllerStyle.alert)
+            
+            // add the actions (buttons)
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.cancel, handler: nil))
+            
+            // show the alert
+            self.present(alert, animated: true, completion: nil)
+        }
+        
+        
     }
     
 }

@@ -25,6 +25,16 @@ class ChangePasswordViewController: UIViewController {
         // Do any additional setup after loading the view.
         menuButton.target = revealViewController()
         menuButton.action = #selector(SWRevealViewController.revealToggle(_:))
+        
+        confirmPasswordTextField.backgroundColor = .clear
+        confirmPasswordTextField.layer.cornerRadius = 5
+        confirmPasswordTextField.layer.borderWidth = 1
+        confirmPasswordTextField.layer.borderColor = UIColor.blue.cgColor
+        
+        newPasswordTextField.backgroundColor = .clear
+        newPasswordTextField.layer.cornerRadius = 5
+        newPasswordTextField.layer.borderWidth = 1
+        newPasswordTextField.layer.borderColor = UIColor.blue.cgColor
     }
     
     override func didReceiveMemoryWarning() {
@@ -59,32 +69,66 @@ class ChangePasswordViewController: UIViewController {
                     print("User not loged in")
                 }
                 else {
-                    
+                    print("User loged in")
                     guard let uid = Auth.auth().currentUser?.uid else {
+                         print("not valid uid")
                         return
                     }
-                    
+                    print("valid uid")
                     let ref: DatabaseReference!
                     ref = Database.database().reference()
                     let userRef = ref.child("users").child(uid)
                     Auth.auth().currentUser!.updatePassword(to: newPasswordTextField.text!, completion: { (error) in
+                        //print(error?.localizedDescription)
                         if error == nil{
+                            print("error nil")
                             userRef.updateChildValues(["password" : self.newPasswordTextField.text! ], withCompletionBlock: {(errEM, referenceEM)   in
                                 
                                 if errEM == nil{
-                                    let alertController = UIAlertController(title: "Success!", message: "Change password successfully!", preferredStyle: .alert)
+                                    let alertController = UIAlertController(title: "Success!", message: "Change password successfully! Please relogin!", preferredStyle: .alert)
                                     
-                                    let defaultAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
-                                    alertController.addAction(defaultAction)
-                                    
+                                    // add the actions (buttons)
+                                    alertController.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: { action in
+                                        
+                                        do {
+                                            try Auth.auth().signOut()
+                                        } catch let errorLogout {
+                                            print(errorLogout)
+                                        }
+                                        
+                                        let homeView = self.storyboard?.instantiateViewController(withIdentifier: "SignInViewController") as! SignInViewController
+                                        self.navigationController?.pushViewController(homeView, animated: true)
+                                        
+                                    }))
                                     self.present(alertController, animated: true, completion: nil)
                                     print("Change password successfully!")
-                                }else{
+                                    
+                                } else {
+                                    let alertError = UIAlertController(title: "Error!", message: "Please relogin and try again!", preferredStyle: .alert)
+                                    let defaultAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+                                    alertError.addAction(defaultAction)
+                                    self.present(alertError, animated: true, completion: nil)
                                     print("Error when changing password!")
                                 }
+                
                             })
                         }
-                        
+                        else {
+                            if (self.newPasswordTextField.text?.characters.count)! < 6 {
+                                let alertError = UIAlertController(title: "Error!", message: "Password much more than 5 characters. Please try again!", preferredStyle: .alert)
+                                let defaultAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+                                alertError.addAction(defaultAction)
+                                self.present(alertError, animated: true, completion: nil)
+                                
+                            }
+                            else {
+                                let alertError1 = UIAlertController(title: "Error!", message: error.debugDescription, preferredStyle: .alert)
+                                let defaultAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+                                alertError1.addAction(defaultAction)
+                                self.present(alertError1, animated: true, completion: nil)
+                            }
+                            
+                        }
                     })
                 }
                 
