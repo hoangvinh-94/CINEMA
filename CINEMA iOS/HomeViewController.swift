@@ -1,3 +1,4 @@
+
 //
 //  ViewController.swift
 //  CINEMA iOS
@@ -5,7 +6,6 @@
 //  Created by healer on 5/27/17.
 //  Copyright © 2017 healer. All rights reserved.
 //
-
 import UIKit
 import Foundation
 import Firebase
@@ -45,38 +45,20 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-//        if currentReachabilityStatus == .notReachable {
-//            print("vinh")
-//        } else {
-//            return
-//            print("vinh1")
-//            let font = UIFont.systemFont(ofSize: 10)
-//            segmentControl.setTitleTextAttributes([NSFontAttributeName: font],
-//                                                  for: .normal)
-//            
-//            ref = Database.database().reference()
-//            if(Auth.auth().currentUser?.uid != nil){
-//                    self.signIn.isEnabled = false
-//                    
-//            }
-//        
-//            // Do any additional setup after loading the view, typically from a nib.
-//            HomeViewController.searchController.searchResultsUpdater = self
-//            definesPresentationContext = true
-//            HomeViewController.searchController.dimsBackgroundDuringPresentation = true
-//            HomeViewController.searchController.searchBar.delegate = self
-//            
-//            menuButton.target = revealViewController()
-//            menuButton.action = #selector(SWRevealViewController.revealToggle(_:))
-//            //db.reloadFilmFromUrlApi(page: 1	, filmType: "popular")
-//            //db.reloadFilmFromUrlApi(page: 1	, filmType: "upcoming")
-//            //db.reloadFilmFromUrlApi(page: 1	, filmType: "now_playing")
-//        }
         ref = Database.database().reference()
         if(Auth.auth().currentUser?.uid != nil){
-            self.signIn.isEnabled = false
-            
+            let uid = Auth.auth().currentUser?.uid
+            ref.child("users").child(uid!).observe(.value, with: {(snapshot) in
+                let user = snapshot.value as? [String: Any]
+                self.signIn.title = "Hi, " + (user?["userName"] as? String)!
+                self.signIn.image = nil
+                self.signIn.action = #selector(self.toProfileViewController)
+                
+            })
         }
+        self.isSlideShowLoaded = false
+        self.isSlideShowDefaultDeleted = false
+        //slideShowDefault()
         
         // Do any additional setup after loading the view, typically from a nib.
         HomeViewController.searchController.searchResultsUpdater = self
@@ -86,24 +68,78 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         menuButton.target = revealViewController()
         menuButton.action = #selector(SWRevealViewController.revealToggle(_:))
-        //db.reloadFilmFromUrlApi(page: 1	, filmType: "popular")
-        //db.reloadFilmFromUrlApi(page: 1	, filmType: "upcoming")
-        //db.reloadFilmFromUrlApi(page: 1	, filmType: "now_playing")
+        
+        if currentReachabilityStatus != .notReachable {
+            self.loadDataToTableView(type: "now_playing")
+            print("User is connected to the internet via wifi.")
+            
+        } else {
+            retryConnection()
+            print("There is no internet connection")
+            
+        }
+        
+        
+        // load time from internet
+        //        let myURLString = "https://www.timeanddate.com/worldclock/vietnam"
+        //        guard let myURL = URL(string: myURLString) else {
+        //            print("*****************************************Error: \(myURLString) doesn't seem to be a valid URL")
+        //            return
+        //        }
+        //
+        //        do {
+        //            let myHTMLString = try String(contentsOf: myURL, encoding: .ascii)
+        //            print("*******************************************HTML : \(myHTMLString)")
+        //            let str = myHTMLString
+        //            let start = str.index(str.startIndex, offsetBy: 13846)
+        //            let end = str.index(str.endIndex, offsetBy: -6)
+        //            let range = start..<end
+        //
+        //            print("1111111111111111111111111111111111111111111111111111111"+str.substring(with: range))
+        //        } catch let error {
+        //            print("****************************************Error: \(error)")
+        //        }
+        
+        
     }
     
     
     override func viewWillAppear(_ animated: Bool) {
         AppUtility.lockOrientation(.portrait, andRotateTo: .portrait)
         self.segmentControl.selectedSegmentIndex = 0
-    //    loadDataToTableView(type: "popular")
-        if currentReachabilityStatus == .notReachable {
-            print("vinh")
-        } else {
-            let font = UIFont.systemFont(ofSize: 10)
-            segmentControl.setTitleTextAttributes([NSFontAttributeName: font],
-                                                  for: .normal)
-            //db.reloadFilmFromUrlApi(page: 1	, filmType: "now_playing")
-        }
+        //loadDataToTableView(type: "now_playing")
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        // Don't forget to reset when view is being removed
+        AppUtility.lockOrientation(.all)
+    }
+    
+    func retryConnection() {
+        let alert = UIAlertController(title: "Check", message: "Internet Connection is Required at first time running the app to load images and videos ", preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(UIAlertAction(title: "Retry", style: UIAlertActionStyle.default, handler: { action in
+            if self.currentReachabilityStatus == .notReachable {
+                self.retryConnection()
+            } else {
+                self.loadDataToTableView(type: "now_playing")
+                
+            }
+        }))
+        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.default, handler: { action in
+            exit(0)
+        }))
+        
+        DispatchQueue.main.async(execute: {
+            self.present(alert, animated: true, completion: nil)
+        })
+        
+    }
+    
+    func toProfileViewController() {
+        let profile = storyboard?.instantiateViewController(withIdentifier: "ProfileViewController") as! ProfileViewController
+        self.navigationController?.pushViewController(profile, animated: true)
     }
     
     func imageResize (image:UIImage, sizeChange:CGSize)-> UIImage{
@@ -205,7 +241,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         // Scroll images automatically with the interval of 3 seconds
         self.mainScrollView.auk.startAutoScroll(delaySeconds: 3)
-
+        
     }
     
     override func didReceiveMemoryWarning() {
@@ -310,9 +346,9 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     @IBAction func signInAction(_ sender: Any) {
         let revealviewcontroller:SWRevealViewController = self.revealViewController()
         
-            let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "SignInViewController")
-            let newFrontController = UINavigationController.init(rootViewController:vc)
-            revealviewcontroller.pushFrontViewController(newFrontController, animated: true)
+        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "SignInViewController")
+        let newFrontController = UINavigationController.init(rootViewController:vc)
+        revealviewcontroller.pushFrontViewController(newFrontController, animated: true)
         
     }
 }

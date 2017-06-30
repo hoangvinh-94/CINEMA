@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="6gD-46-wtw">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="6gD-46-wtw">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
         <capability name="Alignment constraints to the first baseline" minToolsVersion="6.0"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -274,15 +274,6 @@
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HhH-L2-7Io">
-                                            <rect key="frame" x="303" y="113.5" width="48" height="28"/>
-                                            <color key="backgroundColor" red="1" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                            <inset key="contentEdgeInsets" minX="5" minY="5" maxX="5" maxY="5"/>
-                                            <state key="normal" title="Book">
-                                                <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                            </state>
-                                        </button>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h45-ib-7Qv">
                                             <rect key="frame" x="184" y="35.5" width="182" height="14.5"/>
                                             <constraints>
@@ -292,6 +283,15 @@
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HhH-L2-7Io">
+                                            <rect key="frame" x="299" y="116" width="48" height="28"/>
+                                            <color key="backgroundColor" red="1" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                            <inset key="contentEdgeInsets" minX="5" minY="5" maxX="5" maxY="5"/>
+                                            <state key="normal" title="Book">
+                                                <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                            </state>
+                                        </button>
                                     </subviews>
                                     <constraints>
                                         <constraint firstAttribute="bottom" secondItem="0gZ-fr-Ibx" secondAttribute="bottom" constant="7.5" id="2f0-mc-FVi"/>
@@ -300,12 +300,12 @@
                                         <constraint firstItem="ndh-1D-xHe" firstAttribute="leading" secondItem="0gZ-fr-Ibx" secondAttribute="trailing" constant="5" id="KZ0-ZI-8hC"/>
                                         <constraint firstItem="Hxk-CY-LGz" firstAttribute="top" secondItem="7en-0g-pSd" secondAttribute="top" constant="10" id="MUF-DB-rpL"/>
                                         <constraint firstItem="h45-ib-7Qv" firstAttribute="leading" secondItem="ndh-1D-xHe" secondAttribute="trailing" constant="5" id="QGT-ra-Qx3"/>
-                                        <constraint firstAttribute="bottom" secondItem="HhH-L2-7Io" secondAttribute="bottom" constant="10" id="W9n-zZ-h8s"/>
+                                        <constraint firstAttribute="bottom" secondItem="HhH-L2-7Io" secondAttribute="bottom" constant="8" id="W9n-zZ-h8s"/>
                                         <constraint firstItem="Hxk-CY-LGz" firstAttribute="leading" secondItem="0gZ-fr-Ibx" secondAttribute="trailing" constant="5" id="Wwq-rY-ol6"/>
                                         <constraint firstItem="h45-ib-7Qv" firstAttribute="top" secondItem="Hxk-CY-LGz" secondAttribute="bottom" constant="5" id="YSy-FR-saI"/>
                                         <constraint firstItem="0gZ-fr-Ibx" firstAttribute="top" secondItem="7en-0g-pSd" secondAttribute="top" constant="5" id="g8h-4m-JiF"/>
                                         <constraint firstItem="ndh-1D-xHe" firstAttribute="top" secondItem="Hxk-CY-LGz" secondAttribute="bottom" constant="5" id="lIT-gM-aTq"/>
-                                        <constraint firstAttribute="trailing" secondItem="HhH-L2-7Io" secondAttribute="trailing" constant="20" id="nAb-qC-6n9"/>
+                                        <constraint firstAttribute="trailing" secondItem="HhH-L2-7Io" secondAttribute="trailing" constant="24" id="nAb-qC-6n9"/>
                                         <constraint firstAttribute="trailing" secondItem="Hxk-CY-LGz" secondAttribute="trailing" constant="5" id="zFa-dv-ib7"/>
                                     </constraints>
                                 </tableViewCellContentView>
@@ -2013,6 +2013,6 @@
         <image name="movietime1" width="500" height="350"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="MMO-Cf-xd9"/>
+        <segue reference="9Hf-Bp-74r"/>
     </inferredMetricsTieBreakers>
 </document>
