@@ -20,7 +20,10 @@ class SignUpViewController: UIViewController {
     @IBOutlet weak var menuButton: UIBarButtonItem!
     @IBOutlet weak var confirmPasswordTextField: UITextField!
     
+    @IBOutlet weak var scrollView: UIScrollView!
     var actIndicator = UIActivityIndicatorView()
+    
+    weak var activedTextField: UITextField?
     
     // MARK: - Override funcs
     override func viewDidLoad() {
@@ -29,23 +32,23 @@ class SignUpViewController: UIViewController {
         menuButton.target = revealViewController()
         menuButton.action = #selector(SWRevealViewController.revealToggle(_:))
         
-        confirmPasswordTextField.backgroundColor = .clear
+        confirmPasswordTextField.backgroundColor = UIColor.white
         confirmPasswordTextField.layer.cornerRadius = 5
         confirmPasswordTextField.layer.borderWidth = 1
         confirmPasswordTextField.layer.borderColor = UIColor.blue.cgColor
         
-        passwordTextField.backgroundColor = .clear
+        passwordTextField.backgroundColor = UIColor.white
         passwordTextField.layer.cornerRadius = 5
         passwordTextField.layer.borderWidth = 1
         passwordTextField.layer.borderColor = UIColor.blue.cgColor
         
-        emailTextField.backgroundColor = .clear
+        emailTextField.backgroundColor = UIColor.white
         emailTextField.layer.cornerRadius = 5
         emailTextField.layer.borderWidth = 1
         emailTextField.layer.borderColor = UIColor.blue.cgColor
         
         
-        userNameTextField.backgroundColor = .clear
+        userNameTextField.backgroundColor = UIColor.white
         userNameTextField.layer.cornerRadius = 5
         userNameTextField.layer.borderWidth = 1
         userNameTextField.layer.borderColor = UIColor.blue.cgColor
@@ -56,14 +59,52 @@ class SignUpViewController: UIViewController {
         
         self.view.addSubview(actIndicator)
         
+//        
+//        NotificationCenter.default.addObserver(self, selector: Selector("keyboardDidShow:"), name: NSNotification.Name.UIKeyboardDidShow, object: nil)
+//        
+//        NotificationCenter.default.addObserver(self, selector: Selector("keyboardWillBeHidden:"), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
         
-        // Do any additional setup after loading the view.
+        // Do any additional setup after loading the view, typically from a nib.
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardDidShow(notification:)) , name: NSNotification.Name.UIKeyboardDidShow, object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardDidShow(notification:)), name: NSNotification.Name.UIKeyboardDidHide, object: nil)
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        //ScrollView.setContentOffset(CGPoint(x:0,y:250), animated: true)
+        self.activedTextField = textField
+    }
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        self.activedTextField = nil
+    }
+    
+    
+    func keyboardDidShow(notification: NSNotification) {
+        
+        if let activeField = self.activedTextField, let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+            let contentInsets = UIEdgeInsets(top: 0.0, left: 0.0, bottom: keyboardSize.height, right: 0.0)
+            self.scrollView.contentInset = contentInsets
+            self.scrollView.scrollIndicatorInsets = contentInsets
+            var aRect = self.view.frame
+            aRect.size.height -= keyboardSize.size.height
+            if (!aRect.contains(activeField.frame.origin)) {
+                self.scrollView.scrollRectToVisible(activeField.frame, animated: true)
+            }
+        }
+    }
+    
+    func keyboardDidHide(notification: NSNotification) {
+        let contentInsets = UIEdgeInsets.zero
+        self.scrollView.contentInset = contentInsets
+        self.scrollView.scrollIndicatorInsets = contentInsets
+        
+    }
+
     
     @IBAction func signInAction(_ sender: Any) {
         let revealviewcontroller:SWRevealViewController = self.revealViewController()

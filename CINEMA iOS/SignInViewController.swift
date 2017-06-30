@@ -19,18 +19,22 @@ class SignInViewController: UIViewController {
     
     var actIndicator = UIActivityIndicatorView()
     
+    weak var activedTextField: UITextField?
+    
+    @IBOutlet weak var scrollView: UIScrollView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         menuButton.target = revealViewController()
         menuButton.action = #selector(SWRevealViewController.revealToggle(_:))
         
-        passwordTextField.backgroundColor = .clear
+        passwordTextField.backgroundColor = UIColor.white
         passwordTextField.layer.cornerRadius = 5
         passwordTextField.layer.borderWidth = 1
         passwordTextField.layer.borderColor = UIColor.blue.cgColor
         
-        userNameTextField.backgroundColor = .clear
+        userNameTextField.backgroundColor = UIColor.white
         userNameTextField.layer.cornerRadius = 5
         userNameTextField.layer.borderWidth = 1
         userNameTextField.layer.borderColor = UIColor.blue.cgColor
@@ -40,9 +44,9 @@ class SignInViewController: UIViewController {
         actIndicator.center = self.view.center
         
         self.view.addSubview(actIndicator)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardDidShow(notification:)) , name: NSNotification.Name.UIKeyboardDidShow, object: nil)
         
-        
-        // Do any additional setup after loading the view.
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardDidShow(notification:)), name: NSNotification.Name.UIKeyboardDidHide, object: nil)
     }
     
     override func didReceiveMemoryWarning() {
@@ -50,6 +54,35 @@ class SignInViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        //ScrollView.setContentOffset(CGPoint(x:0,y:250), animated: true)
+        self.activedTextField = textField
+    }
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        self.activedTextField = nil
+    }
+    
+    
+    func keyboardDidShow(notification: NSNotification) {
+        
+        if let activeField = self.activedTextField, let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+            let contentInsets = UIEdgeInsets(top: 0.0, left: 0.0, bottom: keyboardSize.height, right: 0.0)
+            self.scrollView.contentInset = contentInsets
+            self.scrollView.scrollIndicatorInsets = contentInsets
+            var aRect = self.view.frame
+            aRect.size.height -= keyboardSize.size.height
+            if (!aRect.contains(activeField.frame.origin)) {
+                self.scrollView.scrollRectToVisible(activeField.frame, animated: true)
+            }
+        }
+    }
+    
+    func keyboardDidHide(notification: NSNotification) {
+        let contentInsets = UIEdgeInsets.zero
+        self.scrollView.contentInset = contentInsets
+        self.scrollView.scrollIndicatorInsets = contentInsets
+        
+    }
     
     @IBAction func singInAction(_ sender: Any) {
         actIndicator.startAnimating()

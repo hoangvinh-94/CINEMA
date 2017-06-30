@@ -45,14 +45,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        if currentReachabilityStatus == .notReachable {
-            LoadView = UIView(frame: CGRect(x: 0, y: 20 + (navigationController?.navigationBar.frame.height)!, width: 50, height: view.frame.height - 20 + (navigationController?.navigationBar.frame.height)!))
-        } else {
-            let font = UIFont.systemFont(ofSize: 10)
-            segmentControl.setTitleTextAttributes([NSFontAttributeName: font],
-                                                  for: .normal)
-            
             ref = Database.database().reference()
             if(Auth.auth().currentUser?.uid != nil){
                 let uid = Auth.auth().currentUser?.uid
@@ -63,11 +55,10 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                     self.signIn.action = #selector(self.toProfileViewController)
 
                 })
-                    
             }
             self.isSlideShowLoaded = false
             self.isSlideShowDefaultDeleted = false
-            slideShowDefault()
+            //slideShowDefault()
             
             // Do any additional setup after loading the view, typically from a nib.
             HomeViewController.searchController.searchResultsUpdater = self
@@ -77,36 +68,37 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             
             menuButton.target = revealViewController()
             menuButton.action = #selector(SWRevealViewController.revealToggle(_:))
-            //db.reloadFilmFromUrlApi(page: 1	, filmType: "popular")
-            //db.reloadFilmFromUrlApi(page: 1	, filmType: "upcoming")
-            //db.reloadFilmFromUrlApi(page: 1	, filmType: "now_playing")
+        
+        if currentReachabilityStatus != .notReachable {
+            self.loadDataToTableView(type: "now_playing")
+            print("User is connected to the internet via wifi.")
             
-            
+        } else {
+            retryConnection()
+            print("There is no internet connection")
             
         }
         
-        //tableViewDidStartLoad(tableView)
-        //tableViewDidFinishLoad(tableView)
         
         // load time from internet
-        let myURLString = "https://www.timeanddate.com/worldclock/vietnam"
-        guard let myURL = URL(string: myURLString) else {
-            print("*****************************************Error: \(myURLString) doesn't seem to be a valid URL")
-            return
-        }
-        
-        do {
-            let myHTMLString = try String(contentsOf: myURL, encoding: .ascii)
-            print("*******************************************HTML : \(myHTMLString)")
-            let str = myHTMLString
-            let start = str.index(str.startIndex, offsetBy: 13846)
-            let end = str.index(str.endIndex, offsetBy: -6)
-            let range = start..<end
-            
-            print("1111111111111111111111111111111111111111111111111111111"+str.substring(with: range))
-        } catch let error {
-            print("****************************************Error: \(error)")
-        }
+//        let myURLString = "https://www.timeanddate.com/worldclock/vietnam"
+//        guard let myURL = URL(string: myURLString) else {
+//            print("*****************************************Error: \(myURLString) doesn't seem to be a valid URL")
+//            return
+//        }
+//        
+//        do {
+//            let myHTMLString = try String(contentsOf: myURL, encoding: .ascii)
+//            print("*******************************************HTML : \(myHTMLString)")
+//            let str = myHTMLString
+//            let start = str.index(str.startIndex, offsetBy: 13846)
+//            let end = str.index(str.endIndex, offsetBy: -6)
+//            let range = start..<end
+//            
+//            print("1111111111111111111111111111111111111111111111111111111"+str.substring(with: range))
+//        } catch let error {
+//            print("****************************************Error: \(error)")
+//        }
       
         
     }
@@ -115,7 +107,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     override func viewWillAppear(_ animated: Bool) {
         AppUtility.lockOrientation(.portrait, andRotateTo: .portrait)
         self.segmentControl.selectedSegmentIndex = 0
-        loadDataToTableView(type: "now_playing")
+        //loadDataToTableView(type: "now_playing")
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -123,6 +115,26 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         // Don't forget to reset when view is being removed
         AppUtility.lockOrientation(.all)
+    }
+    
+    func retryConnection() {
+        let alert = UIAlertController(title: "Check", message: "Internet Connection is Required at first time running the app to load images and videos ", preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(UIAlertAction(title: "Retry", style: UIAlertActionStyle.default, handler: { action in
+            if self.currentReachabilityStatus == .notReachable {
+                self.retryConnection()
+            } else {
+                self.loadDataToTableView(type: "now_playing")
+                
+            }
+        }))
+        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.default, handler: { action in
+            exit(0)
+        }))
+
+        DispatchQueue.main.async(execute: {
+            self.present(alert, animated: true, completion: nil)
+        })
+
     }
     
     func toProfileViewController() {

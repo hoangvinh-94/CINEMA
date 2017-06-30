@@ -26,12 +26,12 @@ class ChangePasswordViewController: UIViewController {
         menuButton.target = revealViewController()
         menuButton.action = #selector(SWRevealViewController.revealToggle(_:))
         
-        confirmPasswordTextField.backgroundColor = .clear
+        confirmPasswordTextField.backgroundColor = UIColor.white
         confirmPasswordTextField.layer.cornerRadius = 5
         confirmPasswordTextField.layer.borderWidth = 1
         confirmPasswordTextField.layer.borderColor = UIColor.blue.cgColor
         
-        newPasswordTextField.backgroundColor = .clear
+        newPasswordTextField.backgroundColor = UIColor.white
         newPasswordTextField.layer.cornerRadius = 5
         newPasswordTextField.layer.borderWidth = 1
         newPasswordTextField.layer.borderColor = UIColor.blue.cgColor
