@@ -99,9 +99,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         if currentReachabilityStatus == .notReachable {
             print("vinh")
         } else {
-            return
-            print("ttb")
-            print("ttb1")
             let font = UIFont.systemFont(ofSize: 10)
             segmentControl.setTitleTextAttributes([NSFontAttributeName: font],
                                                   for: .normal)
