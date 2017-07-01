@@ -59,6 +59,14 @@ class SignUpViewController: UIViewController {
         
         self.view.addSubview(actIndicator)
         
+        UIGraphicsBeginImageContext(self.view.frame.size)
+        UIImage(named: "nen18.jpg")?.draw(in: self.view.bounds)
+        
+        let image: UIImage = UIGraphicsGetImageFromCurrentImageContext()!
+        
+        UIGraphicsEndImageContext()
+        
+        self.view.backgroundColor = UIColor(patternImage: image)
 //        
 //        NotificationCenter.default.addObserver(self, selector: Selector("keyboardDidShow:"), name: NSNotification.Name.UIKeyboardDidShow, object: nil)
 //        

@@ -237,8 +237,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         //let image3 = imageResize(image: UIImage(named:"007.jpg")!, sizeChange: size)
         //self.mainScrollView.auk.show(image: image1)
         self.mainScrollView.auk.show(image: image2)
-        //self.mainScrollView.auk.show(image: image3)
-        
         // Scroll images automatically with the interval of 3 seconds
         self.mainScrollView.auk.startAutoScroll(delaySeconds: 3)
 

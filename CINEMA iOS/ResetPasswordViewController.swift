@@ -19,11 +19,21 @@ class ResetPasswordViewController: UIViewController {
         menuButton.target = revealViewController()
         menuButton.action = #selector(SWRevealViewController.revealToggle(_:))
 
-        emailTextField.backgroundColor = .clear
+        emailTextField.backgroundColor = UIColor.white
         emailTextField.layer.cornerRadius = 5
         emailTextField.layer.borderWidth = 1
         emailTextField.layer.borderColor = UIColor.blue.cgColor
         
+        UIGraphicsBeginImageContextWithOptions(self.view.frame.size, self.view.isOpaque, 0.5)
+        UIImage(named: "nen18.jpg")?.draw(in: self.view.bounds)
+        
+        let image: UIImage = UIGraphicsGetImageFromCurrentImageContext()!
+        
+        UIGraphicsEndImageContext()
+        
+        
+        
+        self.view.backgroundColor = UIColor(patternImage: image)
         // Do any additional setup after loading the view.
     }
     
