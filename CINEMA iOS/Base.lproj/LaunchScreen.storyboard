@@ -21,12 +21,21 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="movietime1" translatesAutoresizingMaskIntoConstraints="NO" id="sOm-5R-gI5">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="nen7" translatesAutoresizingMaskIntoConstraints="NO" id="sOm-5R-gI5">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="sOm-5R-gI5" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" id="0Zr-io-hlc"/>
+                            <constraint firstItem="sOm-5R-gI5" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="518-AE-g3E"/>
+                            <constraint firstItem="sOm-5R-gI5" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="6dF-BE-ATq"/>
+                            <constraint firstItem="sOm-5R-gI5" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" id="E2B-Zf-Kga"/>
+                            <constraint firstAttribute="trailing" secondItem="sOm-5R-gI5" secondAttribute="trailing" id="a0y-KB-jje"/>
+                            <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="sOm-5R-gI5" secondAttribute="bottom" id="eeW-0N-HMZ"/>
+                            <constraint firstAttribute="trailing" secondItem="sOm-5R-gI5" secondAttribute="trailing" id="qaz-qz-xeQ"/>
+                            <constraint firstItem="sOm-5R-gI5" firstAttribute="bottom" secondItem="xb3-aO-Qok" secondAttribute="top" id="wfC-Ch-Ugy"/>
+                        </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -35,6 +44,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="movietime1" width="500" height="350"/>
+        <image name="nen7" width="1080" height="1920"/>
     </resources>
 </document>

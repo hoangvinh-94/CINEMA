@@ -35,6 +35,16 @@ class ChangePasswordViewController: UIViewController {
         newPasswordTextField.layer.cornerRadius = 5
         newPasswordTextField.layer.borderWidth = 1
         newPasswordTextField.layer.borderColor = UIColor.blue.cgColor
+        
+        UIGraphicsBeginImageContext(self.view.frame.size)
+        UIImage(named: "nen18.jpg")?.draw(in: self.view.bounds)
+        
+        let image: UIImage = UIGraphicsGetImageFromCurrentImageContext()!
+        
+        UIGraphicsEndImageContext()
+        
+        self.view.backgroundColor = UIColor(patternImage: image)
+        
     }
     
     override func didReceiveMemoryWarning() {
