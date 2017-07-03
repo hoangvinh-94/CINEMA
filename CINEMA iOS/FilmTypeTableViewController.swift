@@ -18,6 +18,7 @@ class FilmTypeTableViewController: UITableViewController {
     var prefixImg: String = "https://image.tmdb.org/t/p/w320"
     var queue = OperationQueue()
     var typeFilm : Int?
+    var db = DataFilm()
     
     var tableIndicator = UIActivityIndicatorView()
     
@@ -31,7 +32,6 @@ class FilmTypeTableViewController: UITableViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationItem.rightBarButtonItem = self.editButtonItem
         HomeViewController.searchController.searchResultsUpdater = self
         definesPresentationContext = true
         HomeViewController.searchController.dimsBackgroundDuringPresentation = true
@@ -72,35 +72,19 @@ class FilmTypeTableViewController: UITableViewController {
         self.Films = [Film]()
         queue.cancelAllOperations()
         tableIndicator.startAnimating()
-        refHandler = ref.child("films5").observe(.childAdded, with:{ (snapshot) in
-            // Get user value
-            if let dictionary = snapshot.value as? [String: AnyObject]{
-                
-                let id = dictionary["idFilm"] as? Int
-                let typeFilm = dictionary["type"] as? String
-                let overview = dictionary["overview"] as? String
-                let poster_path = dictionary["poster_path"] as? String
-                let release_date = dictionary["release_date"] as? String
-                let title = dictionary["title"] as? String
-                let runtime = dictionary["runtime"] as? Int
-                let genres = dictionary["genres"] as? [Dictionary<String,Any>]
-                
-                
-                if(typeFilm != "" && typeFilm == type){
-                    self.Films.append(Film(id: id!,title: title!, poster: poster_path!, overview: overview!, releaseDate: release_date!, runtime: runtime!, genres: genres!))
-                    DispatchQueue.main.async {
-                        self.tableIndicator.stopAnimating()
-                        self.tableView.reloadData()
-                    }
-                }else{
-                    return
+        db.getDataFilmFireBase(type: type) { (Films, error) in
+            if(error != nil) {
+                print(error!)
+            } else {
+                self.Films = Films!
+                DispatchQueue.main.async {
+                    self.tableIndicator.stopAnimating()
+                    self.tableView.reloadData()
                 }
                 
             }
             
-            
-        })
-        
+        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -174,13 +158,6 @@ class FilmTypeTableViewController: UITableViewController {
         return cell
     }
     
-
-   
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
  
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
@@ -196,35 +173,7 @@ class FilmTypeTableViewController: UITableViewController {
             }
         }
     }
-    
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
 
-        if(HomeViewController.searchController.isActive && HomeViewController.searchController.searchBar.text != ""){
-            // get event dragging
-            let film = FilteredFilms[fromIndexPath.row]
-            // remove event dragging
-            FilteredFilms.remove(at: fromIndexPath.row)
-            // insert event into new possition
-            FilteredFilms.insert(film, at: to.row)
-            
-        }
-        else{
-            // get event dragging
-            let film = Films[fromIndexPath.row]
-            // remove event dragging
-            Films.remove(at: fromIndexPath.row)
-            // insert event into new possition
-            Films.insert(film, at: to.row)
-        }
-        
-    }
-
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
 
     // MARK: - Navigation
 

@@ -79,7 +79,6 @@ class SeatCollectionViewController: UICollectionViewController {
             DispatchQueue.main.async {
                 self.tableIndicator.stopAnimating()
                 self.collectionView?.reloadData()
-//                self.collectionView?.setContentOffset(CGPoint.zero, animated: false)
             }
             
         })
@@ -143,8 +142,6 @@ class SeatCollectionViewController: UICollectionViewController {
          var selectedCell: UICollectionViewCell!
         selectedCell = collectionView.cellForItem(at: indexPath)!
         collectionView.allowsSelection = false
-        print("Set color")
-        
         if(Seats[indexPath.row] == "0"){
             selectedCell.backgroundColor = UIColor.yellow
             collectionView.allowsSelection = true

@@ -17,6 +17,7 @@ class BookFilmTableViewController: UITableViewController {
     var idFilmCurrent: Int?
     var titleFilm: String?
     var bookFilm = [Book]()
+    var db = DataFilm()
     
     override func viewDidLoad() {
         
@@ -40,12 +41,20 @@ class BookFilmTableViewController: UITableViewController {
     
     func loadBookFilm(){
         tableIndicator.startAnimating()
-        
-//        let date = Date()
-//        let formatter = DateFormatter()
-//        formatter.dateFormat = "dd/MM/yyyy"
-//        let today = formatter.string(from: date)
-        
+        db.getBookFilmFireBase(idFilmCurrent: idFilmCurrent!) { (bookFilm, error) in
+            if(error != nil) {
+                print(error!)
+            } else {
+                self.bookFilm = bookFilm!
+                DispatchQueue.main.async {
+                    self.tableIndicator.stopAnimating()
+                    self.tableView.reloadData()
+                }
+
+            }
+
+        }
+        /*
         let date = Date()
         let formatter = DateFormatter()
         formatter.dateFormat = "dd/MM/yyy"
@@ -101,6 +110,7 @@ class BookFilmTableViewController: UITableViewController {
             
             
         })
+ */
     }
     
     

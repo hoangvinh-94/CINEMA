@@ -47,17 +47,7 @@ class TicketInformationTableViewController: UITableViewController {
         
         tableView.backgroundView = tableIndicator
         tableView.separatorStyle = UITableViewCellSeparatorStyle.none
-        
-        
-        
-        //ref = Database.database().reference()
-        //let uid = Auth.auth().currentUser?.uid
-        //loadTicket(id: uid!)
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+      
     }
     
     /*

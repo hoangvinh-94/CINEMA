@@ -46,7 +46,6 @@ class ScheduleTableViewController: UITableViewController {
         ref = Database.database().reference()
         loadDataToTableView()
         if tableIndicator.isAnimating {
-            print("con quay")
             tableIndicator.stopAnimating()
         }
     }
@@ -59,59 +58,25 @@ class ScheduleTableViewController: UITableViewController {
     // MARK: - Table view data source
 
     func loadDataToTableView(){
-                
-        let date = Date()
-        let formatter = DateFormatter()
-        formatter.dateFormat = "dd/MM/yyyy"
-        let today = formatter.string(from: date)
         self.tableIndicator.startAnimating()
         self.Films = [Film]()
         queue.cancelAllOperations()
         
-        ref.child("bookfilm").observe(.childAdded, with: { (snapshot) in
-            
-            let filmId = Int(snapshot.key)
-            if let dictionary1 = snapshot.value as? [String: AnyObject]{
-                if (filmId != nil) {
-                    self.ref.child("films5").observe(.childAdded, with: { (snapshot1) in
-                        let days = dictionary1["day"] as? [Dictionary<String,Any>]
-                        if Int(snapshot1.key) == filmId {
-                            //var room: Int?
-                            for d in days!{
-                                let day = d["day"] as? String
-                                if day == today {
-                                    
-                                    if let dictionary = snapshot1.value as? [String: AnyObject]{
-                                        
-                                        let id = dictionary["idFilm"] as? Int
-                                        let overview = dictionary["overview"] as? String
-                                        let poster_path = dictionary["poster_path"] as? String
-                                        let release_date = dictionary["release_date"] as? String
-                                        let title = dictionary["title"] as? String
-                                        let runtime = dictionary["runtime"] as? Int
-                                        let genres = dictionary["genres"] as? [Dictionary<String,Any>]
-                                        
-                                        
-                                        self.Films.append(Film(id: id!,title: title!, poster: poster_path!, overview: overview!, releaseDate: release_date!, runtime: runtime!, genres: genres!))
-                                        DispatchQueue.main.async {
-                                            self.tableIndicator.stopAnimating()
-                                            self.tableView.reloadData()
-                                        }
-                
-                                    }
-                                    
-                                }
-                                
-                            }
-                            
-                            
-                        }
-                    })
+        
+        db.getBookFilmToday { (Films, error) in
+            if(error != nil) {
+                print(error!)
+            } else {
+                self.Films = Films!
+                DispatchQueue.main.async {
+                    self.tableIndicator.stopAnimating()
+                    self.tableView.reloadData()
                 }
+                
             }
-        })
-        
-        
+
+        }
+            
     }
 
     
@@ -121,7 +86,7 @@ class ScheduleTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
+        // #warning Incomplete implementation, re   turn the number of rows
         return Films.count
     }
 
@@ -139,9 +104,10 @@ class ScheduleTableViewController: UITableViewController {
                     OperationQueue.main.addOperation({
                         cell.posterImage.image = img
                         cell.titleLabel.text = film.getTitle()
-                        cell.timeLabel.text = String(film.getRuntime()) + " minutes"
-                        let count = film.getGenres().count
+                        cell.genreLabel.text = ""
+                            let count = film.getGenres().count
                         var c = 0
+                        print(film.getGenres())
                         for genre in film.getGenres(){
                             c = c + 1
                             if c < count {
@@ -155,12 +121,12 @@ class ScheduleTableViewController: UITableViewController {
                             }
                             
                         }
+ 
                     })
                 }
             }
         }
         return cell
-
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

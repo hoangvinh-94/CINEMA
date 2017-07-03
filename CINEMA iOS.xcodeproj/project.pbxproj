@@ -187,6 +187,7 @@
 		603F997B1EDA350D00BE7151 /* CINEMA iOS */ = {
 			isa = PBXGroup;
 			children = (
+				6067CC7D1F08C42300CB37A0 /* Helper */,
 				603F99AD1EDA366E00BE7151 /* View */,
 				603F99AF1EDA368000BE7151 /* Model */,
 				603F99AE1EDA367800BE7151 /* Controller */,
@@ -221,30 +222,13 @@
 		603F99AD1EDA366E00BE7151 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				605435A81EF3CCFF00C98CFE /* TicketInformationTableViewController.swift */,
 				605435A61EF3CC4A00C98CFE /* TicketInformationTableViewCell.swift */,
-				60E10AC01EF1E7B000A34628 /* FilmTypeTableViewController.swift */,
 				60E10ABE1EF1E76100A34628 /* FilmTypeTableViewCell.swift */,
-				60608AFD1EE7B5540034FA3E /* DetailViewController.swift */,
 				60608AFB1EE7A84E0034FA3E /* SeatCollectionViewCell.swift */,
-				60608AF91EE7A8060034FA3E /* SeatCollectionViewController.swift */,
-				60608AF11EE724110034FA3E /* MenuViewController.swift */,
-				6058B9541EE5266600C5A5E1 /* SignInViewController.swift */,
-				6058B9521EE5260A00C5A5E1 /* SignUpViewController.swift */,
 				60A2B5DD1EE152C100857EAC /* FilmTableViewCell.swift */,
-				605804A31EE4A0FB00E7BF53 /* BookFilmTableViewController.swift */,
-				603F997E1EDA350E00BE7151 /* HomeViewController.swift */,
-				7525D84D1EE4197300FF6FA5 /* SWRevealViewController.m */,
-				7525D84E1EE4197300FF6FA5 /* SWRevealViewController.h */,
-				7525D84C1EE4197100FF6FA5 /* CINEMA iOS-Bridging-Header.h */,
 				7525D8501EE41A6C00FF6FA5 /* MenuCell.swift */,
-				75D0B7F31EE7F6D200A3A5BF /* ResetPasswordViewController.swift */,
-				75D0B7F51EE7F87800A3A5BF /* ChangePasswordViewController.swift */,
 				755CBE161EF19F8000CAD1FC /* ScheduleTableViewCell.swift */,
-				756C08EF1EF8E0220014BB02 /* ProfileViewController.swift */,
-				6054359C1EF30A7B00C98CFE /* ScheduleTableViewController.swift */,
 				756C08F11EF8E1960014BB02 /* MyOrderCell.swift */,
-				75111D8F1EF9660200DD6F4C /* AdminViewController.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -252,9 +236,23 @@
 		603F99AE1EDA367800BE7151 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				600B60971EECAE5600B306E6 /* Reachability.swift */,
-				60A2B5D91EE112C100857EAC /* DataFilm.swift */,
-				75751D101F00033C00F7372C /* AppUtility.swift */,
+				75111D8F1EF9660200DD6F4C /* AdminViewController.swift */,
+				605435A81EF3CCFF00C98CFE /* TicketInformationTableViewController.swift */,
+				60E10AC01EF1E7B000A34628 /* FilmTypeTableViewController.swift */,
+				60608AFD1EE7B5540034FA3E /* DetailViewController.swift */,
+				60608AF91EE7A8060034FA3E /* SeatCollectionViewController.swift */,
+				60608AF11EE724110034FA3E /* MenuViewController.swift */,
+				6058B9541EE5266600C5A5E1 /* SignInViewController.swift */,
+				6058B9521EE5260A00C5A5E1 /* SignUpViewController.swift */,
+				605804A31EE4A0FB00E7BF53 /* BookFilmTableViewController.swift */,
+				603F997E1EDA350E00BE7151 /* HomeViewController.swift */,
+				7525D84D1EE4197300FF6FA5 /* SWRevealViewController.m */,
+				7525D84E1EE4197300FF6FA5 /* SWRevealViewController.h */,
+				7525D84C1EE4197100FF6FA5 /* CINEMA iOS-Bridging-Header.h */,
+				75D0B7F31EE7F6D200A3A5BF /* ResetPasswordViewController.swift */,
+				75D0B7F51EE7F87800A3A5BF /* ChangePasswordViewController.swift */,
+				756C08EF1EF8E0220014BB02 /* ProfileViewController.swift */,
+				6054359C1EF30A7B00C98CFE /* ScheduleTableViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -268,6 +266,16 @@
 				605435A01EF38F0900C98CFE /* User.swift */,
 			);
 			name = Model;
+			sourceTree = "<group>";
+		};
+		6067CC7D1F08C42300CB37A0 /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				600B60971EECAE5600B306E6 /* Reachability.swift */,
+				60A2B5D91EE112C100857EAC /* DataFilm.swift */,
+				75751D101F00033C00F7372C /* AppUtility.swift */,
+			);
+			name = Helper;
 			sourceTree = "<group>";
 		};
 		63A1B9D43BFC15CA6BF0B63D /* Frameworks */ = {

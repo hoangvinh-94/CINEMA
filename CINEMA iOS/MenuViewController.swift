@@ -79,6 +79,7 @@ class MenuViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        HomeViewController.searchController.searchBar.text = ""
         let revealviewcontroller:SWRevealViewController = self.revealViewController()
         
         let cell:MenuCell = tableView.cellForRow(at: indexPath) as! MenuCell
@@ -86,6 +87,7 @@ class MenuViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         if cell.labelMenu.text! == "Home"
         {
+            HomeViewController.searchController.searchBar.isHidden = false
             print("Home Tapped")
             let mainstoryboard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
             let newViewcontroller = mainstoryboard.instantiateViewController(withIdentifier: "HomeViewController") as! HomeViewController
@@ -96,6 +98,8 @@ class MenuViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         if cell.labelMenu.text! == "Change Password"
         {
+            HomeViewController.searchController.searchBar.isHidden = true
+
             print("Change Password Tapped")
             let mainstoryboard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
             let newViewcontroller = mainstoryboard.instantiateViewController(withIdentifier: "ChangePasswordViewController") as! ChangePasswordViewController
@@ -106,6 +110,7 @@ class MenuViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         if cell.labelMenu.text! == "Had Shown"
         {
+            HomeViewController.searchController.searchBar.isHidden = false
             let mainstoryboard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
             let PDC = mainstoryboard.instantiateViewController(withIdentifier: "PDC") as! FilmTypeTableViewController
             PDC.typeFilm = 0
@@ -117,6 +122,7 @@ class MenuViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         if cell.labelMenu.text! == "Now Showing"
         {
+            HomeViewController.searchController.searchBar.isHidden = false
             let mainstoryboard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
             let PDC = mainstoryboard.instantiateViewController(withIdentifier: "PDC") as! FilmTypeTableViewController
             PDC.typeFilm = 1
@@ -127,6 +133,7 @@ class MenuViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         if cell.labelMenu.text! == "Coming Soon"
         {
+            HomeViewController.searchController.searchBar.isHidden = false
             let mainstoryboard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
             let PDC = mainstoryboard.instantiateViewController(withIdentifier: "PDC") as! FilmTypeTableViewController
             PDC.typeFilm = 2
@@ -137,6 +144,7 @@ class MenuViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         if cell.labelMenu.text! == "Schedule Today"
         {
+            HomeViewController.searchController.searchBar.isHidden = false
             print("Schedule Today Tapped")
             let mainstoryboard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
             let newViewcontroller = mainstoryboard.instantiateViewController(withIdentifier: "ScheduleViewController") as! ScheduleTableViewController
@@ -147,6 +155,7 @@ class MenuViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         if cell.labelMenu.text! == "My Profile"
         {
+             HomeViewController.searchController.searchBar.isHidden = false
             print("My Profile Tapped")
             let mainstoryboard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
             let newViewcontroller = mainstoryboard.instantiateViewController(withIdentifier: "ProfileViewController") as! ProfileViewController
@@ -158,6 +167,7 @@ class MenuViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         if cell.labelMenu.text! == "Sign In"
         {
+            HomeViewController.searchController.searchBar.isHidden = true
             print("My Profile Tapped")
             let mainstoryboard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
             let newViewcontroller = mainstoryboard.instantiateViewController(withIdentifier: "SignInViewController") as! SignInViewController

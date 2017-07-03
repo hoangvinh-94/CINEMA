@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import WebKit
 
 class DetailViewController: UIViewController {
 
@@ -21,10 +22,10 @@ class DetailViewController: UIViewController {
     @IBOutlet var directorLabel: UILabel!
     
     @IBOutlet var actorLabel: UILabel!
-    @IBOutlet var cinemaLabel: UILabel!
     
     @IBOutlet var overviewLabel: UILabel!
     
+    @IBOutlet var trailer: UIWebView!
     var prefixImg: String = "https://image.tmdb.org/t/p/w320"
     var queue = OperationQueue()
 
@@ -32,7 +33,7 @@ class DetailViewController: UIViewController {
 
     var film = Film()
     var db = DataFilm()
-    
+    var flag: Bool = false
     var tableIndicator = UIActivityIndicatorView()
    
     class Downloader {
@@ -46,6 +47,15 @@ class DetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+       db.checkFilmHadBook(idFilmCurrent: film.getId(), completionHandler: { (flag, error) in
+            if(error != nil) {
+                print(error!)
+            } else {
+                self.flag = flag!
+               
+            }
+        })
+        
         tableIndicator.center = self.view.center
         tableIndicator.activityIndicatorViewStyle = .whiteLarge
         tableIndicator.color = UIColor.orange
@@ -54,12 +64,15 @@ class DetailViewController: UIViewController {
         self.view.addSubview(tableIndicator)
         
         tableIndicator.startAnimating()
+        
         queue.addOperation { () -> Void in
             if self.film.getPoster() != "" {
                 if let img = Downloader.downloadImageWithURL("\(self.prefixImg)\(self.film.getPoster())") {
                     OperationQueue.main.addOperation({
                         self.tableIndicator.stopAnimating()
                         self.posterImage.image = img
+                        let url = URL(string: "https://www.youtube.com/embed/\(self.film.getTrailers())")
+                        self.trailer.loadRequest(URLRequest(url: url! as URL))
                         self.titleLabel.text = self.film.getTitle().uppercased()
                         self.releaseDateLabel.text = self.film.getReleaseDate()
                         self.runtimeLabel.text = String(self.film.getRuntime()) + " minutes"
@@ -78,7 +91,8 @@ class DetailViewController: UIViewController {
 
                             }
                             
-                        }
+             	           }
+                        
                 })
                 }
             }
@@ -90,13 +104,25 @@ class DetailViewController: UIViewController {
     }
 
     @IBAction func bookFilm(_ sender: Any) {
-        
-        let id = film.getId()
-        let title = film.getTitle()
-        let book = storyboard?.instantiateViewController(withIdentifier: "BFILM") as! BookFilmTableViewController
-        book.idFilmCurrent = id
-        book.titleFilm = title
-        navigationController?.pushViewController(book, animated: true)
+        if(self.flag){
+            let id = film.getId()
+            let title = film.getTitle()
+            let book = storyboard?.instantiateViewController(withIdentifier: "BFILM") as! BookFilmTableViewController
+            book.idFilmCurrent = id
+            book.titleFilm = title
+            navigationController?.pushViewController(book, animated: true)
+
+        }
+        else{
+            let alert = UIAlertController(title: "Information" ,message: "This Film hasn't book! You can choose another Film", preferredStyle: UIAlertControllerStyle.alert)
+            
+            // add the actions (buttons)
+            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default))
+            
+            // show the alert
+            self.present(alert, animated: true, completion: nil)
+        }
+
     }
     
     override func didReceiveMemoryWarning() {

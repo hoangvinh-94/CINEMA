@@ -45,69 +45,48 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        ref = Database.database().reference()
-        if(Auth.auth().currentUser?.uid != nil){
-            let uid = Auth.auth().currentUser?.uid
-            ref.child("users").child(uid!).observe(.value, with: {(snapshot) in
-                let user = snapshot.value as? [String: Any]
-                self.signIn.title = "Hi, " + (user?["userName"] as? String)!
-                self.signIn.image = nil
-                self.signIn.action = #selector(self.toProfileViewController)
-                
-            })
-        }
-        self.isSlideShowLoaded = false
-        self.isSlideShowDefaultDeleted = false
-        //slideShowDefault()
-        
-        // Do any additional setup after loading the view, typically from a nib.
-        HomeViewController.searchController.searchResultsUpdater = self
-        definesPresentationContext = true
-        HomeViewController.searchController.dimsBackgroundDuringPresentation = true
-        HomeViewController.searchController.searchBar.delegate = self
-        
-        menuButton.target = revealViewController()
-        menuButton.action = #selector(SWRevealViewController.revealToggle(_:))
-        
+        //db.reloadFilmFromUrlApi(page: 1, filmType: "upcoming")
+        // When app connected to internet
         if currentReachabilityStatus != .notReachable {
-            self.loadDataToTableView(type: "now_playing")
-            print("User is connected to the internet via wifi.")
+            ref = Database.database().reference()
+            if(Auth.auth().currentUser?.uid != nil){
+                let uid = Auth.auth().currentUser?.uid
+                ref.child("users").child(uid!).observe(.value, with: {(snapshot) in
+                    let user = snapshot.value as? [String: Any]
+                    self.signIn.title = "Hi, " + (user?["userName"] as? String)!
+                    self.signIn.image = nil
+                    self.signIn.action = #selector(self.toProfileViewController)
+                    
+                })
+            }
+            self.isSlideShowLoaded = false
+            self.isSlideShowDefaultDeleted = false
+            //slideShowDefault()
             
-        } else {
-            retryConnection()
-            print("There is no internet connection")
+            // Do any additional setup after loading the view, typically from a nib.
+            HomeViewController.searchController.searchResultsUpdater = self
+            definesPresentationContext = true
+            HomeViewController.searchController.dimsBackgroundDuringPresentation = true
+            HomeViewController.searchController.searchBar.delegate = self
+            
+            menuButton.target = revealViewController()
+            menuButton.action = #selector(SWRevealViewController.revealToggle(_:))
+            self.segmentControl.selectedSegmentIndex = 0
+            loadDataToTableView(type: "now_playing")
             
         }
-        
-        
-        // load time from internet
-        //        let myURLString = "https://www.timeanddate.com/worldclock/vietnam"
-        //        guard let myURL = URL(string: myURLString) else {
-        //            print("*****************************************Error: \(myURLString) doesn't seem to be a valid URL")
-        //            return
-        //        }
-        //
-        //        do {
-        //            let myHTMLString = try String(contentsOf: myURL, encoding: .ascii)
-        //            print("*******************************************HTML : \(myHTMLString)")
-        //            let str = myHTMLString
-        //            let start = str.index(str.startIndex, offsetBy: 13846)
-        //            let end = str.index(str.endIndex, offsetBy: -6)
-        //            let range = start..<end
-        //
-        //            print("1111111111111111111111111111111111111111111111111111111"+str.substring(with: range))
-        //        } catch let error {
-        //            print("****************************************Error: \(error)")
-        //        }
-        
-        
+            // When app disconnected to internet
+        else {
+            retryConnection()
+            
+        }
     }
     
     
     override func viewWillAppear(_ animated: Bool) {
         AppUtility.lockOrientation(.portrait, andRotateTo: .portrait)
         self.segmentControl.selectedSegmentIndex = 0
-        //loadDataToTableView(type: "now_playing")
+        loadDataToTableView(type: "now_playing")
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -116,6 +95,9 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         // Don't forget to reset when view is being removed
         AppUtility.lockOrientation(.all)
     }
+    
+    
+    
     
     func retryConnection() {
         let alert = UIAlertController(title: "Check", message: "Internet Connection is Required at first time running the app to load images and videos ", preferredStyle: UIAlertControllerStyle.alert)
@@ -171,13 +153,47 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         self.Films = [Film]()
         queue.cancelAllOperations()
         tableAcIndicator.startAnimating()
-        refHandler = ref.child("films5").observe(.childAdded, with:{ (snapshot) in
+        /*if (type == "now_playing" && self.isSlideShowLoaded == false && self.isSlideShowDefaultDeleted == false) {
+            self.mainScrollView.auk.removeAll()
+            self.isSlideShowDefaultDeleted = true
+        }
+
+        db.getDataFilmFireBase(type: type) { (Films, error) in
+            if(error != nil) {
+                print(error!)
+            } else {
+                self.Films = Films!
+                if (type == "now_playing" && self.isSlideShowLoaded == false) {
+                    for i in Films!{
+                        let poster_path = i.getPoster()
+                        print(poster_path)
+                        self.slideShow(poster_path: poster_path)
+                    }
+                    if self.mainScrollView.auk.numberOfPages > 3 {
+                        self.isSlideShowLoaded = true
+                    }
+                }
+
+                DispatchQueue.main.async {
+                    
+                self.tableAcIndicator.stopAnimating()
+                self.tableView.reloadData()
+                    
+                }
+            }
+        }
+        */
+        
+        
+        refHandler = ref.child("films").observe(.childAdded, with:{ (snapshot) in
             // Get user value
             if let dictionary = snapshot.value as? [String: AnyObject]{
                 if (type == "now_playing" && self.isSlideShowLoaded == false && self.isSlideShowDefaultDeleted == false) {
                     self.mainScrollView.auk.removeAll()
                     self.isSlideShowDefaultDeleted = true
                 }
+                print(dictionary)
+                
                 let id = dictionary["idFilm"] as? Int
                 let typeFilm = dictionary["type"] as? String
                 let overview = dictionary["overview"] as? String
@@ -186,9 +202,12 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                 let title = dictionary["title"] as? String
                 let runtime = dictionary["runtime"] as? Int
                 let genres = dictionary["genres"] as? [Dictionary<String,Any>]
+                let trailer = dictionary["trailers"]?[0] as? String
                 
                 if(typeFilm != "" && typeFilm == type){
-                    self.Films.append(Film(id: id!,title: title!, poster: poster_path!, overview: overview!, releaseDate: release_date!, runtime: runtime!, genres: genres!))
+                    let F: Film = Film(id: id!,title: title!, poster: poster_path!, overview: overview!, releaseDate: release_date!, runtime: runtime!, genres: genres!)
+                    F.setTrailers(trailer: trailer!)
+                    self.Films.append(F)
                     DispatchQueue.main.async {
                         self.tableAcIndicator.stopAnimating()
                         self.tableView.reloadData()
@@ -211,7 +230,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func slideShow(poster_path: String){
-        
         let size = CGSize(width: Int(self.mainScrollView.frame.width), height: Int(self.mainScrollView.frame.height))
         self.queue.addOperation { () -> Void in
             if poster_path != "" {
@@ -219,6 +237,8 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                     OperationQueue.main.addOperation({
                         img = self.imageResize(image: img, sizeChange: size)
                         self.mainScrollView.auk.show(image: img)
+                        self.mainScrollView.auk.settings.placeholderImage = UIImage(named: "noimagefound")
+                        self.mainScrollView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(HomeViewController.scrollViewTapped)))
                     })
                 }
             }
@@ -230,16 +250,13 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         
     }
     
-    func slideShowDefault() {
-        let size = CGSize(width: Int(self.mainScrollView.frame.width), height: Int(self.mainScrollView.frame.height))
-        //let image1 = imageResize(image: UIImage(named:"movietime1.jpg")!, sizeChange: size)
-        let image2 = imageResize(image: UIImage(named:"gameot.jpg")!, sizeChange: size)
-        //let image3 = imageResize(image: UIImage(named:"007.jpg")!, sizeChange: size)
-        //self.mainScrollView.auk.show(image: image1)
-        self.mainScrollView.auk.show(image: image2)
-        // Scroll images automatically with the interval of 3 seconds
-        self.mainScrollView.auk.startAutoScroll(delaySeconds: 3)
+    func scrollViewTapped() {
+        let filmDetail = storyboard?.instantiateViewController(withIdentifier: "FILMDETAIL") as! DetailViewController
+        // BSeat.Seat = bookFilm[indexPath.section].getSeats()[indexPath.row]
+        filmDetail.film = Films[0]
+        navigationController?.pushViewController(filmDetail, animated: true)
         
+
     }
     
     override func didReceiveMemoryWarning() {
@@ -342,6 +359,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     @IBAction func signInAction(_ sender: Any) {
+        HomeViewController.searchController.searchBar.isHidden = true
         let revealviewcontroller:SWRevealViewController = self.revealViewController()
         
         let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "SignInViewController")
