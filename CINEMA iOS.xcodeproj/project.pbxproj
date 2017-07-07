@@ -48,6 +48,7 @@
 		75D0B7F41EE7F6D200A3A5BF /* ResetPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75D0B7F31EE7F6D200A3A5BF /* ResetPasswordViewController.swift */; };
 		75D0B7F61EE7F87800A3A5BF /* ChangePasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75D0B7F51EE7F87800A3A5BF /* ChangePasswordViewController.swift */; };
 		7AAF2BA74B2083FECC0F815C /* Pods_CINEMA_iOSTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 596F5CE9635484B73D0055E6 /* Pods_CINEMA_iOSTests.framework */; };
+		F7DC99DC1F0F83430062942C /* BookTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7DC99DB1F0F83430062942C /* BookTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -123,6 +124,7 @@
 		ACD0F97FD95CDF992EC443A9 /* Pods_CINEMA_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CINEMA_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CABAF379495E050D6EC17DD8 /* Pods-CINEMA iOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CINEMA iOSTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CINEMA iOSTests/Pods-CINEMA iOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		DD0C14DD304E4AC10D72F568 /* Pods-CINEMA iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CINEMA iOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CINEMA iOS/Pods-CINEMA iOS.debug.xcconfig"; sourceTree = "<group>"; };
+		F7DC99DB1F0F83430062942C /* BookTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -228,6 +230,7 @@
 		603F99AD1EDA366E00BE7151 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				F7DC99DB1F0F83430062942C /* BookTableViewCell.swift */,
 				605435A61EF3CC4A00C98CFE /* TicketInformationTableViewCell.swift */,
 				60E10ABE1EF1E76100A34628 /* FilmTypeTableViewCell.swift */,
 				60608AFB1EE7A84E0034FA3E /* SeatCollectionViewCell.swift */,
@@ -593,6 +596,7 @@
 				60608AFE1EE7B5540034FA3E /* DetailViewController.swift in Sources */,
 				6058B9531EE5260A00C5A5E1 /* SignUpViewController.swift in Sources */,
 				60608AF21EE724110034FA3E /* MenuViewController.swift in Sources */,
+				F7DC99DC1F0F83430062942C /* BookTableViewCell.swift in Sources */,
 				756C08F21EF8E1960014BB02 /* MyOrderCell.swift in Sources */,
 				60608AFA1EE7A8060034FA3E /* SeatCollectionViewController.swift in Sources */,
 				75111D901EF9660300DD6F4C /* AdminViewController.swift in Sources */,
