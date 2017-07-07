@@ -25,6 +25,7 @@ class Book{
         self.Seats = seats
     }
     
+    
     func getIdFilm() -> Int{
         return idFilm!
     }

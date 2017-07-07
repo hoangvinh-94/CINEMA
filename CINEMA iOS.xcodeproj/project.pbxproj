@@ -22,6 +22,8 @@
 		605435A11EF38F0900C98CFE /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 605435A01EF38F0900C98CFE /* User.swift */; };
 		605435A71EF3CC4A00C98CFE /* TicketInformationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 605435A61EF3CC4A00C98CFE /* TicketInformationTableViewCell.swift */; };
 		605435A91EF3CCFF00C98CFE /* TicketInformationTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 605435A81EF3CCFF00C98CFE /* TicketInformationTableViewController.swift */; };
+		60566B9D1F1001E8009AD520 /* BookCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60566B9C1F1001E7009AD520 /* BookCollectionViewController.swift */; };
+		60566B9F1F10022E009AD520 /* BookCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60566B9E1F10022E009AD520 /* BookCollectionViewCell.swift */; };
 		605804A41EE4A0FB00E7BF53 /* BookFilmTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 605804A31EE4A0FB00E7BF53 /* BookFilmTableViewController.swift */; };
 		605804A61EE4A34F00E7BF53 /* Book.swift in Sources */ = {isa = PBXBuildFile; fileRef = 605804A51EE4A34F00E7BF53 /* Book.swift */; };
 		6058B9531EE5260A00C5A5E1 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6058B9521EE5260A00C5A5E1 /* SignUpViewController.swift */; };
@@ -88,6 +90,8 @@
 		605435A01EF38F0900C98CFE /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		605435A61EF3CC4A00C98CFE /* TicketInformationTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TicketInformationTableViewCell.swift; sourceTree = "<group>"; };
 		605435A81EF3CCFF00C98CFE /* TicketInformationTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TicketInformationTableViewController.swift; sourceTree = "<group>"; };
+		60566B9C1F1001E7009AD520 /* BookCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookCollectionViewController.swift; sourceTree = "<group>"; };
+		60566B9E1F10022E009AD520 /* BookCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookCollectionViewCell.swift; sourceTree = "<group>"; };
 		605804A31EE4A0FB00E7BF53 /* BookFilmTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookFilmTableViewController.swift; sourceTree = "<group>"; };
 		605804A51EE4A34F00E7BF53 /* Book.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Book.swift; sourceTree = "<group>"; };
 		6058B9521EE5260A00C5A5E1 /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
@@ -195,6 +199,8 @@
 				603F997C1EDA350E00BE7151 /* AppDelegate.swift */,
 				751C46D01EE2FB460007FC3C /* GoogleService-Info.plist */,
 				600B60991EECAFDF00B306E6 /* Main.storyboard */,
+				60566B9E1F10022E009AD520 /* BookCollectionViewCell.swift */,
+				60566B9C1F1001E7009AD520 /* BookCollectionViewController.swift */,
 				603F99831EDA350E00BE7151 /* Assets.xcassets */,
 				603F99851EDA350E00BE7151 /* LaunchScreen.storyboard */,
 			);
@@ -580,6 +586,7 @@
 				75D0B7F41EE7F6D200A3A5BF /* ResetPasswordViewController.swift in Sources */,
 				756C08F01EF8E0230014BB02 /* ProfileViewController.swift in Sources */,
 				603F997F1EDA350E00BE7151 /* HomeViewController.swift in Sources */,
+				60566B9F1F10022E009AD520 /* BookCollectionViewCell.swift in Sources */,
 				60608AFC1EE7A84E0034FA3E /* SeatCollectionViewCell.swift in Sources */,
 				6058B9551EE5266600C5A5E1 /* SignInViewController.swift in Sources */,
 				605804A61EE4A34F00E7BF53 /* Book.swift in Sources */,
@@ -599,6 +606,7 @@
 				6054359F1EF38ED900C98CFE /* Ticket.swift in Sources */,
 				600B60981EECAE5600B306E6 /* Reachability.swift in Sources */,
 				603F997D1EDA350E00BE7151 /* AppDelegate.swift in Sources */,
+				60566B9D1F1001E8009AD520 /* BookCollectionViewController.swift in Sources */,
 				7525D8521EE41A6C00FF6FA5 /* MenuCell.swift in Sources */,
 				60A2B5DC1EE1143B00857EAC /* Film.swift in Sources */,
 			);
