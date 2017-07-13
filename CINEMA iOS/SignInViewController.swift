@@ -85,6 +85,7 @@ class SignInViewController: UIViewController {
     }
     
     @IBAction func singInAction(_ sender: Any) {
+        
         actIndicator.startAnimating()
         if self.userNameTextField.text == "" || self.passwordTextField.text == "" {
             
@@ -99,6 +100,7 @@ class SignInViewController: UIViewController {
             
         } else {
             
+            HomeViewController.searchController.searchBar.isHidden = false
             Auth.auth().signIn(withEmail: self.userNameTextField.text!, password: self.passwordTextField.text!) { (user, error) in
                 
                 if error == nil {

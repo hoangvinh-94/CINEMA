@@ -302,8 +302,9 @@
             let date = Date()
             let formatter = DateFormatter()
             formatter.dateFormat = "dd/MM/yyyy"
-            let today = formatter.string(from: date)
-            
+            let today1 = formatter.string(from: date)
+        let today = formatter.date(from: today1)
+            print("today\(today!)")
             ref.child("bookfilm").observe(.childAdded, with: { (snapshot) in
                 
                 let filmId = Int(snapshot.key)
@@ -314,7 +315,9 @@
                             if Int(snapshot1.key) == filmId {
                                 //var room: Int?
                                 for d in days!{
-                                    let day = d["day"] as? String
+                                    let day1 = d["day"] as? String
+                                    let day = formatter.date(from: day1!)
+                                    print("day\(day!)")
                                     if day == today {
                                         
                                         if let dictionary = snapshot1.value as? [String: AnyObject]{

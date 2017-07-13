@@ -35,7 +35,6 @@
 		60A2B5DE1EE152C100857EAC /* FilmTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60A2B5DD1EE152C100857EAC /* FilmTableViewCell.swift */; };
 		60E10ABF1EF1E76100A34628 /* FilmTypeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60E10ABE1EF1E76100A34628 /* FilmTypeTableViewCell.swift */; };
 		60E10AC11EF1E7B000A34628 /* FilmTypeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60E10AC01EF1E7B000A34628 /* FilmTypeTableViewController.swift */; };
-		75111D901EF9660300DD6F4C /* AdminViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75111D8F1EF9660200DD6F4C /* AdminViewController.swift */; };
 		751C46D11EE2FB460007FC3C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 751C46D01EE2FB460007FC3C /* GoogleService-Info.plist */; };
 		7525D84F1EE4197300FF6FA5 /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7525D84D1EE4197300FF6FA5 /* SWRevealViewController.m */; };
 		7525D8521EE41A6C00FF6FA5 /* MenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7525D8501EE41A6C00FF6FA5 /* MenuCell.swift */; };
@@ -103,7 +102,6 @@
 		60E10ABE1EF1E76100A34628 /* FilmTypeTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilmTypeTableViewCell.swift; sourceTree = "<group>"; };
 		60E10AC01EF1E7B000A34628 /* FilmTypeTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilmTypeTableViewController.swift; sourceTree = "<group>"; };
 		71DC90CFAD60B88AAC48A138 /* Pods-CINEMA iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CINEMA iOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-CINEMA iOS/Pods-CINEMA iOS.release.xcconfig"; sourceTree = "<group>"; };
-		75111D8F1EF9660200DD6F4C /* AdminViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdminViewController.swift; sourceTree = "<group>"; };
 		751C46D01EE2FB460007FC3C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		7525D84C1EE4197100FF6FA5 /* CINEMA iOS-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CINEMA iOS-Bridging-Header.h"; sourceTree = "<group>"; };
 		7525D84D1EE4197300FF6FA5 /* SWRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWRevealViewController.m; sourceTree = "<group>"; };
@@ -239,7 +237,6 @@
 		603F99AE1EDA367800BE7151 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				75111D8F1EF9660200DD6F4C /* AdminViewController.swift */,
 				605435A81EF3CCFF00C98CFE /* TicketInformationTableViewController.swift */,
 				60E10AC01EF1E7B000A34628 /* FilmTypeTableViewController.swift */,
 				60608AFD1EE7B5540034FA3E /* DetailViewController.swift */,
@@ -592,7 +589,6 @@
 				F7DC99DC1F0F83430062942C /* BookTableViewCell.swift in Sources */,
 				756C08F21EF8E1960014BB02 /* MyOrderCell.swift in Sources */,
 				60608AFA1EE7A8060034FA3E /* SeatCollectionViewController.swift in Sources */,
-				75111D901EF9660300DD6F4C /* AdminViewController.swift in Sources */,
 				605435A11EF38F0900C98CFE /* User.swift in Sources */,
 				60A2B5DE1EE152C100857EAC /* FilmTableViewCell.swift in Sources */,
 				605435A91EF3CCFF00C98CFE /* TicketInformationTableViewController.swift in Sources */,

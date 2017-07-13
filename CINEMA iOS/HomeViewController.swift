@@ -153,36 +153,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         self.Films = [Film]()
         queue.cancelAllOperations()
         tableAcIndicator.startAnimating()
-        /*if (type == "now_playing" && self.isSlideShowLoaded == false && self.isSlideShowDefaultDeleted == false) {
-            self.mainScrollView.auk.removeAll()
-            self.isSlideShowDefaultDeleted = true
-        }
-
-        db.getDataFilmFireBase(type: type) { (Films, error) in
-            if(error != nil) {
-                print(error!)
-            } else {
-                self.Films = Films!
-                if (type == "now_playing" && self.isSlideShowLoaded == false) {
-                    for i in Films!{
-                        let poster_path = i.getPoster()
-                        print(poster_path)
-                        self.slideShow(poster_path: poster_path)
-                    }
-                    if self.mainScrollView.auk.numberOfPages > 3 {
-                        self.isSlideShowLoaded = true
-                    }
-                }
-
-                DispatchQueue.main.async {
-                    
-                self.tableAcIndicator.stopAnimating()
-                self.tableView.reloadData()
-                    
-                }
-            }
-        }
-        */
+   
         
         
         refHandler = ref.child("films").observe(.childAdded, with:{ (snapshot) in
@@ -211,7 +182,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                     DispatchQueue.main.async {
                         self.tableAcIndicator.stopAnimating()
                         self.tableView.reloadData()
-                        self.tableView.setContentOffset(CGPoint.zero, animated: false)
+                        //self.tableView.setContentOffset(CGPoint.zero, animated: false)
                         if (type == "now_playing" && self.isSlideShowLoaded == false) {
                             self.slideShow(poster_path: poster_path!)
                             if self.mainScrollView.auk.numberOfPages > 3 {
