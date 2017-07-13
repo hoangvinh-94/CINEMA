@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12118" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="6gD-46-wtw">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="6gD-46-wtw">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
         <capability name="Alignment constraints to the first baseline" minToolsVersion="6.0"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -252,40 +252,6 @@
             </objects>
             <point key="canvasLocation" x="148" y="349"/>
         </scene>
-        <!--Book Collection View Controller-->
-        <scene sceneID="0ho-bS-y2i">
-            <objects>
-                <collectionViewController id="kd2-eM-mMI" customClass="BookCollectionViewController" customModule="CINEMA_iOS" customModuleProvider="target" sceneMemberID="viewController">
-                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" id="chu-3Q-6bd">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="FIw-V8-dld">
-                            <size key="itemSize" width="50" height="27"/>
-                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                        </collectionViewFlowLayout>
-                        <cells>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="BookCell" id="kaA-tX-Sg1" customClass="BookCollectionViewCell" customModule="CINEMA_iOS" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="50" height="27"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                    <rect key="frame" x="0.0" y="0.0" width="50" height="27"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </view>
-                            </collectionViewCell>
-                        </cells>
-                        <connections>
-                            <outlet property="dataSource" destination="kd2-eM-mMI" id="qYR-7M-gb7"/>
-                            <outlet property="delegate" destination="kd2-eM-mMI" id="hn8-VT-u4x"/>
-                        </connections>
-                    </collectionView>
-                </collectionViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="G8I-55-U2n" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="839.20000000000005" y="339.58020989505252"/>
-        </scene>
         <!--CINEMA-->
         <scene sceneID="QnR-4K-8KI">
             <objects>
@@ -299,7 +265,7 @@
                                 <rect key="frame" x="0.0" y="28" width="375" height="152"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Iqu-gT-cpj" id="7en-0g-pSd">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="151"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="152"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="nen10" translatesAutoresizingMaskIntoConstraints="NO" id="0gZ-fr-Ibx">
@@ -606,32 +572,15 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="l7D-sZ-Efs">
-                                <rect key="frame" x="0.0" y="304" width="375" height="29"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="28" id="WUt-Vh-KGg"/>
-                                </constraints>
-                                <segments>
-                                    <segment title="NOW SHOWING"/>
-                                    <segment title="COMING SOON"/>
-                                    <segment title="HAD SHOWN"/>
-                                </segments>
-                                <connections>
-                                    <action selector="indexChanged:" destination="09v-LC-Aan" eventType="valueChanged" id="xCW-jc-vlO"/>
-                                </connections>
-                            </segmentedControl>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="171" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="LcY-xo-ROb">
-                                <rect key="frame" x="0.0" y="332" width="375" height="335"/>
+                                <rect key="frame" x="0.0" y="275" width="375" height="392"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="335" id="9Ov-JB-B9o"/>
-                                </constraints>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="FilmCell" rowHeight="150" id="NhA-s7-snn" customClass="FilmTableViewCell" customModule="CINEMA_iOS" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="150"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="NhA-s7-snn" id="T59-K2-yrH">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="149"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="149.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="91x-HU-WOt">
@@ -703,32 +652,47 @@
                                 </connections>
                             </tableView>
                             <scrollView autoresizesSubviews="NO" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" alpha="0.94999999999999996" contentMode="scaleAspectFill" translatesAutoresizingMaskIntoConstraints="NO" id="d05-8U-XKZ">
-                                <rect key="frame" x="0.0" y="64" width="375" height="240"/>
+                                <rect key="frame" x="0.0" y="64" width="375" height="183"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="240" id="FEp-DL-9F1"/>
+                                    <constraint firstAttribute="height" constant="183" id="FEp-DL-9F1"/>
                                 </constraints>
                             </scrollView>
                             <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="5ra-FB-SBU">
                                 <rect key="frame" x="157" y="300" width="61" height="37"/>
                                 <color key="color" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             </activityIndicatorView>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="l7D-sZ-Efs">
+                                <rect key="frame" x="0.0" y="247" width="375" height="29"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="28" id="jIC-JF-Jdx"/>
+                                </constraints>
+                                <segments>
+                                    <segment title="NOW SHOWING"/>
+                                    <segment title="COMING SOON"/>
+                                    <segment title="HAD SHOWN"/>
+                                </segments>
+                                <connections>
+                                    <action selector="indexChanged:" destination="09v-LC-Aan" eventType="valueChanged" id="xCW-jc-vlO"/>
+                                </connections>
+                            </segmentedControl>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="d05-8U-XKZ" firstAttribute="leading" secondItem="2T5-aS-cg9" secondAttribute="leading" id="1at-6y-Lbx"/>
                             <constraint firstItem="5ra-FB-SBU" firstAttribute="top" secondItem="rwj-lP-XPd" secondAttribute="bottom" constant="236" id="A4d-cq-wgm"/>
-                            <constraint firstItem="LcY-xo-ROb" firstAttribute="trailing" secondItem="l7D-sZ-Efs" secondAttribute="trailing" id="FRu-Yu-bsV"/>
-                            <constraint firstItem="LcY-xo-ROb" firstAttribute="leading" secondItem="l7D-sZ-Efs" secondAttribute="leading" id="FXz-Rf-qOA"/>
+                            <constraint firstItem="LcY-xo-ROb" firstAttribute="leading" secondItem="2T5-aS-cg9" secondAttribute="leading" id="D5v-bO-jte"/>
+                            <constraint firstItem="l7D-sZ-Efs" firstAttribute="leading" secondItem="2T5-aS-cg9" secondAttribute="leading" id="IaZ-ml-prQ"/>
+                            <constraint firstItem="WhC-zq-OXr" firstAttribute="top" secondItem="LcY-xo-ROb" secondAttribute="bottom" id="JaJ-nI-hUJ"/>
                             <constraint firstAttribute="trailing" secondItem="5ra-FB-SBU" secondAttribute="trailing" constant="157" id="Jf3-Hg-mPX"/>
-                            <constraint firstItem="LcY-xo-ROb" firstAttribute="top" secondItem="l7D-sZ-Efs" secondAttribute="bottom" id="QUk-NB-vBO"/>
-                            <constraint firstItem="l7D-sZ-Efs" firstAttribute="top" secondItem="d05-8U-XKZ" secondAttribute="bottom" id="T34-Bd-kGm"/>
+                            <constraint firstAttribute="trailing" secondItem="LcY-xo-ROb" secondAttribute="trailing" id="Tjc-d2-Jwh"/>
                             <constraint firstItem="d05-8U-XKZ" firstAttribute="top" secondItem="rwj-lP-XPd" secondAttribute="bottom" id="eId-Wc-ISM"/>
+                            <constraint firstItem="LcY-xo-ROb" firstAttribute="top" secondItem="l7D-sZ-Efs" secondAttribute="bottom" id="fbY-mi-ChT"/>
                             <constraint firstItem="WhC-zq-OXr" firstAttribute="top" secondItem="5ra-FB-SBU" secondAttribute="bottom" constant="330" id="ggb-dI-We0"/>
                             <constraint firstAttribute="trailing" secondItem="d05-8U-XKZ" secondAttribute="trailing" id="hIJ-4u-BMc"/>
-                            <constraint firstItem="LcY-xo-ROb" firstAttribute="trailing" secondItem="d05-8U-XKZ" secondAttribute="trailing" id="jcC-a8-u4y"/>
-                            <constraint firstItem="LcY-xo-ROb" firstAttribute="bottom" secondItem="WhC-zq-OXr" secondAttribute="top" id="qWB-fb-zEW"/>
+                            <constraint firstItem="l7D-sZ-Efs" firstAttribute="top" secondItem="d05-8U-XKZ" secondAttribute="bottom" id="pJt-PT-M3i"/>
+                            <constraint firstItem="5ra-FB-SBU" firstAttribute="centerX" secondItem="2T5-aS-cg9" secondAttribute="centerX" id="rnG-vd-cp2"/>
                             <constraint firstItem="5ra-FB-SBU" firstAttribute="leading" secondItem="2T5-aS-cg9" secondAttribute="leading" constant="157" id="yKm-HA-vfF"/>
-                            <constraint firstItem="LcY-xo-ROb" firstAttribute="leading" secondItem="d05-8U-XKZ" secondAttribute="leading" id="yhl-O5-Ca0"/>
+                            <constraint firstAttribute="trailing" secondItem="l7D-sZ-Efs" secondAttribute="trailing" id="ybv-iM-Pqq"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="CINEMA" id="IJB-IW-KXw">
@@ -750,7 +714,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XI5-7R-21w" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-3455" y="1744"/>
+            <point key="canvasLocation" x="-3455.1999999999998" y="1743.778110944528"/>
         </scene>
         <!--FILM DETAIL-->
         <scene sceneID="tzD-OE-5hP">
@@ -1910,6 +1874,6 @@
         <image name="time" width="200" height="200"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Iek-T9-OuO"/>
+        <segue reference="MMO-Cf-xd9"/>
     </inferredMetricsTieBreakers>
 </document>

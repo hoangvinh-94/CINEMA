@@ -79,8 +79,7 @@
                         for filmDictonary in array as! [AnyObject] {
                             if let filmDictonary = filmDictonary as? [String: AnyObject]{
                                 // Parse the search resu
-                                let id = filmDictonary["id"] as! Int
-                                //getMovieDetail(idFilm: String(id))
+                                let id = filmDictonary["id"] as! Int	
                                 getTrailer(id: id)
                             } else {
                                 print("Not a dictionary")
