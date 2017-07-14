@@ -32,6 +32,9 @@ class FilmTypeTableViewController: UITableViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
+    }
+    
+    func load(){
         HomeViewController.searchController.searchResultsUpdater = self
         definesPresentationContext = true
         HomeViewController.searchController.dimsBackgroundDuringPresentation = true
@@ -46,24 +49,31 @@ class FilmTypeTableViewController: UITableViewController {
         tableView.backgroundView = tableIndicator
         tableView.separatorStyle = UITableViewCellSeparatorStyle.none
         
-        
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         // tableIndicator.startAnimating()
-        switch typeFilm! {
-        case 0:
-            loadDataToTableView(type: "popular")
-            break
-        case 1:
-            loadDataToTableView(type: "now_playing")
-            break
-        case 2:
-            loadDataToTableView(type: "upcoming")
-            break
-        default:
-            break
+        if(currentReachabilityStatus != .notReachable){
+            load()
+            switch typeFilm! {
+            case 0:
+                loadDataToTableView(type: "popular")
+                break
+            case 1:
+                loadDataToTableView(type: "now_playing")
+                break
+            case 2:
+                loadDataToTableView(type: "upcoming")
+                break
+            default:
+                break
+            }
+
+        }
+        else{
+            let mainstoryboard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+            let newViewcontroller = mainstoryboard.instantiateViewController(withIdentifier: "ConnectAgain")
+            present(newViewcontroller, animated: true, completion: nil)
         }
     }
 

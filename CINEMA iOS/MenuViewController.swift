@@ -88,7 +88,6 @@ class MenuViewController: UIViewController, UITableViewDelegate, UITableViewData
         if cell.labelMenu.text! == "Home"
         {
             HomeViewController.searchController.searchBar.isHidden = false
-            print("Home Tapped")
             let mainstoryboard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
             let newViewcontroller = mainstoryboard.instantiateViewController(withIdentifier: "HomeViewController") as! HomeViewController
             let newFrontController = UINavigationController.init(rootViewController: newViewcontroller)

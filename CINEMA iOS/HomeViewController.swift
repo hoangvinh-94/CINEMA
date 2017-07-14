@@ -37,56 +37,23 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     var LoadView : UIView = UIView()
     
     @IBOutlet weak var mainScrollView: UIScrollView!
-    class Downloader {
-        class func downloadImageWithURL(_ url:String) -> UIImage! {
-            let data = try? Data(contentsOf: URL(string: url)!)
-            return UIImage(data: data!)
-        }
-    }
+  
     override func viewDidLoad() {
         super.viewDidLoad()
-        //db.reloadFilmFromUrlApi(page: 1, filmType: "upcoming")
-        // When app connected to internet
-        if currentReachabilityStatus != .notReachable {
-            ref = Database.database().reference()
-            if(Auth.auth().currentUser?.uid != nil){
-                let uid = Auth.auth().currentUser?.uid
-                ref.child("users").child(uid!).observe(.value, with: {(snapshot) in
-                    let user = snapshot.value as? [String: Any]
-                    self.signIn.title = "Hi, " + (user?["userName"] as? String)!
-                    self.signIn.image = nil
-                    self.signIn.action = #selector(self.toProfileViewController)
-                    
-                })
-            }
-            self.isSlideShowLoaded = false
-            self.isSlideShowDefaultDeleted = false
-            //slideShowDefault()
-            
-            // Do any additional setup after loading the view, typically from a nib.
-            HomeViewController.searchController.searchResultsUpdater = self
-            definesPresentationContext = true
-            HomeViewController.searchController.dimsBackgroundDuringPresentation = true
-            HomeViewController.searchController.searchBar.delegate = self
-            
-            menuButton.target = revealViewController()
-            menuButton.action = #selector(SWRevealViewController.revealToggle(_:))
-            self.segmentControl.selectedSegmentIndex = 0
-            loadDataToTableView(type: "now_playing")
-            
-        }
-            // When app disconnected to internet
-        else {
-            retryConnection()
-            
-        }
+       
     }
-    
     
     override func viewWillAppear(_ animated: Bool) {
         AppUtility.lockOrientation(.portrait, andRotateTo: .portrait)
         self.segmentControl.selectedSegmentIndex = 0
-        loadDataToTableView(type: "now_playing")
+        if(currentReachabilityStatus != .notReachable){
+            loadInterface()
+        }
+        else{
+            let mainstoryboard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+            let newViewcontroller = mainstoryboard.instantiateViewController(withIdentifier: "ConnectAgain")
+            present(newViewcontroller, animated: true, completion: nil)
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -97,26 +64,32 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     
-    
-    
-    func retryConnection() {
-        let alert = UIAlertController(title: "Check", message: "Internet Connection is Required at first time running the app to load images and videos ", preferredStyle: UIAlertControllerStyle.alert)
-        alert.addAction(UIAlertAction(title: "Retry", style: UIAlertActionStyle.default, handler: { action in
-            if self.currentReachabilityStatus == .notReachable {
-                self.retryConnection()
-            } else {
-                self.loadDataToTableView(type: "now_playing")
+    func loadInterface(){
+        ref = Database.database().reference()
+        if(Auth.auth().currentUser?.uid != nil){
+            let uid = Auth.auth().currentUser?.uid
+            ref.child("users").child(uid!).observe(.value, with: {(snapshot) in
+                let user = snapshot.value as? [String: Any]
+                self.signIn.title = "Hi, " + (user?["userName"] as? String)!
+                self.signIn.image = nil
+                self.signIn.action = #selector(self.toProfileViewController)
                 
-            }
-        }))
-        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.default, handler: { action in
-            exit(0)
-        }))
+            })
+        }
+        self.isSlideShowLoaded = false
+        self.isSlideShowDefaultDeleted = false
+        //slideShowDefault()
         
-        DispatchQueue.main.async(execute: {
-            self.present(alert, animated: true, completion: nil)
-        })
+        // Do any additional setup after loading the view, typically from a nib.
+        HomeViewController.searchController.searchResultsUpdater = self
+        definesPresentationContext = true
+        HomeViewController.searchController.dimsBackgroundDuringPresentation = true
+        HomeViewController.searchController.searchBar.delegate = self
         
+        menuButton.target = revealViewController()
+        menuButton.action = #selector(SWRevealViewController.revealToggle(_:))
+        self.segmentControl.selectedSegmentIndex = 0
+        loadDataToTableView(type: "now_playing")
     }
     
     func toProfileViewController() {
@@ -153,9 +126,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         self.Films = [Film]()
         queue.cancelAllOperations()
         tableAcIndicator.startAnimating()
-   
-        
-        
         refHandler = ref.child("films").observe(.childAdded, with:{ (snapshot) in
             // Get user value
             if let dictionary = snapshot.value as? [String: AnyObject]{
@@ -223,7 +193,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     func scrollViewTapped() {
         let filmDetail = storyboard?.instantiateViewController(withIdentifier: "FILMDETAIL") as! DetailViewController
-        // BSeat.Seat = bookFilm[indexPath.section].getSeats()[indexPath.row]
         filmDetail.film = Films[0]
         navigationController?.pushViewController(filmDetail, animated: true)
         
@@ -338,6 +307,14 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         revealviewcontroller.pushFrontViewController(newFrontController, animated: true)
         
     }
+    
+    class Downloader {
+        class func downloadImageWithURL(_ url:String) -> UIImage! {
+            let data = try? Data(contentsOf: URL(string: url)!)
+            return UIImage(data: data!)
+        }
+    }
+    
 }
 
 extension HomeViewController : UISearchBarDelegate{

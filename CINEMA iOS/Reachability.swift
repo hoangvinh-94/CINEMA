@@ -16,14 +16,8 @@ protocol Utilities {
     
 }
 
-
-
 extension NSObject:Utilities{
-    
-    
-    
-    
-    
+
     enum ReachabilityStatus {
         
         case notReachable
@@ -33,9 +27,7 @@ extension NSObject:Utilities{
         case reachableViaWiFi
         
     }
-    
-    
-    
+
     var currentReachabilityStatus: ReachabilityStatus {
         
         

@@ -1164,6 +1164,50 @@
             </objects>
             <point key="canvasLocation" x="-3455" y="99"/>
         </scene>
+        <!--Connect Again View Controller-->
+        <scene sceneID="oLr-b6-8ZK">
+            <objects>
+                <viewController storyboardIdentifier="ConnectAgain" id="baY-ht-7up" customClass="ConnectAgainViewController" customModule="CINEMA_iOS" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="mJg-Hx-Ri4"/>
+                        <viewControllerLayoutGuide type="bottom" id="z2L-Bp-3sB"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="OLZ-bS-DYI">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IjT-ok-a0x">
+                                <rect key="frame" x="148" y="358" width="78" height="33"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                <state key="normal" title="Try Again">
+                                    <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="connectAgain:" destination="baY-ht-7up" eventType="touchUpInside" id="xra-aY-0TZ"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Not connected" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b6s-so-ueA">
+                                <rect key="frame" x="30" y="277" width="315" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="b6s-so-ueA" firstAttribute="centerX" secondItem="OLZ-bS-DYI" secondAttribute="centerX" id="2Lh-WN-7zR"/>
+                            <constraint firstItem="IjT-ok-a0x" firstAttribute="centerX" secondItem="OLZ-bS-DYI" secondAttribute="centerX" id="9TT-mG-V7N"/>
+                            <constraint firstItem="IjT-ok-a0x" firstAttribute="top" secondItem="b6s-so-ueA" secondAttribute="bottom" constant="60" id="AjA-AM-jH3"/>
+                            <constraint firstItem="b6s-so-ueA" firstAttribute="top" secondItem="mJg-Hx-Ri4" secondAttribute="bottom" constant="257" id="Jad-9u-SBB"/>
+                            <constraint firstItem="b6s-so-ueA" firstAttribute="leading" secondItem="OLZ-bS-DYI" secondAttribute="leading" constant="30" id="w4o-7p-Mqi"/>
+                            <constraint firstAttribute="trailing" secondItem="b6s-so-ueA" secondAttribute="trailing" constant="30" id="zjk-Jy-Q90"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Sfa-X0-KqK" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-5142" y="1955"/>
+        </scene>
         <!--Sign Up View Controller-->
         <scene sceneID="RNn-p3-7QD">
             <objects>

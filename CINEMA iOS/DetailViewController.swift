@@ -27,6 +27,7 @@ class DetailViewController: UIViewController {
     
     @IBOutlet var trailer: UIWebView!
     var prefixImg: String = "https://image.tmdb.org/t/p/w320"
+    var prefixTrailer: String = "https://www.youtube.com/embed/"
     var queue = OperationQueue()
 
     
@@ -41,18 +42,27 @@ class DetailViewController: UIViewController {
             let data = try? Data(contentsOf: URL(string: url)!)
             return UIImage(data: data!)
         }
+        class func downloadTrailerWithURL(_ url:String) -> URLRequest {
+            let urlRequest = URL(string: url)
+            return URLRequest(url: urlRequest!)
+        }
     }
 
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-       db.checkFilmHadBook(idFilmCurrent: film.getId(), completionHandler: { (flag, error) in
+
+        // Do any additional setup after loading the view.
+    }
+
+    func load(){
+        db.checkFilmHadBook(idFilmCurrent: film.getId(), completionHandler: { (flag, error) in
             if(error != nil) {
                 print(error!)
             } else {
                 self.flag = flag!
-               
+                
             }
         })
         
@@ -71,8 +81,8 @@ class DetailViewController: UIViewController {
                     OperationQueue.main.addOperation({
                         self.tableIndicator.stopAnimating()
                         self.posterImage.image = img
-                        let url = URL(string: "https://www.youtube.com/embed/\(self.film.getTrailers())")
-                        self.trailer.loadRequest(URLRequest(url: url! as URL))
+                        
+                        self.trailer.loadRequest(Downloader.downloadTrailerWithURL("\(self.prefixTrailer)\(self.film.getTrailers())"))
                         self.titleLabel.text = self.film.getTitle().uppercased()
                         self.releaseDateLabel.text = self.film.getReleaseDate()
                         self.runtimeLabel.text = String(self.film.getRuntime()) + " minutes"
@@ -88,21 +98,29 @@ class DetailViewController: UIViewController {
                             else{
                                 let g = genre["name"] as? String
                                 self.genreLabel.text = self.genreLabel.text! + String(g!)
-
+                                
                             }
                             
-             	           }
+                        }
                         
-                })
+                    })
                 }
             }
         }
-        
-        
 
-        // Do any additional setup after loading the view.
     }
-
+    
+    override func viewWillAppear(_ animated: Bool) {
+        if(currentReachabilityStatus != .notReachable){
+            load()
+        }
+        else{
+            let mainstoryboard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+            let newViewcontroller = mainstoryboard.instantiateViewController(withIdentifier: "ConnectAgain")
+            present(newViewcontroller, animated: true, completion: nil)
+        }
+        
+    }
     @IBAction func bookFilm(_ sender: Any) {
         if(self.flag){
             let id = film.getId()

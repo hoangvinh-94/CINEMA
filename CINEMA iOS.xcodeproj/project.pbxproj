@@ -17,6 +17,8 @@
 		603F99871EDA350E00BE7151 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 603F99851EDA350E00BE7151 /* LaunchScreen.storyboard */; };
 		603F99921EDA351000BE7151 /* CINEMA_iOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 603F99911EDA351000BE7151 /* CINEMA_iOSTests.swift */; };
 		603F999D1EDA351000BE7151 /* CINEMA_iOSUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 603F999C1EDA351000BE7151 /* CINEMA_iOSUITests.swift */; };
+		605066101F1878770037CBA3 /* ConnectAgainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6050660F1F1878760037CBA3 /* ConnectAgainViewController.swift */; };
+		605066121F188BC40037CBA3 /* Downloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 605066111F188BC30037CBA3 /* Downloader.swift */; };
 		6054359D1EF30A7B00C98CFE /* ScheduleTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6054359C1EF30A7B00C98CFE /* ScheduleTableViewController.swift */; };
 		6054359F1EF38ED900C98CFE /* Ticket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6054359E1EF38ED900C98CFE /* Ticket.swift */; };
 		605435A11EF38F0900C98CFE /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 605435A01EF38F0900C98CFE /* User.swift */; };
@@ -83,6 +85,8 @@
 		603F99981EDA351000BE7151 /* CINEMA iOSUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "CINEMA iOSUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		603F999C1EDA351000BE7151 /* CINEMA_iOSUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CINEMA_iOSUITests.swift; sourceTree = "<group>"; };
 		603F999E1EDA351000BE7151 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6050660F1F1878760037CBA3 /* ConnectAgainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectAgainViewController.swift; sourceTree = "<group>"; };
+		605066111F188BC30037CBA3 /* Downloader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Downloader.swift; sourceTree = "<group>"; };
 		6054359C1EF30A7B00C98CFE /* ScheduleTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduleTableViewController.swift; sourceTree = "<group>"; };
 		6054359E1EF38ED900C98CFE /* Ticket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ticket.swift; sourceTree = "<group>"; };
 		605435A01EF38F0900C98CFE /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -237,6 +241,7 @@
 		603F99AE1EDA367800BE7151 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				6050660F1F1878760037CBA3 /* ConnectAgainViewController.swift */,
 				605435A81EF3CCFF00C98CFE /* TicketInformationTableViewController.swift */,
 				60E10AC01EF1E7B000A34628 /* FilmTypeTableViewController.swift */,
 				60608AFD1EE7B5540034FA3E /* DetailViewController.swift */,
@@ -274,6 +279,7 @@
 				600B60971EECAE5600B306E6 /* Reachability.swift */,
 				60A2B5D91EE112C100857EAC /* DataFilm.swift */,
 				75751D101F00033C00F7372C /* AppUtility.swift */,
+				605066111F188BC30037CBA3 /* Downloader.swift */,
 			);
 			name = Helper;
 			sourceTree = "<group>";
@@ -573,6 +579,7 @@
 			files = (
 				6054359D1EF30A7B00C98CFE /* ScheduleTableViewController.swift in Sources */,
 				7525D84F1EE4197300FF6FA5 /* SWRevealViewController.m in Sources */,
+				605066101F1878770037CBA3 /* ConnectAgainViewController.swift in Sources */,
 				75751D111F00033E00F7372C /* AppUtility.swift in Sources */,
 				60A2B5DA1EE112C100857EAC /* DataFilm.swift in Sources */,
 				60E10ABF1EF1E76100A34628 /* FilmTypeTableViewCell.swift in Sources */,
@@ -596,6 +603,7 @@
 				605435A71EF3CC4A00C98CFE /* TicketInformationTableViewCell.swift in Sources */,
 				75D0B7F61EE7F87800A3A5BF /* ChangePasswordViewController.swift in Sources */,
 				60E10AC11EF1E7B000A34628 /* FilmTypeTableViewController.swift in Sources */,
+				605066121F188BC40037CBA3 /* Downloader.swift in Sources */,
 				6054359F1EF38ED900C98CFE /* Ticket.swift in Sources */,
 				600B60981EECAE5600B306E6 /* Reachability.swift in Sources */,
 				603F997D1EDA350E00BE7151 /* AppDelegate.swift in Sources */,
