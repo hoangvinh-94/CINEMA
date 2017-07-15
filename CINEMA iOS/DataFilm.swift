@@ -8,10 +8,9 @@
     
     import Foundation
     import UIKit
-    import FirebaseDatabase
+    import FirebaseDatabase   //Firebase library
     
     class DataFilm{
-        
         
         var ref: DatabaseReference!
         var refHandler: DatabaseHandle!

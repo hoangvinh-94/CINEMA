@@ -63,7 +63,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         AppUtility.lockOrientation(.all)
     }
     
-    
     func loadInterface(){
         ref = Database.database().reference()
         if(Auth.auth().currentUser?.uid != nil){
@@ -244,7 +243,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         else{
             film = Films[indexPath.row]
         }
-        
         queue.addOperation { () -> Void in
             if film.getPoster() != "" {
                 if let img = Downloader.downloadImageWithURL("\(self.prefixImg)\(film.getPoster())") {
