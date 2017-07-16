@@ -13,9 +13,11 @@ import UIKit
 
 class ConnectAgainViewController: UIViewController {
     
+    
     // MARK: Internal
     
     var tableIndicator = UIActivityIndicatorView()
+    
     
     // MARK: UIViewController
     
@@ -27,6 +29,7 @@ class ConnectAgainViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
     
     // MARK: Main func
     
@@ -60,4 +63,5 @@ class ConnectAgainViewController: UIViewController {
         
         self.view.addSubview(tableIndicator)
     }
+    
 }
