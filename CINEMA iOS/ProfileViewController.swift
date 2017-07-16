@@ -23,6 +23,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
     // MARK: - Variables
     
     var tickets = [Ticket]()
+    var filteredTickets = [Ticket]()
     var ref: DatabaseReference!
     var refHandler: UInt!
     let cellSpacingHeight: CGFloat = 5
@@ -30,7 +31,10 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        HomeViewController.searchController.searchResultsUpdater = self
+        definesPresentationContext = true
+        HomeViewController.searchController.dimsBackgroundDuringPresentation = true
+        HomeViewController.searchController.searchBar.delegate = self
         ref = Database.database().reference()
         
         menuButton.target = revealViewController()
@@ -91,29 +95,28 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         tableIndicator.startAnimating()
         self.tickets = [Ticket]()
         let uid = Auth.auth().currentUser?.uid
+        let date = Date()
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd/MM/yyy"
+        let today = formatter.date(from: formatter.string(from: date))
         
         refHandler = ref.child("tickets").observe(.childAdded, with:{ (snapshot) in
             // Get user value
             if let dictionary = snapshot.value as? [String: AnyObject]{
                 
                 let idUser = dictionary["idUser"] as? String
-                if (idUser == uid) {
+                let day = dictionary["day"] as? String
+                let day1 = formatter.date(from: day!)
+                if (idUser == uid && ((day1! == today!) || (day1! > today!))) {
                     let title = dictionary["titleFilm"] as? String
-                    print("title \(String(describing: title))")
-                    let date = dictionary["day"] as? String
-                    print("title \(String(describing: date))")
                     let time = dictionary["time"] as? String
-                    print("time \(String(describing: time))")
                     let room = dictionary["room"] as? Int
-                    print("room \(String(describing: room))")
                     let seat = dictionary["seat"] as? String
-                    print("seat \(String(describing: seat))")
                     
-                    self.tickets.append(Ticket(titleFilm: title!,day: date!, time: time!, seat: seat!, room: room!))
+                    self.tickets.append(Ticket(titleFilm: title!,day: day!, time: time!, seat: seat!, room: room!))
                     DispatchQueue.main.async {
                         self.tableIndicator.stopAnimating()
                         self.myOrdersTableView.reloadData()
-                        self.myOrdersTableView.setContentOffset(CGPoint.zero, animated: false)
                     }
                     
                     
@@ -136,7 +139,12 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return tickets.count
+        if(HomeViewController.searchController.isActive && HomeViewController.searchController.searchBar.text != ""){
+            return filteredTickets.count
+        }
+        else{
+            return tickets.count
+        }
     }
     
     // Set the spacing between sections
@@ -148,7 +156,12 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         let cell = tableView.dequeueReusableCell(withIdentifier: "MyOrder_Cell") as! MyOrderCell
         var ticket: Ticket
         
-        ticket = tickets[indexPath.row]
+        if(HomeViewController.searchController.searchBar.text != "" && HomeViewController.searchController.isActive){
+            ticket = filteredTickets[indexPath.row]
+        }
+        else{
+            ticket = tickets[indexPath.row]
+        }
         
         cell.dateRelease.text = ticket.getDay()
         cell.roomTicket.text = String(ticket.getRoom())
@@ -165,15 +178,40 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         
         return cell
     }
+    func filterContentForSearchText(searchText: String, scope: String = "All"){
+        filteredTickets = tickets.filter{
+            st in
+            return st.getTitleFilm().lowercased().contains(searchText.lowercased())
+        }
+        myOrdersTableView.reloadData()
+    }
+}
+extension ProfileViewController : UISearchBarDelegate{
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        if(!(searchBar.text?.isEmpty)!){
+            myOrdersTableView?.reloadData()
+            self.revealViewController().revealToggle(animated: true)
+        }
+    }
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if(!searchText.isEmpty){
+            //reload your data source if necessary
+            myOrdersTableView?.reloadData()
+        }
+    }
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        if(!(searchBar.text?.isEmpty)!){
+            //reload your data source if necessary
+            myOrdersTableView?.reloadData()
+        }
+    }
+}
+
+extension ProfileViewController: UISearchResultsUpdating{
     
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destinationViewController.
-     // Pass the selected object to the new view controller.
-     }
-     */
+    func updateSearchResults(for searchController: UISearchController) {
+        filterContentForSearchText(searchText: searchController.searchBar.text!)
+    }
     
 }
+

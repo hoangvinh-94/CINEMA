@@ -11,12 +11,15 @@
 		35F7F23BEDA623DE6415D2AE /* Pods_CINEMA_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ACD0F97FD95CDF992EC443A9 /* Pods_CINEMA_iOS.framework */; };
 		600B60981EECAE5600B306E6 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 600B60971EECAE5600B306E6 /* Reachability.swift */; };
 		600B609B1EECAFDF00B306E6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 600B60991EECAFDF00B306E6 /* Main.storyboard */; };
+		603CCD6F1F1A89AA00E2FD5B /* Struct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 603CCD6E1F1A89AA00E2FD5B /* Struct.swift */; };
 		603F997D1EDA350E00BE7151 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 603F997C1EDA350E00BE7151 /* AppDelegate.swift */; };
 		603F997F1EDA350E00BE7151 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 603F997E1EDA350E00BE7151 /* HomeViewController.swift */; };
 		603F99841EDA350E00BE7151 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 603F99831EDA350E00BE7151 /* Assets.xcassets */; };
 		603F99871EDA350E00BE7151 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 603F99851EDA350E00BE7151 /* LaunchScreen.storyboard */; };
 		603F99921EDA351000BE7151 /* CINEMA_iOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 603F99911EDA351000BE7151 /* CINEMA_iOSTests.swift */; };
 		603F999D1EDA351000BE7151 /* CINEMA_iOSUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 603F999C1EDA351000BE7151 /* CINEMA_iOSUITests.swift */; };
+		605066101F1878770037CBA3 /* ConnectAgainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6050660F1F1878760037CBA3 /* ConnectAgainViewController.swift */; };
+		605066121F188BC40037CBA3 /* Downloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 605066111F188BC30037CBA3 /* Downloader.swift */; };
 		6054359D1EF30A7B00C98CFE /* ScheduleTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6054359C1EF30A7B00C98CFE /* ScheduleTableViewController.swift */; };
 		6054359F1EF38ED900C98CFE /* Ticket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6054359E1EF38ED900C98CFE /* Ticket.swift */; };
 		605435A11EF38F0900C98CFE /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 605435A01EF38F0900C98CFE /* User.swift */; };
@@ -35,7 +38,6 @@
 		60A2B5DE1EE152C100857EAC /* FilmTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60A2B5DD1EE152C100857EAC /* FilmTableViewCell.swift */; };
 		60E10ABF1EF1E76100A34628 /* FilmTypeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60E10ABE1EF1E76100A34628 /* FilmTypeTableViewCell.swift */; };
 		60E10AC11EF1E7B000A34628 /* FilmTypeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60E10AC01EF1E7B000A34628 /* FilmTypeTableViewController.swift */; };
-		75111D901EF9660300DD6F4C /* AdminViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75111D8F1EF9660200DD6F4C /* AdminViewController.swift */; };
 		751C46D11EE2FB460007FC3C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 751C46D01EE2FB460007FC3C /* GoogleService-Info.plist */; };
 		7525D84F1EE4197300FF6FA5 /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7525D84D1EE4197300FF6FA5 /* SWRevealViewController.m */; };
 		7525D8521EE41A6C00FF6FA5 /* MenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7525D8501EE41A6C00FF6FA5 /* MenuCell.swift */; };
@@ -46,6 +48,7 @@
 		75D0B7F41EE7F6D200A3A5BF /* ResetPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75D0B7F31EE7F6D200A3A5BF /* ResetPasswordViewController.swift */; };
 		75D0B7F61EE7F87800A3A5BF /* ChangePasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75D0B7F51EE7F87800A3A5BF /* ChangePasswordViewController.swift */; };
 		7AAF2BA74B2083FECC0F815C /* Pods_CINEMA_iOSTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 596F5CE9635484B73D0055E6 /* Pods_CINEMA_iOSTests.framework */; };
+		F7DC99DC1F0F83430062942C /* BookTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7DC99DB1F0F83430062942C /* BookTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -71,6 +74,7 @@
 		596F5CE9635484B73D0055E6 /* Pods_CINEMA_iOSTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CINEMA_iOSTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		600B60971EECAE5600B306E6 /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		600B609A1EECAFDF00B306E6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		603CCD6E1F1A89AA00E2FD5B /* Struct.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Struct.swift; sourceTree = "<group>"; };
 		603F99791EDA350D00BE7151 /* CINEMA iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "CINEMA iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		603F997C1EDA350E00BE7151 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		603F997E1EDA350E00BE7151 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
@@ -83,6 +87,8 @@
 		603F99981EDA351000BE7151 /* CINEMA iOSUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "CINEMA iOSUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		603F999C1EDA351000BE7151 /* CINEMA_iOSUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CINEMA_iOSUITests.swift; sourceTree = "<group>"; };
 		603F999E1EDA351000BE7151 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6050660F1F1878760037CBA3 /* ConnectAgainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectAgainViewController.swift; sourceTree = "<group>"; };
+		605066111F188BC30037CBA3 /* Downloader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Downloader.swift; sourceTree = "<group>"; };
 		6054359C1EF30A7B00C98CFE /* ScheduleTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduleTableViewController.swift; sourceTree = "<group>"; };
 		6054359E1EF38ED900C98CFE /* Ticket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ticket.swift; sourceTree = "<group>"; };
 		605435A01EF38F0900C98CFE /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -102,7 +108,6 @@
 		60E10ABE1EF1E76100A34628 /* FilmTypeTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilmTypeTableViewCell.swift; sourceTree = "<group>"; };
 		60E10AC01EF1E7B000A34628 /* FilmTypeTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilmTypeTableViewController.swift; sourceTree = "<group>"; };
 		71DC90CFAD60B88AAC48A138 /* Pods-CINEMA iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CINEMA iOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-CINEMA iOS/Pods-CINEMA iOS.release.xcconfig"; sourceTree = "<group>"; };
-		75111D8F1EF9660200DD6F4C /* AdminViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdminViewController.swift; sourceTree = "<group>"; };
 		751C46D01EE2FB460007FC3C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		7525D84C1EE4197100FF6FA5 /* CINEMA iOS-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CINEMA iOS-Bridging-Header.h"; sourceTree = "<group>"; };
 		7525D84D1EE4197300FF6FA5 /* SWRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWRevealViewController.m; sourceTree = "<group>"; };
@@ -119,6 +124,7 @@
 		ACD0F97FD95CDF992EC443A9 /* Pods_CINEMA_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CINEMA_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CABAF379495E050D6EC17DD8 /* Pods-CINEMA iOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CINEMA iOSTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CINEMA iOSTests/Pods-CINEMA iOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		DD0C14DD304E4AC10D72F568 /* Pods-CINEMA iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CINEMA iOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CINEMA iOS/Pods-CINEMA iOS.debug.xcconfig"; sourceTree = "<group>"; };
+		F7DC99DB1F0F83430062942C /* BookTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -187,6 +193,7 @@
 		603F997B1EDA350D00BE7151 /* CINEMA iOS */ = {
 			isa = PBXGroup;
 			children = (
+				6067CC7D1F08C42300CB37A0 /* Helper */,
 				603F99AD1EDA366E00BE7151 /* View */,
 				603F99AF1EDA368000BE7151 /* Model */,
 				603F99AE1EDA367800BE7151 /* Controller */,
@@ -196,6 +203,7 @@
 				600B60991EECAFDF00B306E6 /* Main.storyboard */,
 				603F99831EDA350E00BE7151 /* Assets.xcassets */,
 				603F99851EDA350E00BE7151 /* LaunchScreen.storyboard */,
+				603CCD6E1F1A89AA00E2FD5B /* Struct.swift */,
 			);
 			path = "CINEMA iOS";
 			sourceTree = "<group>";
@@ -221,30 +229,14 @@
 		603F99AD1EDA366E00BE7151 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				605435A81EF3CCFF00C98CFE /* TicketInformationTableViewController.swift */,
+				F7DC99DB1F0F83430062942C /* BookTableViewCell.swift */,
 				605435A61EF3CC4A00C98CFE /* TicketInformationTableViewCell.swift */,
-				60E10AC01EF1E7B000A34628 /* FilmTypeTableViewController.swift */,
 				60E10ABE1EF1E76100A34628 /* FilmTypeTableViewCell.swift */,
-				60608AFD1EE7B5540034FA3E /* DetailViewController.swift */,
 				60608AFB1EE7A84E0034FA3E /* SeatCollectionViewCell.swift */,
-				60608AF91EE7A8060034FA3E /* SeatCollectionViewController.swift */,
-				60608AF11EE724110034FA3E /* MenuViewController.swift */,
-				6058B9541EE5266600C5A5E1 /* SignInViewController.swift */,
-				6058B9521EE5260A00C5A5E1 /* SignUpViewController.swift */,
 				60A2B5DD1EE152C100857EAC /* FilmTableViewCell.swift */,
-				605804A31EE4A0FB00E7BF53 /* BookFilmTableViewController.swift */,
-				603F997E1EDA350E00BE7151 /* HomeViewController.swift */,
-				7525D84D1EE4197300FF6FA5 /* SWRevealViewController.m */,
-				7525D84E1EE4197300FF6FA5 /* SWRevealViewController.h */,
-				7525D84C1EE4197100FF6FA5 /* CINEMA iOS-Bridging-Header.h */,
 				7525D8501EE41A6C00FF6FA5 /* MenuCell.swift */,
-				75D0B7F31EE7F6D200A3A5BF /* ResetPasswordViewController.swift */,
-				75D0B7F51EE7F87800A3A5BF /* ChangePasswordViewController.swift */,
 				755CBE161EF19F8000CAD1FC /* ScheduleTableViewCell.swift */,
-				756C08EF1EF8E0220014BB02 /* ProfileViewController.swift */,
-				6054359C1EF30A7B00C98CFE /* ScheduleTableViewController.swift */,
 				756C08F11EF8E1960014BB02 /* MyOrderCell.swift */,
-				75111D8F1EF9660200DD6F4C /* AdminViewController.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -252,9 +244,23 @@
 		603F99AE1EDA367800BE7151 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				600B60971EECAE5600B306E6 /* Reachability.swift */,
-				60A2B5D91EE112C100857EAC /* DataFilm.swift */,
-				75751D101F00033C00F7372C /* AppUtility.swift */,
+				6050660F1F1878760037CBA3 /* ConnectAgainViewController.swift */,
+				605435A81EF3CCFF00C98CFE /* TicketInformationTableViewController.swift */,
+				60E10AC01EF1E7B000A34628 /* FilmTypeTableViewController.swift */,
+				60608AFD1EE7B5540034FA3E /* DetailViewController.swift */,
+				60608AF91EE7A8060034FA3E /* SeatCollectionViewController.swift */,
+				60608AF11EE724110034FA3E /* MenuViewController.swift */,
+				6058B9541EE5266600C5A5E1 /* SignInViewController.swift */,
+				6058B9521EE5260A00C5A5E1 /* SignUpViewController.swift */,
+				605804A31EE4A0FB00E7BF53 /* BookFilmTableViewController.swift */,
+				603F997E1EDA350E00BE7151 /* HomeViewController.swift */,
+				7525D84D1EE4197300FF6FA5 /* SWRevealViewController.m */,
+				7525D84E1EE4197300FF6FA5 /* SWRevealViewController.h */,
+				7525D84C1EE4197100FF6FA5 /* CINEMA iOS-Bridging-Header.h */,
+				75D0B7F31EE7F6D200A3A5BF /* ResetPasswordViewController.swift */,
+				75D0B7F51EE7F87800A3A5BF /* ChangePasswordViewController.swift */,
+				756C08EF1EF8E0220014BB02 /* ProfileViewController.swift */,
+				6054359C1EF30A7B00C98CFE /* ScheduleTableViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -268,6 +274,17 @@
 				605435A01EF38F0900C98CFE /* User.swift */,
 			);
 			name = Model;
+			sourceTree = "<group>";
+		};
+		6067CC7D1F08C42300CB37A0 /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				600B60971EECAE5600B306E6 /* Reachability.swift */,
+				60A2B5D91EE112C100857EAC /* DataFilm.swift */,
+				75751D101F00033C00F7372C /* AppUtility.swift */,
+				605066111F188BC30037CBA3 /* Downloader.swift */,
+			);
+			name = Helper;
 			sourceTree = "<group>";
 		};
 		63A1B9D43BFC15CA6BF0B63D /* Frameworks */ = {
@@ -565,6 +582,7 @@
 			files = (
 				6054359D1EF30A7B00C98CFE /* ScheduleTableViewController.swift in Sources */,
 				7525D84F1EE4197300FF6FA5 /* SWRevealViewController.m in Sources */,
+				605066101F1878770037CBA3 /* ConnectAgainViewController.swift in Sources */,
 				75751D111F00033E00F7372C /* AppUtility.swift in Sources */,
 				60A2B5DA1EE112C100857EAC /* DataFilm.swift in Sources */,
 				60E10ABF1EF1E76100A34628 /* FilmTypeTableViewCell.swift in Sources */,
@@ -578,16 +596,18 @@
 				60608AFE1EE7B5540034FA3E /* DetailViewController.swift in Sources */,
 				6058B9531EE5260A00C5A5E1 /* SignUpViewController.swift in Sources */,
 				60608AF21EE724110034FA3E /* MenuViewController.swift in Sources */,
+				F7DC99DC1F0F83430062942C /* BookTableViewCell.swift in Sources */,
 				756C08F21EF8E1960014BB02 /* MyOrderCell.swift in Sources */,
 				60608AFA1EE7A8060034FA3E /* SeatCollectionViewController.swift in Sources */,
-				75111D901EF9660300DD6F4C /* AdminViewController.swift in Sources */,
 				605435A11EF38F0900C98CFE /* User.swift in Sources */,
 				60A2B5DE1EE152C100857EAC /* FilmTableViewCell.swift in Sources */,
+				603CCD6F1F1A89AA00E2FD5B /* Struct.swift in Sources */,
 				605435A91EF3CCFF00C98CFE /* TicketInformationTableViewController.swift in Sources */,
 				755CBE171EF19F8000CAD1FC /* ScheduleTableViewCell.swift in Sources */,
 				605435A71EF3CC4A00C98CFE /* TicketInformationTableViewCell.swift in Sources */,
 				75D0B7F61EE7F87800A3A5BF /* ChangePasswordViewController.swift in Sources */,
 				60E10AC11EF1E7B000A34628 /* FilmTypeTableViewController.swift in Sources */,
+				605066121F188BC40037CBA3 /* Downloader.swift in Sources */,
 				6054359F1EF38ED900C98CFE /* Ticket.swift in Sources */,
 				600B60981EECAE5600B306E6 /* Reachability.swift in Sources */,
 				603F997D1EDA350E00BE7151 /* AppDelegate.swift in Sources */,

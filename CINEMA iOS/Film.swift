@@ -17,6 +17,7 @@ class Film: NSObject{
     private var releaseDate: String?
     private var genres: [Dictionary<String,Any>]?
     private var runtime: Int?
+    private var trailer: String?
     
     
     override init(){
@@ -32,7 +33,14 @@ class Film: NSObject{
         self.runtime = runtime
         self.genres = genres
     }
-   
+    
+    func getTrailers() -> String{
+        return trailer!;
+    }
+    
+    func setTrailers(trailer: String){
+        self.trailer = trailer
+    }
     
     func getId() -> Int{
         return id!

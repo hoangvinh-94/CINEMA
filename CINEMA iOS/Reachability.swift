@@ -6,47 +6,35 @@
 //  Copyright © 2017 healer. All rights reserved.
 //
 
+
+//  Class check if there is internet connection or not, this is utility class.
+
 import UIKit
-
 import SystemConfiguration
-
-
 
 protocol Utilities {
     
 }
 
-
-
 extension NSObject:Utilities{
-    
-    
-    
-    
-    
+
+    // Status for connect
     enum ReachabilityStatus {
         
         case notReachable
-        
         case reachableViaWWAN
-        
         case reachableViaWiFi
         
     }
     
-    
-    
+    // Check connect to intenet
     var currentReachabilityStatus: ReachabilityStatus {
-        
-        
         
         var zeroAddress = sockaddr_in()
         
         zeroAddress.sin_len = UInt8(MemoryLayout<sockaddr_in>.size)
         
         zeroAddress.sin_family = sa_family_t(AF_INET)
-        
-        
         
         guard let defaultRouteReachability = withUnsafePointer(to: &zeroAddress, {
             
@@ -62,8 +50,6 @@ extension NSObject:Utilities{
             
         }
         
-        
-        
         var flags: SCNetworkReachabilityFlags = []
         
         if !SCNetworkReachabilityGetFlags(defaultRouteReachability, &flags) {
@@ -72,12 +58,9 @@ extension NSObject:Utilities{
             
         }
         
-        
-        
         if flags.contains(.reachable) == false {
             
             // The target host is not reachable.
-            
             return .notReachable
             
         }
@@ -85,7 +68,6 @@ extension NSObject:Utilities{
         else if flags.contains(.isWWAN) == true {
             
             // WWAN connections are OK if the calling application is using the CFNetwork APIs.
-            
             return .reachableViaWWAN
             
         }
@@ -93,27 +75,21 @@ extension NSObject:Utilities{
         else if flags.contains(.connectionRequired) == false {
             
             // If the target host is reachable and no connection is required then we'll assume that you're on Wi-Fi...
-            
             return .reachableViaWiFi
             
         }
             
-        else if (flags.contains(.connectionOnDemand) == true || flags.contains(.connectionOnTraffic) == true) && flags.contains(.interventionRequired) == false {
+        else if ((flags.contains(.connectionOnDemand) == true || flags.contains(.connectionOnTraffic) == true) && (flags.contains(.interventionRequired) == false)) {
             
             // The connection is on-demand (or on-traffic) if the calling application is using the CFSocketStream or higher APIs and no [user] intervention is needed
-            
             return .reachableViaWiFi
             
-        }
-            
-        else {
+        } else {
             
             return .notReachable
             
         }
         
     }
-    
-    
     
 }
