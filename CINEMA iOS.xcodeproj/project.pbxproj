@@ -11,6 +11,7 @@
 		35F7F23BEDA623DE6415D2AE /* Pods_CINEMA_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ACD0F97FD95CDF992EC443A9 /* Pods_CINEMA_iOS.framework */; };
 		600B60981EECAE5600B306E6 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 600B60971EECAE5600B306E6 /* Reachability.swift */; };
 		600B609B1EECAFDF00B306E6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 600B60991EECAFDF00B306E6 /* Main.storyboard */; };
+		603CCD6F1F1A89AA00E2FD5B /* Struct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 603CCD6E1F1A89AA00E2FD5B /* Struct.swift */; };
 		603F997D1EDA350E00BE7151 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 603F997C1EDA350E00BE7151 /* AppDelegate.swift */; };
 		603F997F1EDA350E00BE7151 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 603F997E1EDA350E00BE7151 /* HomeViewController.swift */; };
 		603F99841EDA350E00BE7151 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 603F99831EDA350E00BE7151 /* Assets.xcassets */; };
@@ -73,6 +74,7 @@
 		596F5CE9635484B73D0055E6 /* Pods_CINEMA_iOSTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CINEMA_iOSTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		600B60971EECAE5600B306E6 /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		600B609A1EECAFDF00B306E6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		603CCD6E1F1A89AA00E2FD5B /* Struct.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Struct.swift; sourceTree = "<group>"; };
 		603F99791EDA350D00BE7151 /* CINEMA iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "CINEMA iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		603F997C1EDA350E00BE7151 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		603F997E1EDA350E00BE7151 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
@@ -201,6 +203,7 @@
 				600B60991EECAFDF00B306E6 /* Main.storyboard */,
 				603F99831EDA350E00BE7151 /* Assets.xcassets */,
 				603F99851EDA350E00BE7151 /* LaunchScreen.storyboard */,
+				603CCD6E1F1A89AA00E2FD5B /* Struct.swift */,
 			);
 			path = "CINEMA iOS";
 			sourceTree = "<group>";
@@ -598,6 +601,7 @@
 				60608AFA1EE7A8060034FA3E /* SeatCollectionViewController.swift in Sources */,
 				605435A11EF38F0900C98CFE /* User.swift in Sources */,
 				60A2B5DE1EE152C100857EAC /* FilmTableViewCell.swift in Sources */,
+				603CCD6F1F1A89AA00E2FD5B /* Struct.swift in Sources */,
 				605435A91EF3CCFF00C98CFE /* TicketInformationTableViewController.swift in Sources */,
 				755CBE171EF19F8000CAD1FC /* ScheduleTableViewCell.swift in Sources */,
 				605435A71EF3CC4A00C98CFE /* TicketInformationTableViewCell.swift in Sources */,
