@@ -12,7 +12,13 @@ import Firebase
 import FirebaseDatabase
 import Auk
 
+
+// MARK: - HomeViewController
+
 class HomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource{
+    
+    
+    // MARK: Internal
     
     @IBOutlet weak var tableAcIndicator: UIActivityIndicatorView!
     public static var searchController = UISearchController(searchResultsController: nil)
@@ -24,8 +30,12 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     var prefixImg: String = "https://image.tmdb.org/t/p/w320"
     var prefixImgSlideshow: String = "https://image.tmdb.org/t/p/w1400_and_h450_bestv2"
     var queue = OperationQueue()
-    var isSlideShowLoaded: Bool!
-    var isSlideShowDefaultDeleted: Bool!
+    var isSlideShowLoaded: Bool! // Check if image is load to scrollView or not
+    var isSlideShowDefaultDeleted: Bool! // Check if the image default is deleted or not
+    
+    let DEFAULT_IMAGE_SLIDE_SHOW = "noimagefound"
+    let TIME_DELAY_SLIDE_SHOW = 3
+    let IMAGE_LOADED_NUMBER = 3
     
     @IBOutlet var tableView: UITableView!
     
@@ -38,6 +48,9 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     @IBOutlet weak var mainScrollView: UIScrollView!
   
+    
+    // MARK: - UIViewController
+    
     override func viewDidLoad() {
         super.viewDidLoad()
        
@@ -75,9 +88,10 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                 
             })
         }
+        
         self.isSlideShowLoaded = false
         self.isSlideShowDefaultDeleted = false
-        //slideShowDefault()
+        
         
         // Do any additional setup after loading the view, typically from a nib.
         HomeViewController.searchController.searchResultsUpdater = self
@@ -92,22 +106,10 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func toProfileViewController() {
+        
         let profile = storyboard?.instantiateViewController(withIdentifier: "ProfileViewController") as! ProfileViewController
         self.navigationController?.pushViewController(profile, animated: true)
     }
-    
-    func imageResize (image:UIImage, sizeChange:CGSize)-> UIImage{
-        
-        let hasAlpha = true
-        let scale: CGFloat = 0.0 // Use scale factor of main screen
-        
-        UIGraphicsBeginImageContextWithOptions(sizeChange, !hasAlpha, scale)
-        image.draw(in: CGRect(origin: CGPoint.zero, size: sizeChange))
-        
-        let scaledImage = UIGraphicsGetImageFromCurrentImageContext()
-        return scaledImage!
-    }
-    
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
@@ -125,11 +127,13 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         self.Films = [Film]()
         queue.cancelAllOperations()
         tableAcIndicator.startAnimating()
+        
         refHandler = ref.child("films").observe(.childAdded, with:{ (snapshot) in
+            
             // Get user value
             if let dictionary = snapshot.value as? [String: AnyObject]{
-                if (type == "now_playing" && self.isSlideShowLoaded == false && self.isSlideShowDefaultDeleted == false) {
-                    self.mainScrollView.auk.removeAll()
+                if type == "now_playing" && self.isSlideShowLoaded == false && self.isSlideShowDefaultDeleted == false { // If the the tap choosen is now playing, image is not loaed to scrollview and image default is not deleted
+                    self.mainScrollView.auk.removeAll() // remove the default images
                     self.isSlideShowDefaultDeleted = true
                 }
                 print(dictionary)
@@ -151,10 +155,10 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                     DispatchQueue.main.async {
                         self.tableAcIndicator.stopAnimating()
                         self.tableView.reloadData()
-                        //self.tableView.setContentOffset(CGPoint.zero, animated: false)
-                        if (type == "now_playing" && self.isSlideShowLoaded == false) {
-                            self.slideShow(poster_path: poster_path!)
-                            if self.mainScrollView.auk.numberOfPages > 3 {
+                        
+                        if type == "now_playing" && self.isSlideShowLoaded == false {
+                            self.slideShow(poster_path: poster_path!) // Add image url to scrollview
+                            if self.mainScrollView.auk.numberOfPages > self.IMAGE_LOADED_NUMBER { //Image is loaded to scrollview
                                 self.isSlideShowLoaded = true
                             }
                         }
@@ -169,25 +173,25 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         
     }
     
+    // Add image url is loaded from databse to ScrollView
     func slideShow(poster_path: String){
-        let size = CGSize(width: Int(self.mainScrollView.frame.width), height: Int(self.mainScrollView.frame.height))
+        
+        let size = CGSize(width: Int(self.mainScrollView.frame.width), height: Int(self.mainScrollView.frame.height)) // get scrollView with and height
         self.queue.addOperation { () -> Void in
             if poster_path != "" {
                 if var img = Downloader.downloadImageWithURL("\(self.prefixImg)\(poster_path )") {
                     OperationQueue.main.addOperation({
-                        img = self.imageResize(image: img, sizeChange: size)
+                        img = self.imageResize(image: img, sizeChange: size) // Call resize func to change iamge size
                         self.mainScrollView.auk.show(image: img)
-                        self.mainScrollView.auk.settings.placeholderImage = UIImage(named: "noimagefound")
+                        self.mainScrollView.auk.settings.placeholderImage = UIImage(named: self.DEFAULT_IMAGE_SLIDE_SHOW)
                         self.mainScrollView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(HomeViewController.scrollViewTapped)))
                     })
                 }
             }
-            
         }
+        
         // Scroll images automatically with the interval of 3 seconds
-        self.mainScrollView.auk.startAutoScroll(delaySeconds: 3)
-        
-        
+        self.mainScrollView.auk.startAutoScroll(delaySeconds: Double(TIME_DELAY_SLIDE_SHOW))
     }
     
     func scrollViewTapped() {
@@ -313,7 +317,25 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
     }
     
+    
+    // MARK: Rest options
+    
+    func imageResize (image:UIImage, sizeChange:CGSize)-> UIImage{
+        
+        let hasAlpha = true
+        let scale: CGFloat = 0.0 // Use scale factor of main screen
+        
+        UIGraphicsBeginImageContextWithOptions(sizeChange, !hasAlpha, scale) // Change size image to scroll view size
+        image.draw(in: CGRect(origin: CGPoint.zero, size: sizeChange))
+        
+        let scaledImage = UIGraphicsGetImageFromCurrentImageContext()
+        return scaledImage!
+    }
+    
 }
+
+
+// MARK: UISearchBarDelegate
 
 extension HomeViewController : UISearchBarDelegate{
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
@@ -334,7 +356,11 @@ extension HomeViewController : UISearchBarDelegate{
             tableView?.reloadData()
         }
     }
+    
 }
+
+
+// MARK: UISearchResultsUpdating
 
 extension HomeViewController: UISearchResultsUpdating{
     
