@@ -8,7 +8,13 @@
 
 import Foundation
 
+// MARK: - Film
+
 class Film: NSObject{
+    
+    //  MARK: Internal
+    
+    // MARK: Declare variables
     
     private var id: Int?
     private var title: String?
@@ -19,12 +25,12 @@ class Film: NSObject{
     private var runtime: Int?
     private var trailer: String?
     
-    
     override init(){
         
     }
     
     init(id: Int, title: String, poster: String, overview: String, releaseDate: String, runtime: Int, genres: [Dictionary<String,Any>]) {
+        
         self.id = id
         self.title = title
         self.poster = poster
@@ -47,7 +53,8 @@ class Film: NSObject{
     }
 
     func getRuntime() -> Int{
-        return runtime!    }
+        return runtime!
+    }
     
     func getGenres() -> [Dictionary<String,Any>]{
         return genres!
@@ -56,15 +63,16 @@ class Film: NSObject{
     func getTitle() -> String{
         return title!
     }
+    
     func getPoster() -> String{
         return poster!
     }
+    
     func getOverview() -> String{
         return overview!
     }
+    
     func getReleaseDate() -> String{
         return releaseDate!
     }
-    
-
 }

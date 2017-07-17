@@ -32,7 +32,10 @@ class BookFilmTableViewController: UITableViewController {
     // MARK: UITableViewController
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+    }
+
+    // load interface for view
+    func load(){
         tableIndicator.activityIndicatorViewStyle = .whiteLarge
         tableIndicator.color = UIColor.orange
         tableView.backgroundView = tableIndicator
@@ -42,8 +45,13 @@ class BookFilmTableViewController: UITableViewController {
         if tableIndicator.isAnimating {
             tableIndicator.stopAnimating()
         }
-    }
 
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        load()
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

@@ -120,6 +120,7 @@ class SignInViewController: UIViewController {
             Auth.auth().signIn(withEmail: self.userNameTextField.text!, password: self.passwordTextField.text!) { (user, error) in
                 
                 if error == nil {
+                    HomeViewController.searchController.searchBar.isHidden = false
                     self.actIndicator.stopAnimating()
                     //Print into the console if successfully logged in
                     print("You have successfully logged in")

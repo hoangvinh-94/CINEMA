@@ -164,7 +164,7 @@ class MenuViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
         
         if cell.labelMenu.text! == "Sign Out" {
-            HomeViewController.searchController.searchBar.isHidden = true
+            HomeViewController.searchController.searchBar.isHidden = false
             
             do {
                 try Auth.auth().signOut()

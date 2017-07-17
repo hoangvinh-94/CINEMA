@@ -8,7 +8,13 @@
 
 import Foundation
 
-class Book{
+// MARK: - Book
+
+class Book: NSObject{
+    
+    // MARK: Internal
+    
+    // MARK: Declare variables
     
     private var idFilm: Int?
     private var Day: String?
@@ -16,15 +22,14 @@ class Book{
     private var Times: [String]?
     private var Seats: [String]?
     
-
     init(id: Int, day: String, rooms: [Int], times: [String], seats: [String]){
+        
         self.idFilm = id
         self.Day = day
         self.Rooms = rooms
         self.Times = times
         self.Seats = seats
     }
-    
     
     func getIdFilm() -> Int{
         return idFilm!
@@ -45,5 +50,4 @@ class Book{
     func getDays() -> String{
         return Day!
     }
-    
 }

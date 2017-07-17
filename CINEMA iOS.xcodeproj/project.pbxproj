@@ -22,7 +22,6 @@
 		605066121F188BC40037CBA3 /* Downloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 605066111F188BC30037CBA3 /* Downloader.swift */; };
 		6054359D1EF30A7B00C98CFE /* ScheduleTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6054359C1EF30A7B00C98CFE /* ScheduleTableViewController.swift */; };
 		6054359F1EF38ED900C98CFE /* Ticket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6054359E1EF38ED900C98CFE /* Ticket.swift */; };
-		605435A11EF38F0900C98CFE /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 605435A01EF38F0900C98CFE /* User.swift */; };
 		605435A71EF3CC4A00C98CFE /* TicketInformationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 605435A61EF3CC4A00C98CFE /* TicketInformationTableViewCell.swift */; };
 		605435A91EF3CCFF00C98CFE /* TicketInformationTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 605435A81EF3CCFF00C98CFE /* TicketInformationTableViewController.swift */; };
 		605804A41EE4A0FB00E7BF53 /* BookFilmTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 605804A31EE4A0FB00E7BF53 /* BookFilmTableViewController.swift */; };
@@ -91,7 +90,6 @@
 		605066111F188BC30037CBA3 /* Downloader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Downloader.swift; sourceTree = "<group>"; };
 		6054359C1EF30A7B00C98CFE /* ScheduleTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduleTableViewController.swift; sourceTree = "<group>"; };
 		6054359E1EF38ED900C98CFE /* Ticket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ticket.swift; sourceTree = "<group>"; };
-		605435A01EF38F0900C98CFE /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		605435A61EF3CC4A00C98CFE /* TicketInformationTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TicketInformationTableViewCell.swift; sourceTree = "<group>"; };
 		605435A81EF3CCFF00C98CFE /* TicketInformationTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TicketInformationTableViewController.swift; sourceTree = "<group>"; };
 		605804A31EE4A0FB00E7BF53 /* BookFilmTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookFilmTableViewController.swift; sourceTree = "<group>"; };
@@ -271,7 +269,6 @@
 				60A2B5DB1EE1143B00857EAC /* Film.swift */,
 				605804A51EE4A34F00E7BF53 /* Book.swift */,
 				6054359E1EF38ED900C98CFE /* Ticket.swift */,
-				605435A01EF38F0900C98CFE /* User.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -599,7 +596,6 @@
 				F7DC99DC1F0F83430062942C /* BookTableViewCell.swift in Sources */,
 				756C08F21EF8E1960014BB02 /* MyOrderCell.swift in Sources */,
 				60608AFA1EE7A8060034FA3E /* SeatCollectionViewController.swift in Sources */,
-				605435A11EF38F0900C98CFE /* User.swift in Sources */,
 				60A2B5DE1EE152C100857EAC /* FilmTableViewCell.swift in Sources */,
 				603CCD6F1F1A89AA00E2FD5B /* Struct.swift in Sources */,
 				605435A91EF3CCFF00C98CFE /* TicketInformationTableViewController.swift in Sources */,
