@@ -9,60 +9,57 @@
 import UIKit
 import Firebase
 
+
+// MARK: - MenuViewController
+
 class MenuViewController: UIViewController, UITableViewDelegate, UITableViewDataSource{
+    
+    
     // MARK: - Declaration variables
-   var searchController = HomeViewController.searchController
-    var ref : DatabaseReference!
+    
+    var searchController = HomeViewController.searchController
+    var ref : DatabaseReference! // Reference of Firebase database
     var ManuNameArray: Array = [String]()
     var iconArray: Array = [UIImage]()
-    
+    let REMOVEPOSITION = 5 // Position of menu removed when user signout
+    let DEFAULT_CURRENT_USER = "Current User"
     @IBOutlet var tableView: UITableView!
     
-     // MARK: - Override funcs
+    
+    // MARK: - UIViewController
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         ref = Database.database().reference()
-        if(Auth.auth().currentUser?.uid != nil){
-            let uid = Auth.auth().currentUser?.uid
-            ref.child("users").child(uid!).observe(.value, with: {(snapshot) in
-                let user = snapshot.value as? [String: Any]
-                self.navigationItem.title = user?["userName"] as? String
-                
-            })
-        }
-        else{
-            self.navigationItem.title = "Current User"
-        }
-        tableView.tableHeaderView = searchController.searchBar
-        ManuNameArray = ["Home", "Schedule Today", "Now Showing", "Coming Soon", "Had Shown", "Sign In"]
-        iconArray = [UIImage(named:"home2")!, UIImage(named:"schedule")!, UIImage(named:"dangchieu")!, UIImage(named:"played1")!,UIImage(named:"oldmovie")!, UIImage(named:"signin")!]
         
-        if Auth.auth().currentUser?.uid != nil {
-            
-            ManuNameArray.remove(at: 5)
-            iconArray.remove(at: 5)
-            
-            ManuNameArray.append("My Profile")
-            iconArray.append(UIImage(named:"userinfor")!)
-            ManuNameArray.append("Change Password")
-            iconArray.append(UIImage(named:"changepassword")!)
-            ManuNameArray.append("Sign Out")
-            iconArray.append(UIImage(named:"logout")!)
-        }
+        // Set username if user loged in to Navigation
+        self.setUserNameToNavigationItem()
+        
+        // Add searchbar to table header
+        tableView.tableHeaderView = searchController.searchBar
+        
+        // Create menu contents
+        self.setMenuContent()
+        
         // Do any additional setup after loading the view.
     }
+    
     override func viewWillAppear(_ animated: Bool) {
         tableView.tableHeaderView = searchController.searchBar
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
+        
         // Dispose of any resources that can be recreated.
     }
-     // MARK: - Life cycles
+    
+    
+    // MARK: - Life cycles
+    
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        return 1 // TableView Section number
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -79,14 +76,14 @@ class MenuViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        HomeViewController.searchController.searchBar.text = ""
+        
+        HomeViewController.searchController.searchBar.text = "" // Reset searchbar text to nil
         let revealviewcontroller:SWRevealViewController = self.revealViewController()
         
         let cell:MenuCell = tableView.cellForRow(at: indexPath) as! MenuCell
         print(cell.labelMenu.text!)
         
-        if cell.labelMenu.text! == "Home"
-        {
+        if cell.labelMenu.text! == "Home" {
             HomeViewController.searchController.searchBar.isHidden = false
             let mainstoryboard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
             let newViewcontroller = mainstoryboard.instantiateViewController(withIdentifier: "HomeViewController") as! HomeViewController
@@ -95,8 +92,7 @@ class MenuViewController: UIViewController, UITableViewDelegate, UITableViewData
             revealviewcontroller.pushFrontViewController(newFrontController, animated: true)
         }
         
-        if cell.labelMenu.text! == "Change Password"
-        {
+        if cell.labelMenu.text! == "Change Password" {
             HomeViewController.searchController.searchBar.isHidden = true
 
             print("Change Password Tapped")
@@ -107,8 +103,7 @@ class MenuViewController: UIViewController, UITableViewDelegate, UITableViewData
             revealviewcontroller.pushFrontViewController(newFrontController, animated: true)
         }
         
-        if cell.labelMenu.text! == "Had Shown"
-        {
+        if cell.labelMenu.text! == "Had Shown" {
             HomeViewController.searchController.searchBar.isHidden = false
             let mainstoryboard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
             let PDC = mainstoryboard.instantiateViewController(withIdentifier: "PDC") as! FilmTypeTableViewController
@@ -116,11 +111,9 @@ class MenuViewController: UIViewController, UITableViewDelegate, UITableViewData
             
             let newFrontController = UINavigationController.init(rootViewController: PDC)
             revealviewcontroller.pushFrontViewController(newFrontController, animated: true)
-            
         }
         
-        if cell.labelMenu.text! == "Now Showing"
-        {
+        if cell.labelMenu.text! == "Now Showing" {
             HomeViewController.searchController.searchBar.isHidden = false
             let mainstoryboard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
             let PDC = mainstoryboard.instantiateViewController(withIdentifier: "PDC") as! FilmTypeTableViewController
@@ -130,8 +123,7 @@ class MenuViewController: UIViewController, UITableViewDelegate, UITableViewData
             revealviewcontroller.pushFrontViewController(newFrontController, animated: true)
         }
         
-        if cell.labelMenu.text! == "Coming Soon"
-        {
+        if cell.labelMenu.text! == "Coming Soon" {
             HomeViewController.searchController.searchBar.isHidden = false
             let mainstoryboard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
             let PDC = mainstoryboard.instantiateViewController(withIdentifier: "PDC") as! FilmTypeTableViewController
@@ -141,8 +133,7 @@ class MenuViewController: UIViewController, UITableViewDelegate, UITableViewData
             revealviewcontroller.pushFrontViewController(newFrontController, animated: true)
         }
         
-        if cell.labelMenu.text! == "Schedule Today"
-        {
+        if cell.labelMenu.text! == "Schedule Today" {
             HomeViewController.searchController.searchBar.isHidden = false
             print("Schedule Today Tapped")
             let mainstoryboard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
@@ -152,8 +143,7 @@ class MenuViewController: UIViewController, UITableViewDelegate, UITableViewData
             revealviewcontroller.pushFrontViewController(newFrontController, animated: true)
         }
         
-        if cell.labelMenu.text! == "My Profile"
-        {
+        if cell.labelMenu.text! == "My Profile" {
              HomeViewController.searchController.searchBar.isHidden = false
             print("My Profile Tapped")
             let mainstoryboard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
@@ -161,11 +151,9 @@ class MenuViewController: UIViewController, UITableViewDelegate, UITableViewData
             let newFrontController = UINavigationController.init(rootViewController: newViewcontroller)
             
             revealviewcontroller.pushFrontViewController(newFrontController, animated: true)
-            
         }
         
-        if cell.labelMenu.text! == "Sign In"
-        {
+        if cell.labelMenu.text! == "Sign In" {
             HomeViewController.searchController.searchBar.isHidden = true
             print("My Profile Tapped")
             let mainstoryboard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
@@ -173,13 +161,11 @@ class MenuViewController: UIViewController, UITableViewDelegate, UITableViewData
             let newFrontController = UINavigationController.init(rootViewController: newViewcontroller)
             
             revealviewcontroller.pushFrontViewController(newFrontController, animated: true)
-            
         }
         
-        if cell.labelMenu.text! == "Sign Out"
-        {
+        if cell.labelMenu.text! == "Sign Out" {
             HomeViewController.searchController.searchBar.isHidden = true
-            print("Log out Tapped")
+            
             do {
                 try Auth.auth().signOut()
             }
@@ -187,25 +173,69 @@ class MenuViewController: UIViewController, UITableViewDelegate, UITableViewData
                 print(error)
             }
             
-            ManuNameArray.remove(at: 5)
-            iconArray.remove(at: 5)
-            
-            ManuNameArray.remove(at: 5)
-            iconArray.remove(at: 5)
-            
-            ManuNameArray.remove(at: 5)
-            iconArray.remove(at: 5)
-            
-            ManuNameArray.append("Sign In")
-            iconArray.append(UIImage(named:"signin")!)
+            self.removeOptionsWhenSignOut()
             
             tableView.reloadData()
+            
             let mainstoryboard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
             let newViewcontroller = mainstoryboard.instantiateViewController(withIdentifier: "HomeViewController") as! HomeViewController
             let newFrontController = UINavigationController.init(rootViewController: newViewcontroller)
             navigationItem.title = "Current User"
             revealviewcontroller.pushFrontViewController(newFrontController, animated: true)
         }
+    }
+    
+    // MARK: Rest options
+    
+    func setMenuContent() {
+        
+        ManuNameArray = ["Home", "Schedule Today", "Now Showing", "Coming Soon", "Had Shown", "Sign In"]
+        
+        iconArray = [UIImage(named:"home2")!, UIImage(named:"schedule")!, UIImage(named:"dangchieu")!, UIImage(named:"played1")!,UIImage(named:"oldmovie")!, UIImage(named:"signin")!]
+        
+        // If user do login, add some options to menu
+        if Auth.auth().currentUser?.uid != nil {
+            
+            ManuNameArray.remove(at: REMOVEPOSITION) // Remove signIn option
+            iconArray.remove(at: REMOVEPOSITION)
+            
+            ManuNameArray.append("My Profile")
+            iconArray.append(UIImage(named:"userinfor")!)
+            ManuNameArray.append("Change Password")
+            iconArray.append(UIImage(named:"changepassword")!)
+            ManuNameArray.append("Sign Out")
+            iconArray.append(UIImage(named:"logout")!)
+        }
+    }
+    
+    func setUserNameToNavigationItem() {
+        
+        if Auth.auth().currentUser?.uid != nil {
+            let uid = Auth.auth().currentUser?.uid
+            ref.child("users").child(uid!).observe(.value, with: { (snapshot) in
+                let user = snapshot.value as? [String: Any]
+                self.navigationItem.title = user?["userName"] as? String
+            })
+        }
+        else {
+            self.navigationItem.title = DEFAULT_CURRENT_USER
+        }
+    }
+    
+    // Remove some options when user signout: ChangePassword, View Profile options
+    func removeOptionsWhenSignOut() {
+        
+        ManuNameArray.remove(at: REMOVEPOSITION)
+        iconArray.remove(at: REMOVEPOSITION)
+        
+        ManuNameArray.remove(at: REMOVEPOSITION)
+        iconArray.remove(at: REMOVEPOSITION)
+        
+        ManuNameArray.remove(at: REMOVEPOSITION)
+        iconArray.remove(at: REMOVEPOSITION)
+        
+        ManuNameArray.append("Sign In")
+        iconArray.append(UIImage(named:"signin")!)
     }
 
 }

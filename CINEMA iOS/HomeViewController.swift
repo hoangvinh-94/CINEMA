@@ -36,8 +36,12 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     final let TYPE_UPCOMING: String = "upcoming"
     final let TYPE_POPULAR: String = "popular"
     var queue = OperationQueue()
-    var isSlideShowLoaded: Bool!
-    var isSlideShowDefaultDeleted: Bool!
+    var isSlideShowLoaded: Bool! // Check if image is load to scrollView or not
+    var isSlideShowDefaultDeleted: Bool! // Check if the image default is deleted or not
+    
+    let DEFAULT_IMAGE_SLIDE_SHOW = "noimagefound"
+    let TIME_DELAY_SLIDE_SHOW = 3
+    let IMAGE_LOADED_NUMBER = 3
     
     @IBOutlet var tableView: UITableView!
     
@@ -106,6 +110,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                 self.signIn.action = #selector(self.toProfileViewController)
             })
         }
+        
         self.isSlideShowLoaded = false
         self.isSlideShowDefaultDeleted = false
         
@@ -146,6 +151,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         self.Films = [Film]()
         queue.cancelAllOperations()
         tableAcIndicator.startAnimating()
+        
         refHandler = ref.child("films").observe(.childAdded, with:{ (snapshot) in
             
             // Get user value
@@ -186,25 +192,27 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     // display image to slide show scrollView
     func slideShow(poster_path: String){
-        let size = CGSize(width: Int(self.mainScrollView.frame.width), height: Int(self.mainScrollView.frame.height))
+        
+        let size = CGSize(width: Int(self.mainScrollView.frame.width), height: Int(self.mainScrollView.frame.height)) // get scrollView with and height
         self.queue.addOperation { () -> Void in
             if poster_path != "" {
                 if var img = Downloader.downloadImageWithURL("\(prefixImg)\(poster_path )") {
                     OperationQueue.main.addOperation({
-                        img = self.imageResize(image: img, sizeChange: size)
+                        img = self.imageResize(image: img, sizeChange: size) // Call resize func to change iamge size
                         self.mainScrollView.auk.show(image: img)
-                        self.mainScrollView.auk.settings.placeholderImage = UIImage(named: "noimagefound")
+                        self.mainScrollView.auk.settings.placeholderImage = UIImage(named: self.DEFAULT_IMAGE_SLIDE_SHOW)
                         self.mainScrollView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(HomeViewController.scrollViewTapped)))
                     })
                 }
             }
-            
         }
         
         // Scroll images automatically with the interval of 3 seconds
         self.mainScrollView.auk.startAutoScroll(delaySeconds: Double(TIME_DELAY_SLIDESHOW))
         
         
+        // Scroll images automatically with the interval of 3 seconds
+        self.mainScrollView.auk.startAutoScroll(delaySeconds: Double(TIME_DELAY_SLIDE_SHOW))
     }
     
     // catch event clicked picture in slideshow
@@ -338,6 +346,21 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             return UIImage(data: data!)
         }
         
+    }
+    
+    
+    // MARK: Rest options
+    
+    func imageResize (image:UIImage, sizeChange:CGSize)-> UIImage{
+        
+        let hasAlpha = true
+        let scale: CGFloat = 0.0 // Use scale factor of main screen
+        
+        UIGraphicsBeginImageContextWithOptions(sizeChange, !hasAlpha, scale) // Change size image to scroll view size
+        image.draw(in: CGRect(origin: CGPoint.zero, size: sizeChange))
+        
+        let scaledImage = UIGraphicsGetImageFromCurrentImageContext()
+        return scaledImage!
     }
     
 }
