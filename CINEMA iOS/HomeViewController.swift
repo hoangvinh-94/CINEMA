@@ -229,14 +229,14 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
     }
     
-    // MARK: UITableViewDelegate
+    // MARK: UITableViewDataSource
     
     func numberOfSections(in tableView: UITableView) -> Int {
         
         return self.NUMBERSECTION_RETURNED
     }
     
-     // MARK: UITableViewDelegate
+
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
@@ -248,7 +248,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
     }
     
-     // MARK: UITableViewDelegate
+
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
@@ -295,7 +295,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         tableView.reloadData()
     }
     
-     // MARK: UITableViewDelegate
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == IDENTIFIER_DETAILTABLEVIEWCELL {
             if let index = self.tableView.indexPathForSelectedRow{
@@ -334,6 +334,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
 }
 
+// MARK: UISearchBarDelegate
 
 extension HomeViewController : UISearchBarDelegate{
     
@@ -369,6 +370,7 @@ extension HomeViewController : UISearchBarDelegate{
     }
 }
 
+// MARK: UISearchResultsUpdating
 extension HomeViewController: UISearchResultsUpdating{
     
     // MARK: Internal

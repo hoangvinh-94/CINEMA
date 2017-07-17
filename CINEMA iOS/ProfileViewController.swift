@@ -9,7 +9,12 @@
 import UIKit
 import Firebase
 
+// Display user information
+// MARK: - ProfileViewController
+
 class ProfileViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+    
+    // MARK: Internal
 
     // MARK: - IBOutlet
     @IBOutlet weak var userNameLabel: UILabel!
@@ -21,7 +26,11 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
     @IBOutlet weak var menuButton: UIBarButtonItem!
     
     // MARK: - Variables
-    
+    final let DATE_FORMAT: String = "dd/MM/yyyy"
+    final let NUMBERSECTION_RETURNED: Int = 1
+    final let IDENTIFIER_ORDERCELL: String = "MyOrder_Cell"
+    final let BORDER_WIDTH_CELL: Float = 1.0
+    final let CORNER_RADIUS_CELL: Float = 5.0
     var tickets = [Ticket]()
     var filteredTickets = [Ticket]()
     var ref: DatabaseReference!
@@ -29,24 +38,22 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
     let cellSpacingHeight: CGFloat = 5
     var tableIndicator = UIActivityIndicatorView()
     
+    // MARK: UIViewController
+    
     override func viewDidLoad() {
+        
         super.viewDidLoad()
         HomeViewController.searchController.searchResultsUpdater = self
         definesPresentationContext = true
         HomeViewController.searchController.dimsBackgroundDuringPresentation = true
         HomeViewController.searchController.searchBar.delegate = self
         ref = Database.database().reference()
-        
         menuButton.target = revealViewController()
         menuButton.action = #selector(SWRevealViewController.revealToggle(_:))
-        
         tableIndicator.activityIndicatorViewStyle = .whiteLarge
         tableIndicator.color = UIColor.orange
-        
         myOrdersTableView.backgroundView = tableIndicator
         myOrdersTableView.separatorStyle = UITableViewCellSeparatorStyle.none
-        
-        // Do any additional setup after loading the view.
     }
     
     override func didReceiveMemoryWarning() {
@@ -55,13 +62,13 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        
         AppUtility.lockOrientation(.portrait, andRotateTo: .portrait)
         loadUserInfor()
         loadDataToTableView()
         if tableIndicator.isAnimating {
             tableIndicator.stopAnimating()
         }
-
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -90,14 +97,13 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
     }
     
     //Load the tickets current user have ordered
-    
     func loadDataToTableView(){
         tableIndicator.startAnimating()
         self.tickets = [Ticket]()
         let uid = Auth.auth().currentUser?.uid
         let date = Date()
         let formatter = DateFormatter()
-        formatter.dateFormat = "dd/MM/yyy"
+        formatter.dateFormat = DATE_FORMAT
         let today = formatter.date(from: formatter.string(from: date))
         
         refHandler = ref.child("tickets").observe(.childAdded, with:{ (snapshot) in
@@ -107,39 +113,34 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
                 let idUser = dictionary["idUser"] as? String
                 let day = dictionary["day"] as? String
                 let day1 = formatter.date(from: day!)
-                if (idUser == uid && ((day1! == today!) || (day1! > today!))) {
+                if idUser == uid && ((day1! == today!) || (day1! > today!)) {
                     let title = dictionary["titleFilm"] as? String
                     let time = dictionary["time"] as? String
                     let room = dictionary["room"] as? Int
                     let seat = dictionary["seat"] as? String
-                    
                     self.tickets.append(Ticket(titleFilm: title!,day: day!, time: time!, seat: seat!, room: room!))
                     DispatchQueue.main.async {
                         self.tableIndicator.stopAnimating()
                         self.myOrdersTableView.reloadData()
                     }
-                    
-                    
-                }else {
+                }
+                else {
                     return
                 }
-                
             }
-            
-            
         })
-        
     }
     
     // MARK: - Table view data source
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        
+        return NUMBERSECTION_RETURNED
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        if(HomeViewController.searchController.isActive && HomeViewController.searchController.searchBar.text != ""){
+        if HomeViewController.searchController.isActive && HomeViewController.searchController.searchBar.text != "" {
             return filteredTickets.count
         }
         else{
@@ -149,20 +150,20 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
     
     // Set the spacing between sections
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        
         return cellSpacingHeight
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "MyOrder_Cell") as! MyOrderCell
-        var ticket: Ticket
         
-        if(HomeViewController.searchController.searchBar.text != "" && HomeViewController.searchController.isActive){
+        let cell = tableView.dequeueReusableCell(withIdentifier: IDENTIFIER_ORDERCELL) as! MyOrderCell
+        var ticket: Ticket
+        if HomeViewController.searchController.searchBar.text != "" && HomeViewController.searchController.isActive {
             ticket = filteredTickets[indexPath.row]
         }
         else{
             ticket = tickets[indexPath.row]
         }
-        
         cell.dateRelease.text = ticket.getDay()
         cell.roomTicket.text = String(ticket.getRoom())
         cell.titleFilm.text = ticket.getTitleFilm()
@@ -172,13 +173,15 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         // add border and color
         cell.backgroundColor = UIColor.white
         cell.layer.borderColor = UIColor.black.cgColor
-        cell.layer.borderWidth = 1
-        cell.layer.cornerRadius = 5
+        cell.layer.borderWidth = CGFloat(BORDER_WIDTH_CELL)
+        cell.layer.cornerRadius = CGFloat(CORNER_RADIUS_CELL)
         cell.clipsToBounds = true
-        
         return cell
     }
+    
+   // Search film by Title Film
     func filterContentForSearchText(searchText: String, scope: String = "All"){
+        
         filteredTickets = tickets.filter{
             st in
             return st.getTitleFilm().lowercased().contains(searchText.lowercased())
@@ -186,32 +189,48 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         myOrdersTableView.reloadData()
     }
 }
+
+// MARK: UISearchBarDelegate
+
 extension ProfileViewController : UISearchBarDelegate{
+    
+    // MARK: Internal
+    
+    // MARK: UISearchBarDelegate
+    // button search clicked
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        if(!(searchBar.text?.isEmpty)!){
+        
+        if !(searchBar.text?.isEmpty)! {
             myOrdersTableView?.reloadData()
             self.revealViewController().revealToggle(animated: true)
         }
     }
+    
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        if(!searchText.isEmpty){
+        
+        if !searchText.isEmpty {
             //reload your data source if necessary
             myOrdersTableView?.reloadData()
         }
     }
+    
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-        if(!(searchBar.text?.isEmpty)!){
+        
+        if !(searchBar.text?.isEmpty)! {
             //reload your data source if necessary
             myOrdersTableView?.reloadData()
         }
     }
 }
 
+// MARK: UISearchResultsUpdating
+
 extension ProfileViewController: UISearchResultsUpdating{
+    
+     // MARK: Internal
     
     func updateSearchResults(for searchController: UISearchController) {
         filterContentForSearchText(searchText: searchController.searchBar.text!)
     }
-    
 }
 
