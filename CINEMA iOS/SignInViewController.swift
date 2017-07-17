@@ -45,6 +45,7 @@ class SignInViewController: UIViewController {
         
         // NotificationCenter show keyboard function
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardDidShow(notification:)) , name: NSNotification.Name.UIKeyboardDidShow, object: nil)
+        
         // NotificationCenter hide keyboard function
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardDidShow(notification:)), name: NSNotification.Name.UIKeyboardDidHide, object: nil)
     }

@@ -8,9 +8,11 @@
 
 import Foundation
 
-
+// MARK: - AppUtility
 //  This class use to lock Orientation of the screen
 class AppUtility {
+    
+    // MARK: Internal
     
     // function lock the rotate of screen
     static func lockOrientation(_ orientation: UIInterfaceOrientationMask) {

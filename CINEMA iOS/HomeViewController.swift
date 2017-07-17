@@ -15,9 +15,10 @@ import Auk
 // Display base information of film with 3 type film
 // MARK: - HomeViewController
 class HomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource{
+    
     // MARK: Internal
     
-    @IBOutlet weak var tableAcIndicator: UIActivityIndicatorView! //  load internet
+    @IBOutlet weak var tableAcIndicator: UIActivityIndicatorView! //  signal loading internet
     public static var searchController = UISearchController(searchResultsController: nil)
     let db = DataFilm()
     var Films = [Film]()
@@ -58,7 +59,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     override func viewDidLoad() {
         super.viewDidLoad()
-       
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -67,7 +67,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         self.segmentControl.selectedSegmentIndex = SELECTED_SEGMENT_DEFAUT
         
         // connected to internet
-        if(currentReachabilityStatus != .notReachable){
+        if currentReachabilityStatus != .notReachable {
             loadInterface()
         }
         else{
@@ -75,7 +75,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             let newViewcontroller = mainstoryboard.instantiateViewController(withIdentifier: "ConnectAgain")
             present(newViewcontroller, animated: true, completion: nil)
         }
-        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -83,7 +82,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         // Don't forget to reset when view is being removed
         AppUtility.lockOrientation(.all)
-        
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -101,7 +99,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     func loadInterface(){
         
         ref = Database.database().reference()
-        if(Auth.auth().currentUser?.uid != nil){
+        if Auth.auth().currentUser?.uid != nil {
             let uid = Auth.auth().currentUser?.uid
             ref.child("users").child(uid!).observe(.value, with: {(snapshot) in
                 let user = snapshot.value as? [String: Any]
@@ -123,7 +121,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         menuButton.action = #selector(SWRevealViewController.revealToggle(_:))
         self.segmentControl.selectedSegmentIndex = SELECTED_SEGMENT_DEFAUT
         loadDataToTableView(type: TYPE_NOW_PLAYING)
-        
     }
     
     // Covert to ProfileViewController
@@ -131,18 +128,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         let profile = storyboard?.instantiateViewController(withIdentifier: IDENTIFIER_PROFILETABLEVIEWCELL) as! ProfileViewController
         self.navigationController?.pushViewController(profile, animated: true)
-        
-    }
-    
-    // Set image size in slide image
-    func imageResize (image:UIImage, sizeChange:CGSize)-> UIImage{
-        
-        let hasAlpha = true
-        let scale: CGFloat = 0.0 // Use scale factor of main screen
-        UIGraphicsBeginImageContextWithOptions(sizeChange, !hasAlpha, scale)
-        image.draw(in: CGRect(origin: CGPoint.zero, size: sizeChange))
-        let scaledImage = UIGraphicsGetImageFromCurrentImageContext()
-        return scaledImage!
     }
     
     // Load Data film from firebase
@@ -156,7 +141,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             
             // Get user value
             if let dictionary = snapshot.value as? [String: AnyObject]{
-                if (type == self.TYPE_NOW_PLAYING && self.isSlideShowLoaded == false && self.isSlideShowDefaultDeleted == false) {
+                if type == self.TYPE_NOW_PLAYING && self.isSlideShowLoaded == false && self.isSlideShowDefaultDeleted == false {
                     self.mainScrollView.auk.removeAll()
                     self.isSlideShowDefaultDeleted = true
                 }
@@ -176,14 +161,15 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                     DispatchQueue.main.async {
                         self.tableAcIndicator.stopAnimating()
                         self.tableView.reloadData()
-                        if ((type == self.TYPE_NOW_PLAYING) && (self.isSlideShowLoaded == false)) {
+                        if type == self.TYPE_NOW_PLAYING && self.isSlideShowLoaded == false {
                             self.slideShow(poster_path: poster_path!)
                             if self.mainScrollView.auk.numberOfPages > 3 {
                                 self.isSlideShowLoaded = true
                             }
                         }
                     }
-                }else{
+                }
+                else{
                     return
                 }
             }
@@ -222,7 +208,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         let filmDetail = storyboard?.instantiateViewController(withIdentifier: IDENTIFIER_DETAILTABLEVIEWCELL) as! DetailViewController
         filmDetail.film = Films[0]
         navigationController?.pushViewController(filmDetail, animated: true)
-    
     }
     
     // MARK: UISegmentedControl
@@ -241,7 +226,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             break
         default: break
         }
-        
     }
     
     // MARK: UITableViewDelegate
@@ -249,19 +233,18 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     func numberOfSections(in tableView: UITableView) -> Int {
         
         return self.NUMBERSECTION_RETURNED
-        
     }
     
      // MARK: UITableViewDelegate
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        if (HomeViewController.searchController.isActive && (HomeViewController.searchController.searchBar.text != "")) {
+        if HomeViewController.searchController.isActive && HomeViewController.searchController.searchBar.text != "" {
             return FilteredFilms.count
-        }else{
+        }
+        else{
             return Films.count
         }
-        
     }
     
      // MARK: UITableViewDelegate
@@ -270,14 +253,15 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         let cell = tableView.dequeueReusableCell(withIdentifier: IDENTIFIER_FILMTABLEVIEWCELL) as! FilmTableViewCell
         var film: Film
-        if (HomeViewController.searchController.isActive && (HomeViewController.searchController.searchBar.text != "")){
+        if HomeViewController.searchController.isActive && HomeViewController.searchController.searchBar.text != ""{
             film = FilteredFilms[indexPath.row]
             
-        }else{
+        }
+        else{
             film = Films[indexPath.row]
         }
         queue.addOperation { () -> Void in
-            if (film.getPoster() != "") {
+            if film.getPoster() != "" {
                 if let img = Downloader.downloadImageWithURL("\(prefixImg)\(film.getPoster())") {
                     OperationQueue.main.addOperation({
                         cell.PosterFilm.image = img
@@ -309,15 +293,15 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             return st.getTitle().lowercased().contains(searchText.lowercased())
         }
         tableView.reloadData()
-        
     }
     
+     // MARK: UITableViewDelegate
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if(segue.identifier == IDENTIFIER_DETAILTABLEVIEWCELL){
+        if segue.identifier == IDENTIFIER_DETAILTABLEVIEWCELL {
             if let index = self.tableView.indexPathForSelectedRow{
                 let filmDetail = segue.destination as! DetailViewController
                 
-                if(HomeViewController.searchController.isActive && HomeViewController.searchController.searchBar.text != ""){
+                if HomeViewController.searchController.isActive && HomeViewController.searchController.searchBar.text != "" {
                     filmDetail.film = FilteredFilms[index.row]
                 }
                 else{
@@ -335,19 +319,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: IDENTIFIER_SIGNINVIEWCONTROLLER)
         let newFrontController = UINavigationController.init(rootViewController:vc)
         revealviewcontroller.pushFrontViewController(newFrontController, animated: true)
-        
     }
-    
-    // Download image from internet
-    class Downloader {
-        
-        class func downloadImageWithURL(_ url:String) -> UIImage! {
-            let data = try? Data(contentsOf: URL(string: url)!)
-            return UIImage(data: data!)
-        }
-        
-    }
-    
     
     // MARK: Rest options
     
@@ -355,14 +327,11 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         let hasAlpha = true
         let scale: CGFloat = 0.0 // Use scale factor of main screen
-        
         UIGraphicsBeginImageContextWithOptions(sizeChange, !hasAlpha, scale) // Change size image to scroll view size
         image.draw(in: CGRect(origin: CGPoint.zero, size: sizeChange))
-        
         let scaledImage = UIGraphicsGetImageFromCurrentImageContext()
         return scaledImage!
     }
-    
 }
 
 
@@ -373,7 +342,7 @@ extension HomeViewController : UISearchBarDelegate{
     // MARK: UISearchBarDelegate
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        if (!(searchBar.text?.isEmpty)!) {
+        if !(searchBar.text?.isEmpty)! {
             tableView?.reloadData()
             self.revealViewController().revealToggle(animated: true)
         }
@@ -381,7 +350,7 @@ extension HomeViewController : UISearchBarDelegate{
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         
-        if (!searchText.isEmpty) {
+        if !searchText.isEmpty {
             
             //reload your data source if necessary
             tableView?.reloadData()
@@ -390,15 +359,13 @@ extension HomeViewController : UISearchBarDelegate{
     
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         
-        if (!(searchBar.text?.isEmpty)!) {
+        if !(searchBar.text?.isEmpty)! {
             
             //reload your data source if necessary
             tableView?.reloadData()
         }
     }
-    
 }
-
 
 extension HomeViewController: UISearchResultsUpdating{
     

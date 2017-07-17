@@ -54,9 +54,10 @@
                 }
                 if let error = error {
                     print(error.localizedDescription)
-                } else if let httpResponse = response as? HTTPURLResponse {
-                    if (httpResponse.statusCode == 200) {
-                        if(data?.count != 0){
+                }
+                else if let httpResponse = response as? HTTPURLResponse {
+                    if httpResponse.statusCode == 200 {
+                        if data?.count != 0 {
                             self.saveDataIntoFireBase(data: data!)
                         }
                     }
@@ -74,15 +75,17 @@
                     // Get the results array
                     if let array: AnyObject = response["results"] {
                         for filmDictonary in array as! [AnyObject] {
-                            if let filmDictonary = filmDictonary as? [String: AnyObject]{
+                            if let filmDictonary = filmDictonary as? [String: AnyObject] {
                                 // Parse the search result
                                 let id = filmDictonary["id"] as! Int	
                                 getTrailer(id: id)
-                            } else {
+                            }
+                            else {
                                 print("Not a dictionary")
                             }
                         }
-                    } else {
+                    }
+                    else {
                         print("Results key not found in dictionary")
                     }
                 }
@@ -101,9 +104,10 @@
                 let request = NSMutableURLRequest(url: url! as URL, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 5) // after 5 seconds request timeout
                 request.httpMethod = "GET"
                 _ = URLSession.shared.dataTask(with: request as URLRequest, completionHandler: { (Data, URLResponse, Error) in
-                    if (Error != nil) {
+                    if Error != nil {
                         print(Error!)
-                    } else {
+                    }
+                    else {
                         do {
                             detail = try JSONSerialization.jsonObject(with: Data!, options: .allowFragments) as! [String:Any]
                             DispatchQueue.main.async {
@@ -140,7 +144,8 @@
                 _ = URLSession.shared.dataTask(with: request as URLRequest, completionHandler: { (Data, URLResponse, Error) in
                     if (Error != nil) {
                         print(Error!)
-                    } else {
+                    }
+                    else {
                         do {
                            trailers = try JSONSerialization.jsonObject(with: Data!, options: .allowFragments) as! [String:Any]
                             let results = trailers["results"] as? [[String: Any]]
@@ -175,7 +180,7 @@
                 
                 // Get id film
                 let idFilm = Int(snapshot.key)
-                if (idFilm == idFilmCurrent) {
+                if idFilm == idFilmCurrent {
                     if let dictionary = snapshot.value as? [String: AnyObject]{
                         let days = dictionary["day"] as? [Dictionary<String,Any>]
                         for d in days!{
@@ -215,7 +220,7 @@
                     let runtime = dictionary["runtime"] as? Int
                     let genres = dictionary["genres"] as? [Dictionary<String,Any>]
                     let trailer = dictionary["trailers"]?[self.TRAILER_FIRST] as? String
-                    if ((typeFilm != "") && (typeFilm == type)) {
+                    if typeFilm != "" && typeFilm == type {
                         let F: Film = Film(id: id!,title: title!, poster: poster_path!, overview: overview!, releaseDate: release_date!, runtime: runtime!, genres: genres!)
                         F.setTrailers(trailer: trailer!)
                         listFilm.append(F)
@@ -250,7 +255,7 @@
                         let days = dictionary["day"] as? [Dictionary<String,Any>]
                         for d in days!{
                             let day = d["day"] as? String
-                            if (day == today || day == tomorrow || day == nextTomorrow) {
+                            if day == today || day == tomorrow || day == nextTomorrow {
                                 var Times = [String]()
                                 var Rooms = [Int]()
                                 var Seats = [String]()
@@ -288,7 +293,7 @@
             ref.child("bookfilm").observe(.childAdded, with: { (snapshot) in
                 let filmId = Int(snapshot.key)
                 if let dictionary1 = snapshot.value as? [String: AnyObject]{
-                    if (filmId != nil) {
+                    if filmId != nil {
                         self.ref.child("films").observe(.childAdded, with: { (snapshot1) in
                             let days = dictionary1["day"] as? [Dictionary<String,Any>]
                             if Int(snapshot1.key) == filmId {

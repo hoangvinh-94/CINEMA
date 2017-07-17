@@ -8,17 +8,22 @@
 
 import Foundation
 
+// MARK: - Downloader
+
 // Download data from internet
-class Downloader{
+public class Downloader{
+    // MARK: Internal
     
     // Download image from internet by urlRequest
-    class func downloadImageWithURL(_ url:String) -> UIImage! {
+    public static func downloadImageWithURL(_ url:String) -> UIImage! {
+        
         let data = try? Data(contentsOf: URL(string: url)!)
         return UIImage(data: data!)
     }
     
     // Download trailer from internet by urlRequest
-    class func downloadTrailerWithURL(_ url:String) -> URLRequest {
+     public static func downloadTrailerWithURL(_ url:String) -> URLRequest {
+        
         let urlRequest = URL(string: url)
         return URLRequest(url: urlRequest!)
     }
