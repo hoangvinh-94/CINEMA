@@ -232,11 +232,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CINEMA iOS/DataFilm.swift"
-            timestampString = "521611917.298765"
+            timestampString = "521956000.640143"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "152"
-            endingLineNumber = "152"
+            startingLineNumber = "148"
+            endingLineNumber = "148"
             landmarkName = "getTrailer(id:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -248,11 +248,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CINEMA iOS/DataFilm.swift"
-            timestampString = "521835034.308686"
+            timestampString = "521956000.640143"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "138"
-            endingLineNumber = "138"
+            startingLineNumber = "135"
+            endingLineNumber = "135"
             landmarkName = "getTrailer(id:)"
             landmarkType = "7">
             <Locations>
@@ -311,11 +311,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CINEMA iOS/DataFilm.swift"
-            timestampString = "521835034.308686"
+            timestampString = "521956000.640143"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "243"
-            endingLineNumber = "243"
+            startingLineNumber = "233"
+            endingLineNumber = "233"
             landmarkName = "getBookFilmFireBase(idFilmCurrent:completionHandler:)"
             landmarkType = "7">
          </BreakpointContent>

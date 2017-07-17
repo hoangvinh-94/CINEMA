@@ -12,17 +12,29 @@ import Firebase
 import FirebaseDatabase
 import Auk
 
+// Display base information of film with 3 type film
+// MARK: - HomeViewController
 class HomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource{
+    // MARK: Internal
     
-    @IBOutlet weak var tableAcIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var tableAcIndicator: UIActivityIndicatorView! //  load internet
     public static var searchController = UISearchController(searchResultsController: nil)
-    var db = DataFilm()
+    let db = DataFilm()
     var Films = [Film]()
     var FilteredFilms = [Film]()
     var ref: DatabaseReference!
     var refHandler: UInt!
-    var prefixImg: String = "https://image.tmdb.org/t/p/w320"
-    var prefixImgSlideshow: String = "https://image.tmdb.org/t/p/w1400_and_h450_bestv2"
+    final let SELECTED_SEGMENT_DEFAUT: Int = 0
+    final let TIME_DELAY_SLIDESHOW: Int = 3
+    final let TRAILER_FIRST: Int = 0
+    final let NUMBERSECTION_RETURNED: Int = 1
+    final let IDENTIFIER_FILMTABLEVIEWCELL: String = "FilmCell"
+    final let IDENTIFIER_PROFILETABLEVIEWCELL: String = "ProfileViewController"
+    final let IDENTIFIER_DETAILTABLEVIEWCELL: String = "FilmDetail"
+    final let IDENTIFIER_SIGNINVIEWCONTROLLER: String = "SignInViewController"
+    final let TYPE_NOW_PLAYING: String = "now_playing"
+    final let TYPE_UPCOMING: String = "upcoming"
+    final let TYPE_POPULAR: String = "popular"
     var queue = OperationQueue()
     var isSlideShowLoaded: Bool!
     var isSlideShowDefaultDeleted: Bool!
@@ -38,14 +50,19 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     @IBOutlet weak var mainScrollView: UIScrollView!
   
+    // MARK: UIViewController
+    
     override func viewDidLoad() {
         super.viewDidLoad()
        
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        
         AppUtility.lockOrientation(.portrait, andRotateTo: .portrait)
-        self.segmentControl.selectedSegmentIndex = 0
+        self.segmentControl.selectedSegmentIndex = SELECTED_SEGMENT_DEFAUT
+        
+        // connected to internet
         if(currentReachabilityStatus != .notReachable){
             loadInterface()
         }
@@ -54,6 +71,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             let newViewcontroller = mainstoryboard.instantiateViewController(withIdentifier: "ConnectAgain")
             present(newViewcontroller, animated: true, completion: nil)
         }
+        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -61,53 +79,8 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         // Don't forget to reset when view is being removed
         AppUtility.lockOrientation(.all)
+        
     }
-    
-    func loadInterface(){
-        ref = Database.database().reference()
-        if(Auth.auth().currentUser?.uid != nil){
-            let uid = Auth.auth().currentUser?.uid
-            ref.child("users").child(uid!).observe(.value, with: {(snapshot) in
-                let user = snapshot.value as? [String: Any]
-                self.signIn.title = "Hi, " + (user?["userName"] as? String)!
-                self.signIn.image = nil
-                self.signIn.action = #selector(self.toProfileViewController)
-                
-            })
-        }
-        self.isSlideShowLoaded = false
-        self.isSlideShowDefaultDeleted = false
-        //slideShowDefault()
-        
-        // Do any additional setup after loading the view, typically from a nib.
-        HomeViewController.searchController.searchResultsUpdater = self
-        definesPresentationContext = true
-        HomeViewController.searchController.dimsBackgroundDuringPresentation = true
-        HomeViewController.searchController.searchBar.delegate = self
-        
-        menuButton.target = revealViewController()
-        menuButton.action = #selector(SWRevealViewController.revealToggle(_:))
-        self.segmentControl.selectedSegmentIndex = 0
-        loadDataToTableView(type: "now_playing")
-    }
-    
-    func toProfileViewController() {
-        let profile = storyboard?.instantiateViewController(withIdentifier: "ProfileViewController") as! ProfileViewController
-        self.navigationController?.pushViewController(profile, animated: true)
-    }
-    
-    func imageResize (image:UIImage, sizeChange:CGSize)-> UIImage{
-        
-        let hasAlpha = true
-        let scale: CGFloat = 0.0 // Use scale factor of main screen
-        
-        UIGraphicsBeginImageContextWithOptions(sizeChange, !hasAlpha, scale)
-        image.draw(in: CGRect(origin: CGPoint.zero, size: sizeChange))
-        
-        let scaledImage = UIGraphicsGetImageFromCurrentImageContext()
-        return scaledImage!
-    }
-    
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
@@ -120,20 +93,67 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             }, completion: nil)
     }
     
+    // load all interface for view
+    func loadInterface(){
+        
+        ref = Database.database().reference()
+        if(Auth.auth().currentUser?.uid != nil){
+            let uid = Auth.auth().currentUser?.uid
+            ref.child("users").child(uid!).observe(.value, with: {(snapshot) in
+                let user = snapshot.value as? [String: Any]
+                self.signIn.title = "Hi, " + (user?["userName"] as? String)!
+                self.signIn.image = nil
+                self.signIn.action = #selector(self.toProfileViewController)
+            })
+        }
+        self.isSlideShowLoaded = false
+        self.isSlideShowDefaultDeleted = false
+        
+        // Do any additional setup after loading the view, typically from a nib.
+        HomeViewController.searchController.searchResultsUpdater = self
+        definesPresentationContext = true
+        HomeViewController.searchController.dimsBackgroundDuringPresentation = true
+        HomeViewController.searchController.searchBar.delegate = self
+        menuButton.target = revealViewController()
+        menuButton.action = #selector(SWRevealViewController.revealToggle(_:))
+        self.segmentControl.selectedSegmentIndex = SELECTED_SEGMENT_DEFAUT
+        loadDataToTableView(type: TYPE_NOW_PLAYING)
+        
+    }
+    
+    // Covert to ProfileViewController
+    func toProfileViewController() {
+        
+        let profile = storyboard?.instantiateViewController(withIdentifier: IDENTIFIER_PROFILETABLEVIEWCELL) as! ProfileViewController
+        self.navigationController?.pushViewController(profile, animated: true)
+        
+    }
+    
+    // Set image size in slide image
+    func imageResize (image:UIImage, sizeChange:CGSize)-> UIImage{
+        
+        let hasAlpha = true
+        let scale: CGFloat = 0.0 // Use scale factor of main screen
+        UIGraphicsBeginImageContextWithOptions(sizeChange, !hasAlpha, scale)
+        image.draw(in: CGRect(origin: CGPoint.zero, size: sizeChange))
+        let scaledImage = UIGraphicsGetImageFromCurrentImageContext()
+        return scaledImage!
+    }
+    
+    // Load Data film from firebase
     func loadDataToTableView(type: String){
         
         self.Films = [Film]()
         queue.cancelAllOperations()
         tableAcIndicator.startAnimating()
         refHandler = ref.child("films").observe(.childAdded, with:{ (snapshot) in
+            
             // Get user value
             if let dictionary = snapshot.value as? [String: AnyObject]{
-                if (type == "now_playing" && self.isSlideShowLoaded == false && self.isSlideShowDefaultDeleted == false) {
+                if (type == self.TYPE_NOW_PLAYING && self.isSlideShowLoaded == false && self.isSlideShowDefaultDeleted == false) {
                     self.mainScrollView.auk.removeAll()
                     self.isSlideShowDefaultDeleted = true
                 }
-                print(dictionary)
-                
                 let id = dictionary["idFilm"] as? Int
                 let typeFilm = dictionary["type"] as? String
                 let overview = dictionary["overview"] as? String
@@ -142,8 +162,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                 let title = dictionary["title"] as? String
                 let runtime = dictionary["runtime"] as? Int
                 let genres = dictionary["genres"] as? [Dictionary<String,Any>]
-                let trailer = dictionary["trailers"]?[0] as? String
-                
+                let trailer = dictionary["trailers"]?[self.TRAILER_FIRST] as? String
                 if(typeFilm != "" && typeFilm == type){
                     let F: Film = Film(id: id!,title: title!, poster: poster_path!, overview: overview!, releaseDate: release_date!, runtime: runtime!, genres: genres!)
                     F.setTrailers(trailer: trailer!)
@@ -151,8 +170,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                     DispatchQueue.main.async {
                         self.tableAcIndicator.stopAnimating()
                         self.tableView.reloadData()
-                        //self.tableView.setContentOffset(CGPoint.zero, animated: false)
-                        if (type == "now_playing" && self.isSlideShowLoaded == false) {
+                        if ((type == self.TYPE_NOW_PLAYING) && (self.isSlideShowLoaded == false)) {
                             self.slideShow(poster_path: poster_path!)
                             if self.mainScrollView.auk.numberOfPages > 3 {
                                 self.isSlideShowLoaded = true
@@ -163,17 +181,15 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                     return
                 }
             }
-            
-            
         })
-        
     }
     
+    // display image to slide show scrollView
     func slideShow(poster_path: String){
         let size = CGSize(width: Int(self.mainScrollView.frame.width), height: Int(self.mainScrollView.frame.height))
         self.queue.addOperation { () -> Void in
             if poster_path != "" {
-                if var img = Downloader.downloadImageWithURL("\(self.prefixImg)\(poster_path )") {
+                if var img = Downloader.downloadImageWithURL("\(prefixImg)\(poster_path )") {
                     OperationQueue.main.addOperation({
                         img = self.imageResize(image: img, sizeChange: size)
                         self.mainScrollView.auk.show(image: img)
@@ -184,68 +200,77 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             }
             
         }
+        
         // Scroll images automatically with the interval of 3 seconds
-        self.mainScrollView.auk.startAutoScroll(delaySeconds: 3)
+        self.mainScrollView.auk.startAutoScroll(delaySeconds: Double(TIME_DELAY_SLIDESHOW))
         
         
     }
     
+    // catch event clicked picture in slideshow
     func scrollViewTapped() {
-        let filmDetail = storyboard?.instantiateViewController(withIdentifier: "FILMDETAIL") as! DetailViewController
+        
+        // perform not finish
+        let filmDetail = storyboard?.instantiateViewController(withIdentifier: IDENTIFIER_DETAILTABLEVIEWCELL) as! DetailViewController
         filmDetail.film = Films[0]
         navigationController?.pushViewController(filmDetail, animated: true)
-        
-
+    
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
+    // MARK: UISegmentedControl
     
     @IBAction func indexChanged(_ sender: Any) {
+        
         switch segmentControl.selectedSegmentIndex{
         case 0:
-            loadDataToTableView(type: "now_playing")
+            loadDataToTableView(type: TYPE_NOW_PLAYING)
             break
         case 1:
-            loadDataToTableView(type: "upcoming")
+            loadDataToTableView(type: TYPE_UPCOMING)
             break
         case 2:
-            loadDataToTableView(type: "popular")
+            loadDataToTableView(type: TYPE_POPULAR)
             break
         default: break
         }
         
-        
-    }
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
     }
     
+    // MARK: UITableViewDelegate
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        
+        return self.NUMBERSECTION_RETURNED
+        
+    }
+    
+     // MARK: UITableViewDelegate
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if(HomeViewController.searchController.isActive && HomeViewController.searchController.searchBar.text != ""){
+        
+        if (HomeViewController.searchController.isActive && (HomeViewController.searchController.searchBar.text != "")) {
             return FilteredFilms.count
-        }
-        else{
+        }else{
             return Films.count
         }
         
     }
     
+     // MARK: UITableViewDelegate
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "FilmCell") as! FilmTableViewCell
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: IDENTIFIER_FILMTABLEVIEWCELL) as! FilmTableViewCell
         var film: Film
-        if(HomeViewController.searchController.isActive && HomeViewController.searchController.searchBar.text != ""){
+        if (HomeViewController.searchController.isActive && (HomeViewController.searchController.searchBar.text != "")){
             film = FilteredFilms[indexPath.row]
             
-        }
-        else{
+        }else{
             film = Films[indexPath.row]
         }
         queue.addOperation { () -> Void in
-            if film.getPoster() != "" {
-                if let img = Downloader.downloadImageWithURL("\(self.prefixImg)\(film.getPoster())") {
+            if (film.getPoster() != "") {
+                if let img = Downloader.downloadImageWithURL("\(prefixImg)\(film.getPoster())") {
                     OperationQueue.main.addOperation({
                         cell.PosterFilm.image = img
                         cell.TitleFilm.text = film.getTitle()
@@ -254,18 +279,13 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                         cell.GenreFilm.text = ""
                         for genre in film.getGenres(){
                             c = c + 1
+                            let g = genre["name"] as? String
+                            cell.GenreFilm.text = cell.GenreFilm.text! + String(g!)
                             if c < count {
-                                let g = genre["name"] as? String
-                                cell.GenreFilm.text = cell.GenreFilm.text! + String(g! + ", ")
+                                //cell.GenreFilm.text = cell.GenreFilm.text! + String(g! + ", ")
+                                cell.GenreFilm.text = cell.GenreFilm.text! + String(", ")
                             }
-                            else{
-                                let g = genre["name"] as? String
-                                cell.GenreFilm.text = cell.GenreFilm.text! + String(g!)
-                                
-                            }
-                            
                         }
-                        
                     })
                 }
             }
@@ -273,16 +293,19 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         return cell
     }
     
+    // Search film by Title Film
     func filterContentForSearchText(searchText: String, scope: String = "All"){
+        
         FilteredFilms = Films.filter{
             st in
             return st.getTitle().lowercased().contains(searchText.lowercased())
         }
         tableView.reloadData()
+        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if(segue.identifier == "FilmDetail"){
+        if(segue.identifier == IDENTIFIER_DETAILTABLEVIEWCELL){
             if let index = self.tableView.indexPathForSelectedRow{
                 let filmDetail = segue.destination as! DetailViewController
                 
@@ -296,47 +319,69 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
     }
     
+    // Action click signIn button
     @IBAction func signInAction(_ sender: Any) {
+        
         HomeViewController.searchController.searchBar.isHidden = true
         let revealviewcontroller:SWRevealViewController = self.revealViewController()
-        
-        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "SignInViewController")
+        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: IDENTIFIER_SIGNINVIEWCONTROLLER)
         let newFrontController = UINavigationController.init(rootViewController:vc)
         revealviewcontroller.pushFrontViewController(newFrontController, animated: true)
         
     }
     
+    // Download image from internet
     class Downloader {
+        
         class func downloadImageWithURL(_ url:String) -> UIImage! {
             let data = try? Data(contentsOf: URL(string: url)!)
             return UIImage(data: data!)
+        }
+        
+    }
+    
+}
+
+
+extension HomeViewController : UISearchBarDelegate{
+    
+    // MARK: Internal
+    
+    // MARK: UISearchBarDelegate
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        if (!(searchBar.text?.isEmpty)!) {
+            tableView?.reloadData()
+            self.revealViewController().revealToggle(animated: true)
+        }
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        
+        if (!searchText.isEmpty) {
+            
+            //reload your data source if necessary
+            tableView?.reloadData()
+        }
+    }
+    
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        
+        if (!(searchBar.text?.isEmpty)!) {
+            
+            //reload your data source if necessary
+            tableView?.reloadData()
         }
     }
     
 }
 
-extension HomeViewController : UISearchBarDelegate{
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        if(!(searchBar.text?.isEmpty)!){
-            tableView?.reloadData()
-            self.revealViewController().revealToggle(animated: true)
-        }
-    }
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        if(!searchText.isEmpty){
-            //reload your data source if necessary
-            tableView?.reloadData()
-        }
-    }
-    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-        if(!(searchBar.text?.isEmpty)!){
-            //reload your data source if necessary
-            tableView?.reloadData()
-        }
-    }
-}
 
 extension HomeViewController: UISearchResultsUpdating{
+    
+    // MARK: Internal
+    
+    // MARK: UISearchResultsUpdating
     
     func updateSearchResults(for searchController: UISearchController) {
         filterContentForSearchText(searchText: searchController.searchBar.text!)

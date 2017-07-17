@@ -11,7 +11,9 @@
     import FirebaseDatabase   //Firebase library
     
     // Support get data from firebase
+    // MARK: - DataFilm
     class DataFilm{
+        // MARK: Internal
         
         var ref: DatabaseReference!
         var refHandler: DatabaseHandle!
@@ -28,7 +30,8 @@
         }
         
         // Get data from Url Api and Set data into FireBase by page and film type
-        func reloadFilmFromUrlApi(page : Int, filmType: String) {
+        // MARK: Private
+        private func reloadFilmFromUrlApi(page : Int, filmType: String) {
             
             let Session = URLSession.shared
             var dataTask: URLSessionDataTask?
@@ -63,6 +66,7 @@
         }
         
         // This helper method helps parse response JSON NSData into an array of Track objects.
+        // MARK: Private
         private func saveDataIntoFireBase(data: Data?) {
             do {
                 if let response = try JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions (rawValue: 0)) as? [String: AnyObject] {
@@ -71,7 +75,7 @@
                     if let array: AnyObject = response["results"] {
                         for filmDictonary in array as! [AnyObject] {
                             if let filmDictonary = filmDictonary as? [String: AnyObject]{
-                                // Parse the search resu
+                                // Parse the search result
                                 let id = filmDictonary["id"] as! Int	
                                 getTrailer(id: id)
                             } else {
@@ -88,6 +92,7 @@
         }
         
         // get Detail film by idfilm and passed into trailer parameter
+        // MARK: Private
         func getMovieDetail(idFilm: String?, trailer: [String]) {
             
             if let movieId = idFilm {
@@ -123,7 +128,8 @@
         }
         
         // Get trailer film by id film
-        func getTrailer(id: Int?){
+        // MARK: Private
+        private func getTrailer(id: Int?){
             
             var trailer = [String]()
             if let movieId = id {
@@ -155,6 +161,7 @@
         }
         
         // check film had book by id
+        // MARK: Private
         func checkFilmHadBook(idFilmCurrent: Int, completionHandler: @escaping (_ flag: Bool?, _ error: Error?) -> Void){
             
             var flag: Bool = false
@@ -189,6 +196,7 @@
         }
 
         //Get list film from firebase passed into type film parameter
+        // MARK: Private
         func getDataFilmFireBase(type: String, completionHandler: @escaping (_ films: [Film]?, _ error: Error?) -> Void){
             
             var listFilm = [Film]()
@@ -219,6 +227,7 @@
         }
         
         // get book from Firebase by idFilm
+        // MARK: Private
         func getBookFilmFireBase(idFilmCurrent: Int, completionHandler: @escaping (_ bookFilms: [Book]?, _ error: Error?) -> Void){
             
             var listBook = [Book]()
@@ -267,6 +276,7 @@
         }
         
         // get Book film today
+        // MARK: Private
         func getBookFilmToday(completionHandler: @escaping (_ Films: [Film]?, _ error: Error?) -> Void){
             
             var listFilm = [Film]()
