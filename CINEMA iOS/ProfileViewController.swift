@@ -15,7 +15,7 @@ import Firebase
 class ProfileViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     // MARK: Internal
-
+    
     // MARK: - IBOutlet
     @IBOutlet weak var userNameLabel: UILabel!
     
@@ -107,6 +107,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         let today = formatter.date(from: formatter.string(from: date))
         
         refHandler = ref.child("tickets").observe(.childAdded, with:{ (snapshot) in
+            
             // Get user value
             if let dictionary = snapshot.value as? [String: AnyObject]{
                 
@@ -131,7 +132,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         })
     }
     
-    // MARK: - Table view data source
+    // MARK: - UITableViewDataSource
     
     func numberOfSections(in tableView: UITableView) -> Int {
         
