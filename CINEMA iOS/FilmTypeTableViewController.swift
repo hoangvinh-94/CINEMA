@@ -9,13 +9,24 @@
 import UIKit
 import Firebase
 
-
+// Display all film each type film
+// MARK: - FilmTypeTableViewController
 class FilmTypeTableViewController: UITableViewController {
+    
+    // MARK: Internal
+    
+    // MARK: Variables
+    final let NUMBERSECTION_RETURNED: Int = 1
+    final let IDENTIFIER_FILMTYPETABLEVIEWCELL: String = "FilmTypeCell"
+    final let IDENTIFIER_DETAILTABLEVIEWCELL: String = "FilmTypeDetail"
+    final let IDENTIFIER_CONNECTAGAINVIEWCONTROLLER: String = "ConnectAgain"
+    final let TYPE_NOW_PLAYING: String = "now_playing"
+    final let TYPE_UPCOMING: String = "upcoming"
+    final let TYPE_POPULAR: String = "popular"
     var Films = [Film]()
     var FilteredFilms = [Film]()
     var ref: DatabaseReference!
     var refHandler: UInt!
-    var prefixImg: String = "https://image.tmdb.org/t/p/w320"
     var queue = OperationQueue()
     var typeFilm : Int?
     var db = DataFilm()
@@ -23,18 +34,16 @@ class FilmTypeTableViewController: UITableViewController {
     var tableIndicator = UIActivityIndicatorView()
     
     @IBOutlet var menuButton: UIBarButtonItem!
-    
-    class Downloader {
-        class func downloadImageWithURL(_ url:String) -> UIImage! {
-            let data = try? Data(contentsOf: URL(string: url)!)
-            return UIImage(data: data!)
-        }
-    }
+
+    // MARK: UITableViewController
+
     override func viewDidLoad() {
         super.viewDidLoad()
     }
     
+    // load view
     func load(){
+        
         HomeViewController.searchController.searchResultsUpdater = self
         definesPresentationContext = true
         HomeViewController.searchController.dimsBackgroundDuringPresentation = true
@@ -45,55 +54,55 @@ class FilmTypeTableViewController: UITableViewController {
         
         tableIndicator.activityIndicatorViewStyle = .whiteLarge
         tableIndicator.color = UIColor.orange
-        
         tableView.backgroundView = tableIndicator
         tableView.separatorStyle = UITableViewCellSeparatorStyle.none
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        // tableIndicator.startAnimating()
+        
+        // check connect to internet
         if(currentReachabilityStatus != .notReachable){
             load()
             switch typeFilm! {
             case 0:
-                loadDataToTableView(type: "popular")
+                loadDataToTableView(type: TYPE_POPULAR)
                 break
             case 1:
-                loadDataToTableView(type: "now_playing")
+                loadDataToTableView(type: TYPE_NOW_PLAYING)
                 break
             case 2:
-                loadDataToTableView(type: "upcoming")
+                loadDataToTableView(type: TYPE_UPCOMING)
                 break
             default:
                 break
             }
-
         }
         else{
             let mainstoryboard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-            let newViewcontroller = mainstoryboard.instantiateViewController(withIdentifier: "ConnectAgain")
+            let newViewcontroller = mainstoryboard.instantiateViewController(withIdentifier: IDENTIFIER_CONNECTAGAINVIEWCONTROLLER)
             present(newViewcontroller, animated: true, completion: nil)
         }
     }
 
+    // load data to tableView
     func loadDataToTableView(type: String){
         
         self.Films = [Film]()
         queue.cancelAllOperations()
         tableIndicator.startAnimating()
+    
+        // use method getData from DataFilm class
         db.getDataFilmFireBase(type: type) { (Films, error) in
-            if(error != nil) {
+            if error != nil {
                 print(error!)
-            } else {
+            }
+            else {
                 self.Films = Films!
                 DispatchQueue.main.async {
                     self.tableIndicator.stopAnimating()
                     self.tableView.reloadData()
                 }
-                
             }
-            
         }
     }
     
@@ -101,15 +110,26 @@ class FilmTypeTableViewController: UITableViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    // Search film by Title Film
+    func filterContentForSearchText(searchText: String, scope: String = "All"){
+        
+        FilteredFilms = Films.filter{
+            st in
+            return st.getTitle().lowercased().contains(searchText.lowercased())
+        }
+        tableView.reloadData()
+    }
 
-    // MARK: - Table view data source
-
+    // MARK: - UITableViewDataSource
     override func numberOfSections(in tableView: UITableView) -> Int {
+        
         // #warning Incomplete implementation, return the number of sections
-        return 1
+        return NUMBERSECTION_RETURNED
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
         // #warning Incomplete implementation, return the number of rows
         if(HomeViewController.searchController.isActive && HomeViewController.searchController.searchBar.text != ""){
             return FilteredFilms.count
@@ -119,28 +139,19 @@ class FilmTypeTableViewController: UITableViewController {
         }
     }
 
-    func filterContentForSearchText(searchText: String, scope: String = "All"){
-        FilteredFilms = Films.filter{
-            st in
-            return st.getTitle().lowercased().contains(searchText.lowercased())
-        }
-        tableView.reloadData()
-    }
-    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "FilmTypeCell") as! FilmTypeTableViewCell
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: IDENTIFIER_FILMTYPETABLEVIEWCELL) as! FilmTypeTableViewCell
         var film: Film
-        if(HomeViewController.searchController.isActive && HomeViewController.searchController.searchBar.text != ""){
+        if HomeViewController.searchController.isActive && HomeViewController.searchController.searchBar.text != "" {
             film = FilteredFilms[indexPath.row]
-            
         }
         else{
             film = Films[indexPath.row]
         }
-        
         queue.addOperation { () -> Void in
             if film.getPoster() != "" {
-                if let img = Downloader.downloadImageWithURL("\(self.prefixImg)\(film.getPoster())") {
+                if let img = Downloader.downloadImageWithURL("\(prefixImg)\(film.getPoster())") {
                     OperationQueue.main.addOperation({
                         cell.PosterFilm.image = img
                         cell.TitleFilm.text = film.getTitle()
@@ -149,18 +160,12 @@ class FilmTypeTableViewController: UITableViewController {
                         cell.GenreFilm.text = ""
                         for genre in film.getGenres(){
                             c = c + 1
+                            let g = genre["name"] as? String
+                            cell.GenreFilm.text = cell.GenreFilm.text! + String(g!)
                             if c < count {
-                                let g = genre["name"] as? String
-                                cell.GenreFilm.text = cell.GenreFilm.text! + String(g! + ", ")
+                                cell.GenreFilm.text = cell.GenreFilm.text! + String(", ")
                             }
-                            else{
-                                let g = genre["name"] as? String
-                                cell.GenreFilm.text = cell.GenreFilm.text! + String(g!)
-                                
-                            }
-                            
                         }
-                        
                     })
                 }
             }
@@ -168,32 +173,15 @@ class FilmTypeTableViewController: UITableViewController {
         return cell
     }
     
- 
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            if(HomeViewController.searchController.isActive && HomeViewController.searchController.searchBar.text != ""){
-                FilteredFilms.remove(at: indexPath.row)
-                tableView.deleteRows(at: [indexPath], with: .fade)
-                
-            }
-            else{
-                Films.remove(at: indexPath.row)
-                tableView.deleteRows(at: [indexPath], with: .fade)
-            }
-        }
-    }
-
-
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if(segue.identifier == "FilmTypeDetail"){
+        
+        if segue.identifier == IDENTIFIER_DETAILTABLEVIEWCELL {
             if let index = self.tableView.indexPathForSelectedRow{
                 let filmDetail = segue.destination as! DetailViewController
-                
-                if(HomeViewController.searchController.isActive && HomeViewController.searchController.searchBar.text != ""){
+                if HomeViewController.searchController.isActive && HomeViewController.searchController.searchBar.text != "" {
                     filmDetail.film = FilteredFilms[index.row]
                 }
                 else{
@@ -201,33 +189,46 @@ class FilmTypeTableViewController: UITableViewController {
                 }
             }
         }
-
     }
- 
-
 }
+
+// MARK: UISearchBarDelegate
 extension FilmTypeTableViewController : UISearchBarDelegate{
+    
+    // MARK: Internal
+    
+    // button search clicked
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        if(!(searchBar.text?.isEmpty)!){
+        
+        if !(searchBar.text?.isEmpty)! {
             tableView?.reloadData()
             self.revealViewController().revealToggle(animated: true)
         }
     }
+    
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        if(!searchText.isEmpty){
+        
+        if !searchText.isEmpty {
+            
             //reload your data source if necessary
             tableView?.reloadData()
         }
     }
+    
+    // update data when search begin change
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-        if(!(searchBar.text?.isEmpty)!){
+        if !(searchBar.text?.isEmpty)! {
+            
             //reload your data source if necessary
             tableView?.reloadData()
         }
     }
 }
 
+// MARK: UISearchResultsUpdating
 extension FilmTypeTableViewController: UISearchResultsUpdating{
+    
+    // MARK: Internal
     
     func updateSearchResults(for searchController: UISearchController) {
         filterContentForSearchText(searchText: searchController.searchBar.text!)

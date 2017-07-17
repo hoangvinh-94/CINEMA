@@ -11,6 +11,7 @@ import UIKit
 // Informations displayed in cell tableview
 // MARK: - FilmTableViewCell
 class FilmTableViewCell: UITableViewCell {
+    
     // MARK: Internal
     
     @IBOutlet var PosterFilm: UIImageView!

@@ -33,6 +33,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     final let IDENTIFIER_PROFILETABLEVIEWCELL: String = "ProfileViewController"
     final let IDENTIFIER_DETAILTABLEVIEWCELL: String = "FilmDetail"
     final let IDENTIFIER_SIGNINVIEWCONTROLLER: String = "SignInViewController"
+    final let IDENTIFIER_CONNECTAGAINVIEWCONTROLLER: String = "ConnectAgain"
     final let TYPE_NOW_PLAYING: String = "now_playing"
     final let TYPE_UPCOMING: String = "upcoming"
     final let TYPE_POPULAR: String = "popular"
@@ -72,7 +73,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
         else{
             let mainstoryboard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-            let newViewcontroller = mainstoryboard.instantiateViewController(withIdentifier: "ConnectAgain")
+            let newViewcontroller = mainstoryboard.instantiateViewController(withIdentifier: IDENTIFIER_CONNECTAGAINVIEWCONTROLLER)
             present(newViewcontroller, animated: true, completion: nil)
         }
     }
@@ -274,7 +275,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                             let g = genre["name"] as? String
                             cell.GenreFilm.text = cell.GenreFilm.text! + String(g!)
                             if c < count {
-                                //cell.GenreFilm.text = cell.GenreFilm.text! + String(g! + ", ")
                                 cell.GenreFilm.text = cell.GenreFilm.text! + String(", ")
                             }
                         }
@@ -340,8 +340,9 @@ extension HomeViewController : UISearchBarDelegate{
     // MARK: Internal
     
     // MARK: UISearchBarDelegate
-    
+    // button search clicked
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        
         if !(searchBar.text?.isEmpty)! {
             tableView?.reloadData()
             self.revealViewController().revealToggle(animated: true)
@@ -357,6 +358,7 @@ extension HomeViewController : UISearchBarDelegate{
         }
     }
     
+    // update data when search begin change
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         
         if !(searchBar.text?.isEmpty)! {

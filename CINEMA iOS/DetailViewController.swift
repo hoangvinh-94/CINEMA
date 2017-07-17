@@ -9,80 +9,66 @@
 import UIKit
 import WebKit
 
+// Display detail information film
+// MARK: - DetailViewController
 class DetailViewController: UIViewController {
-
-    @IBOutlet var posterImage: UIImageView!
     
+    // MARK: Internal
+
+    // MARK: Declare variables
+    final let IDENTIFIER_CONNECTAGAINVIEWCONTROLLER: String = "ConnectAgain"
+    final let IDENTIFIER_BOOKFILMVIEWCONTROLLER: String = "BFILM"
+    @IBOutlet var posterImage: UIImageView!
     @IBOutlet var titleLabel: UILabel!
     @IBOutlet var releaseDateLabel: UILabel!
-    
     @IBOutlet var genreLabel: UILabel!
     @IBOutlet var runtimeLabel: UILabel!
-    
     @IBOutlet var directorLabel: UILabel!
-    
     @IBOutlet var actorLabel: UILabel!
-    
     @IBOutlet var overviewLabel: UILabel!
-    
     @IBOutlet var trailer: UIWebView!
-    var prefixImg: String = "https://image.tmdb.org/t/p/w320"
-    var prefixTrailer: String = "https://www.youtube.com/embed/"
     var queue = OperationQueue()
-
-    
-
     var film = Film()
     var db = DataFilm()
     var flag: Bool = false
     var tableIndicator = UIActivityIndicatorView()
-   
-    class Downloader {
-        class func downloadImageWithURL(_ url:String) -> UIImage! {
-            let data = try? Data(contentsOf: URL(string: url)!)
-            return UIImage(data: data!)
-        }
-        class func downloadTrailerWithURL(_ url:String) -> URLRequest {
-            let urlRequest = URL(string: url)
-            return URLRequest(url: urlRequest!)
-        }
-    }
 
-    
+    // MARK: UIViewController
     override func viewDidLoad() {
         super.viewDidLoad()
         
-
         // Do any additional setup after loading the view.
     }
 
+    // Load
     func load(){
+        
+        // check had film booked in today
         db.checkFilmHadBook(idFilmCurrent: film.getId(), completionHandler: { (flag, error) in
-            if(error != nil) {
+            if error != nil {
                 print(error!)
-            } else {
+            }
+            else {
                 self.flag = flag!
                 
             }
         })
         
+        // set attributes for tableIndicator
         tableIndicator.center = self.view.center
         tableIndicator.activityIndicatorViewStyle = .whiteLarge
         tableIndicator.color = UIColor.orange
         tableIndicator.hidesWhenStopped = true
-        
         self.view.addSubview(tableIndicator)
-        
         tableIndicator.startAnimating()
-        
         queue.addOperation { () -> Void in
             if self.film.getPoster() != "" {
-                if let img = Downloader.downloadImageWithURL("\(self.prefixImg)\(self.film.getPoster())") {
+                if let img = Downloader.downloadImageWithURL("\(prefixImg)\(self.film.getPoster())") {
                     OperationQueue.main.addOperation({
                         self.tableIndicator.stopAnimating()
                         self.posterImage.image = img
                         
-                        self.trailer.loadRequest(Downloader.downloadTrailerWithURL("\(self.prefixTrailer)\(self.film.getTrailers())"))
+                        self.trailer.loadRequest(Downloader.downloadTrailerWithURL("\(prefixTrailer)\(self.film.getTrailers())"))
                         self.titleLabel.text = self.film.getTitle().uppercased()
                         self.releaseDateLabel.text = self.film.getReleaseDate()
                         self.runtimeLabel.text = String(self.film.getRuntime()) + " minutes"
@@ -91,41 +77,38 @@ class DetailViewController: UIViewController {
                         var c = 0
                         for genre in self.film.getGenres(){
                             c = c + 1
+                            let g = genre["name"] as? String
+                            self.genreLabel.text = self.genreLabel.text! + String(g!)
                             if c < count {
-                                let g = genre["name"] as? String
-                                self.genreLabel.text = self.genreLabel.text! + String(g! + ", ")
+                                self.genreLabel.text = self.genreLabel.text! + String(", ")
                             }
-                            else{
-                                let g = genre["name"] as? String
-                                self.genreLabel.text = self.genreLabel.text! + String(g!)
-                                
-                            }
-                            
                         }
-                        
                     })
                 }
             }
         }
-
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        if(currentReachabilityStatus != .notReachable){
+        
+        // check connect to internet
+        if currentReachabilityStatus != .notReachable {
             load()
         }
         else{
             let mainstoryboard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-            let newViewcontroller = mainstoryboard.instantiateViewController(withIdentifier: "ConnectAgain")
+            let newViewcontroller = mainstoryboard.instantiateViewController(withIdentifier: IDENTIFIER_CONNECTAGAINVIEWCONTROLLER)
             present(newViewcontroller, animated: true, completion: nil)
         }
-        
     }
+    
+    // save button pressed
     @IBAction func bookFilm(_ sender: Any) {
-        if(self.flag){
+        
+        if self.flag {
             let id = film.getId()
             let title = film.getTitle()
-            let book = storyboard?.instantiateViewController(withIdentifier: "BFILM") as! BookFilmTableViewController
+            let book = storyboard?.instantiateViewController(withIdentifier: IDENTIFIER_BOOKFILMVIEWCONTROLLER) as! BookFilmTableViewController
             book.idFilmCurrent = id
             book.titleFilm = title
             navigationController?.pushViewController(book, animated: true)
@@ -140,12 +123,10 @@ class DetailViewController: UIViewController {
             // show the alert
             self.present(alert, animated: true, completion: nil)
         }
-
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
 }

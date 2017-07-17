@@ -72,11 +72,8 @@ class ScheduleTableViewController: UITableViewController {
                     self.tableIndicator.stopAnimating()
                     self.tableView.reloadData()
                 }
-                
             }
-
         }
-            
     }
 
     
@@ -90,14 +87,11 @@ class ScheduleTableViewController: UITableViewController {
         return Films.count
     }
 
-    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: "ScheduleFilmCell") as! ScheduleTableViewCell
         var film: Film
-        
         film = Films[indexPath.row]
-        
-        
         queue.addOperation { () -> Void in
             if film.getPoster() != "" {
                 if let img = Downloader.downloadImageWithURL("\(self.prefixImg)\(film.getPoster())") {
@@ -117,11 +111,8 @@ class ScheduleTableViewController: UITableViewController {
                             else{
                                 let g = genre["name"] as? String
                                 cell.genreLabel.text = cell.genreLabel.text! + String(g!)
-                                
                             }
-                            
                         }
- 
                     })
                 }
             }
@@ -130,12 +121,11 @@ class ScheduleTableViewController: UITableViewController {
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
         if(segue.identifier == "ScheduleDetail"){
             if let index = self.tableView.indexPathForSelectedRow{
                 let filmDetail = segue.destination as! DetailViewController
-                
                 filmDetail.film = Films[index.row]
-                
             }
         }
     }
