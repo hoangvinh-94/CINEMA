@@ -8,7 +8,11 @@
 
 import UIKit
 
+// MARK: -BookTableViewCell
+
 class BookTableViewCell: UITableViewCell {
 
+    // MARK: Internal
+    
     @IBOutlet var timeLabel: UILabel!
 }

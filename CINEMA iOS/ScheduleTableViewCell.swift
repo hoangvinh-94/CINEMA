@@ -8,14 +8,14 @@
 
 import UIKit
 
+// MARK: - ScheduleTableViewCell
+
 class ScheduleTableViewCell: UITableViewCell {
     
+    // MARK: Internal
     
     @IBOutlet weak var titleLabel: UILabel!
-    
     @IBOutlet weak var posterImage: UIImageView!
-    
     @IBOutlet weak var genreLabel: UILabel!
-    
 }
   

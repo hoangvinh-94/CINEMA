@@ -8,27 +8,15 @@
 
 import UIKit
 
+// MARK: - MyOrderCell
+
 class MyOrderCell: UITableViewCell {
     
+    // MARK: Internal
+    
     @IBOutlet weak var titleFilm: UILabel!
-    
     @IBOutlet weak var dateRelease: UILabel!
-    
     @IBOutlet weak var timeTicket: UILabel!
-    
     @IBOutlet weak var roomTicket: UILabel!
-    
     @IBOutlet weak var seatTicket: UILabel!
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
-
 }
