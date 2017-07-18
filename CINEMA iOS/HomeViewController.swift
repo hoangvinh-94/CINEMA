@@ -14,7 +14,7 @@ import Auk
 
 // Display base information of film with 3 type film
 // MARK: - HomeViewController
-class HomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource{
+class HomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     // MARK: Internal
     
@@ -97,7 +97,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     // load all interface for view
-    func loadInterface(){
+    func loadInterface() {
         
         ref = Database.database().reference()
         if Auth.auth().currentUser?.uid != nil {
@@ -131,7 +131,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     // Load Data film from firebase
-    func loadDataToTableView(type: String){
+    func loadDataToTableView(type: String) {
         
         self.Films = [Film]()
         queue.cancelAllOperations()
@@ -139,7 +139,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         refHandler = ref.child("films").observe(.childAdded, with:{ (snapshot) in
             
             // Get user value
-            if let dictionary = snapshot.value as? [String: AnyObject]{
+            if let dictionary = snapshot.value as? [String: AnyObject] {
                 if type == self.TYPE_NOW_PLAYING && self.isSlideShowLoaded == false && self.isSlideShowDefaultDeleted == false {
                     self.mainScrollView.auk.removeAll()
                     self.isSlideShowDefaultDeleted = true
@@ -176,7 +176,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     // display image to slide show scrollView
-    func slideShow(poster_path: String){
+    func slideShow(poster_path: String) {
         
         let size = CGSize(width: Int(self.mainScrollView.frame.width), height: Int(self.mainScrollView.frame.height)) // get scrollView with and height
         self.queue.addOperation { () -> Void in
@@ -246,7 +246,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         let cell = tableView.dequeueReusableCell(withIdentifier: IDENTIFIER_FILMTABLEVIEWCELL) as! FilmTableViewCell
         var film: Film
-        if HomeViewController.searchController.isActive && HomeViewController.searchController.searchBar.text != ""{
+        if HomeViewController.searchController.isActive && HomeViewController.searchController.searchBar.text != "" {
             film = FilteredFilms[indexPath.row]
             
         }
@@ -278,9 +278,9 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     // Search film by Title Film
-    func filterContentForSearchText(searchText: String, scope: String = "All"){
+    func filterContentForSearchText(searchText: String, scope: String = "All") {
         
-        FilteredFilms = Films.filter{
+        FilteredFilms = Films.filter {
             st in
             return st.getTitle().lowercased().contains(searchText.lowercased())
         }
@@ -289,7 +289,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == IDENTIFIER_DETAILTABLEVIEWCELL {
-            if let index = self.tableView.indexPathForSelectedRow{
+            if let index = self.tableView.indexPathForSelectedRow {
                 let filmDetail = segue.destination as! DetailViewController
                 
                 if HomeViewController.searchController.isActive && HomeViewController.searchController.searchBar.text != "" {
@@ -314,7 +314,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     // MARK: Rest options
     
-    func imageResize (image:UIImage, sizeChange:CGSize)-> UIImage{
+    func imageResize (image:UIImage, sizeChange:CGSize)-> UIImage {
         
         let hasAlpha = true
         let scale: CGFloat = 0.0 // Use scale factor of main screen
@@ -327,7 +327,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
 
 // MARK: UISearchBarDelegate
 
-extension HomeViewController : UISearchBarDelegate{
+extension HomeViewController : UISearchBarDelegate {
     
     // MARK: Internal
     
@@ -362,7 +362,7 @@ extension HomeViewController : UISearchBarDelegate{
 }
 
 // MARK: UISearchResultsUpdating
-extension HomeViewController: UISearchResultsUpdating{
+extension HomeViewController: UISearchResultsUpdating {
     
     // MARK: Internal
     
