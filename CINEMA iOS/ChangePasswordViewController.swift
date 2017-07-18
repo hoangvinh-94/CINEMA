@@ -17,11 +17,11 @@ class ChangePasswordViewController: UIViewController {
 
     
     // MARK: - IBOutlet
-
+    final let IDENTIFIER_SIGNINVIEWCONTROLLER: String = "SignInViewController"
+    final let BORDER_WIDTH_CELL: Float = 1.0
+    final let CORNER_RADIUS_CELL: Float = 5.0
     @IBOutlet weak var newPasswordTextField: UITextField!
-    
     @IBOutlet weak var confirmPasswordTextField: UITextField!
-    
     @IBOutlet weak var menuButton: UIBarButtonItem!
     
      // MARK: - Override funcs
@@ -32,12 +32,12 @@ class ChangePasswordViewController: UIViewController {
         menuButton.target = revealViewController()
         menuButton.action = #selector(SWRevealViewController.revealToggle(_:))
         confirmPasswordTextField.backgroundColor = UIColor.white
-        confirmPasswordTextField.layer.cornerRadius = 5
-        confirmPasswordTextField.layer.borderWidth = 1
+        confirmPasswordTextField.layer.cornerRadius = CGFloat(CORNER_RADIUS_CELL)
+        confirmPasswordTextField.layer.borderWidth = CGFloat(BORDER_WIDTH_CELL)
         confirmPasswordTextField.layer.borderColor = UIColor.blue.cgColor
         newPasswordTextField.backgroundColor = UIColor.white
-        newPasswordTextField.layer.cornerRadius = 5
-        newPasswordTextField.layer.borderWidth = 1
+        newPasswordTextField.layer.cornerRadius = CGFloat(CORNER_RADIUS_CELL)
+        newPasswordTextField.layer.borderWidth = CGFloat(BORDER_WIDTH_CELL)
         newPasswordTextField.layer.borderColor = UIColor.blue.cgColor
         UIGraphicsBeginImageContext(self.view.frame.size)
         UIImage(named: "nen18.jpg")?.draw(in: self.view.bounds)
@@ -97,7 +97,7 @@ class ChangePasswordViewController: UIViewController {
                                         } catch let errorLogout {
                                             print(errorLogout)
                                         }
-                                        let homeView = self.storyboard?.instantiateViewController(withIdentifier: "SignInViewController") as! SignInViewController
+                                        let homeView = self.storyboard?.instantiateViewController(withIdentifier: self.IDENTIFIER_SIGNINVIEWCONTROLLER) as! SignInViewController
                                         self.navigationController?.pushViewController(homeView, animated: true)
                                     }))
                                     self.present(alertController, animated: true, completion: nil)

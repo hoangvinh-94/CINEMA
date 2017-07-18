@@ -35,7 +35,7 @@ class BookFilmTableViewController: UITableViewController {
     }
 
     // load interface for view
-    func load(){
+    func load() {
         tableIndicator.activityIndicatorViewStyle = .whiteLarge
         tableIndicator.color = UIColor.orange
         tableView.backgroundView = tableIndicator

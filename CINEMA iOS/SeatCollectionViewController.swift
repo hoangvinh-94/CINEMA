@@ -54,7 +54,7 @@ class SeatCollectionViewController: UICollectionViewController {
     }
     
     // load all seat in room
-    func loadSeat(){
+    func loadSeat() {
         
         tableIndicator.startAnimating()
         let idRef1 = ref.child("bookfilm").child(String(idFilm!)).child("day").child(String(idDay!)).child("times").child(String(idTime!))
@@ -136,7 +136,7 @@ class SeatCollectionViewController: UICollectionViewController {
             collectionView.allowsMultipleSelection = true
             Seats[indexPath.row] = String(indexPath.row +  1)
         }
-        else{
+        else {
             collectionView.allowsSelection = true
             collectionView.allowsMultipleSelection = true
             selectedCell.backgroundColor = UIColor.green

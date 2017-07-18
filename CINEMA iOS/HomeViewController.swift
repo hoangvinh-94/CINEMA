@@ -71,7 +71,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         if currentReachabilityStatus != .notReachable {
             loadInterface()
         }
-        else{
+        else {
             let mainstoryboard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
             let newViewcontroller = mainstoryboard.instantiateViewController(withIdentifier: IDENTIFIER_CONNECTAGAINVIEWCONTROLLER)
             present(newViewcontroller, animated: true, completion: nil)
@@ -168,7 +168,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                         }
                     }
                 }
-                else{
+                else {
                     return
                 }
             }
@@ -211,7 +211,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     @IBAction func indexChanged(_ sender: Any) {
         
-        switch segmentControl.selectedSegmentIndex{
+        switch segmentControl.selectedSegmentIndex {
         case 0:
             loadDataToTableView(type: TYPE_NOW_PLAYING)
             break
@@ -237,7 +237,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         if HomeViewController.searchController.isActive && HomeViewController.searchController.searchBar.text != "" {
             return FilteredFilms.count
         }
-        else{
+        else {
             return Films.count
         }
     }
@@ -295,7 +295,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                 if HomeViewController.searchController.isActive && HomeViewController.searchController.searchBar.text != "" {
                     filmDetail.film = FilteredFilms[index.row]
                 }
-                else{
+                else {
                     filmDetail.film = Films[index.row]
                 }
             }

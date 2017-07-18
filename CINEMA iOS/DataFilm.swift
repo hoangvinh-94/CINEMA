@@ -192,7 +192,7 @@
                         }
                     }
                 }
-                else{
+                else {
                     return
                 }
                 completionHandler(flag,nil)
@@ -273,7 +273,7 @@
                         }
                     }
                 }
-                else{
+                else {
                     return
                 }
                 completionHandler(listBook,nil)

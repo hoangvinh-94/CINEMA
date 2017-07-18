@@ -97,7 +97,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
     }
     
     //Load the tickets current user have ordered
-    func loadDataToTableView(){
+    func loadDataToTableView() {
         tableIndicator.startAnimating()
         self.tickets = [Ticket]()
         let uid = Auth.auth().currentUser?.uid
@@ -109,7 +109,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         refHandler = ref.child("tickets").observe(.childAdded, with:{ (snapshot) in
             
             // Get user value
-            if let dictionary = snapshot.value as? [String: AnyObject]{
+            if let dictionary = snapshot.value as? [String: AnyObject] {
                 
                 let idUser = dictionary["idUser"] as? String
                 let day = dictionary["day"] as? String
@@ -144,7 +144,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         if HomeViewController.searchController.isActive && HomeViewController.searchController.searchBar.text != "" {
             return filteredTickets.count
         }
-        else{
+        else {
             return tickets.count
         }
     }
@@ -162,7 +162,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         if HomeViewController.searchController.searchBar.text != "" && HomeViewController.searchController.isActive {
             ticket = filteredTickets[indexPath.row]
         }
-        else{
+        else {
             ticket = tickets[indexPath.row]
         }
         cell.dateRelease.text = ticket.getDay()
@@ -183,7 +183,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
    // Search film by Title Film
     func filterContentForSearchText(searchText: String, scope: String = "All"){
         
-        filteredTickets = tickets.filter{
+        filteredTickets = tickets.filter {
             st in
             return st.getTitleFilm().lowercased().contains(searchText.lowercased())
         }
@@ -193,7 +193,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
 
 // MARK: UISearchBarDelegate
 
-extension ProfileViewController : UISearchBarDelegate{
+extension ProfileViewController : UISearchBarDelegate {
     
     // MARK: Internal
     
@@ -226,7 +226,7 @@ extension ProfileViewController : UISearchBarDelegate{
 
 // MARK: UISearchResultsUpdating
 
-extension ProfileViewController: UISearchResultsUpdating{
+extension ProfileViewController: UISearchResultsUpdating {
     
      // MARK: Internal
     

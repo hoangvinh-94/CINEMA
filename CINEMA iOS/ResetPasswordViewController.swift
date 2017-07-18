@@ -16,6 +16,7 @@ class ResetPasswordViewController: UIViewController {
     // MARK: - IBOutlet
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var menuButton: UIBarButtonItem!
+    final let IDENTIFIER_SIGNINVIEWCONTROLLER: String = "SignInViewController"
     
      // MARK: - Override func
     override func viewDidLoad() {
@@ -39,7 +40,7 @@ class ResetPasswordViewController: UIViewController {
     @IBAction func signInAction(_ sender: Any) {
         
         let revealviewcontroller:SWRevealViewController = self.revealViewController()
-        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "SignInViewController")
+        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: IDENTIFIER_SIGNINVIEWCONTROLLER)
         let newFrontController = UINavigationController.init(rootViewController:vc)
         revealviewcontroller.pushFrontViewController(newFrontController, animated: true)
     }
@@ -76,7 +77,7 @@ class ResetPasswordViewController: UIViewController {
                 
                 // add the actions (buttons)
                 alertController.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: { action in
-                    let homeView = self.storyboard?.instantiateViewController(withIdentifier: "SignInViewController") as! SignInViewController
+                    let homeView = self.storyboard?.instantiateViewController(withIdentifier: self.IDENTIFIER_SIGNINVIEWCONTROLLER) as! SignInViewController
                     self.navigationController?.pushViewController(homeView, animated: true)
                 }))
                 self.present(alertController, animated: true, completion: nil)

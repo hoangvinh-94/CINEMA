@@ -52,7 +52,7 @@ class ScheduleTableViewController: UITableViewController {
 
     // MARK: - UITableViewDataSource
     // load data to TableView
-    func loadDataToTableView(){
+    func loadDataToTableView() {
         
         self.tableIndicator.startAnimating()
         self.Films = [Film]()

@@ -61,7 +61,7 @@ class FilmTypeTableViewController: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         
         // check connect to internet
-        if(currentReachabilityStatus != .notReachable){
+        if currentReachabilityStatus != .notReachable {
             load()
             switch typeFilm! {
             case 0:
@@ -77,7 +77,7 @@ class FilmTypeTableViewController: UITableViewController {
                 break
             }
         }
-        else{
+        else {
             let mainstoryboard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
             let newViewcontroller = mainstoryboard.instantiateViewController(withIdentifier: IDENTIFIER_CONNECTAGAINVIEWCONTROLLER)
             present(newViewcontroller, animated: true, completion: nil)
@@ -85,7 +85,7 @@ class FilmTypeTableViewController: UITableViewController {
     }
 
     // load data to tableView
-    func loadDataToTableView(type: String){
+    func loadDataToTableView(type: String) {
         
         self.Films = [Film]()
         queue.cancelAllOperations()
@@ -112,7 +112,7 @@ class FilmTypeTableViewController: UITableViewController {
     }
     
     // Search film by Title Film
-    func filterContentForSearchText(searchText: String, scope: String = "All"){
+    func filterContentForSearchText(searchText: String, scope: String = "All") {
         
         FilteredFilms = Films.filter{
             st in
@@ -131,10 +131,10 @@ class FilmTypeTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         // #warning Incomplete implementation, return the number of rows
-        if(HomeViewController.searchController.isActive && HomeViewController.searchController.searchBar.text != ""){
+        if HomeViewController.searchController.isActive && HomeViewController.searchController.searchBar.text != "" {
             return FilteredFilms.count
         }
-        else{
+        else {
             return Films.count
         }
     }
@@ -146,7 +146,7 @@ class FilmTypeTableViewController: UITableViewController {
         if HomeViewController.searchController.isActive && HomeViewController.searchController.searchBar.text != "" {
             film = FilteredFilms[indexPath.row]
         }
-        else{
+        else {
             film = Films[indexPath.row]
         }
         queue.addOperation { () -> Void in
@@ -184,7 +184,7 @@ class FilmTypeTableViewController: UITableViewController {
                 if HomeViewController.searchController.isActive && HomeViewController.searchController.searchBar.text != "" {
                     filmDetail.film = FilteredFilms[index.row]
                 }
-                else{
+                else {
                     filmDetail.film = Films[index.row]
                 }
             }

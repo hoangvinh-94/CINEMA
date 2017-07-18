@@ -41,7 +41,7 @@ class DetailViewController: UIViewController {
     }
 
     // Load
-    func load(){
+    func load() {
         
         // check had film booked in today
         db.checkFilmHadBook(idFilmCurrent: film.getId(), completionHandler: { (flag, error) in
@@ -67,7 +67,6 @@ class DetailViewController: UIViewController {
                     OperationQueue.main.addOperation({
                         self.tableIndicator.stopAnimating()
                         self.posterImage.image = img
-                        
                         self.trailer.loadRequest(Downloader.downloadTrailerWithURL("\(prefixTrailer)\(self.film.getTrailers())"))
                         self.titleLabel.text = self.film.getTitle().uppercased()
                         self.releaseDateLabel.text = self.film.getReleaseDate()
@@ -95,7 +94,7 @@ class DetailViewController: UIViewController {
         if currentReachabilityStatus != .notReachable {
             load()
         }
-        else{
+        else {
             let mainstoryboard:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
             let newViewcontroller = mainstoryboard.instantiateViewController(withIdentifier: IDENTIFIER_CONNECTAGAINVIEWCONTROLLER)
             present(newViewcontroller, animated: true, completion: nil)
@@ -114,7 +113,7 @@ class DetailViewController: UIViewController {
             navigationController?.pushViewController(book, animated: true)
 
         }
-        else{
+        else {
             let alert = UIAlertController(title: "Information" ,message: "This Film hasn't book! You can choose another Film", preferredStyle: UIAlertControllerStyle.alert)
             
             // add the actions (buttons)
