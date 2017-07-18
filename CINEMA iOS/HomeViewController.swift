@@ -109,7 +109,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                 self.signIn.action = #selector(self.toProfileViewController)
             })
         }
-        
         self.isSlideShowLoaded = false
         self.isSlideShowDefaultDeleted = false
         
@@ -137,7 +136,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         self.Films = [Film]()
         queue.cancelAllOperations()
         tableAcIndicator.startAnimating()
-        
         refHandler = ref.child("films").observe(.childAdded, with:{ (snapshot) in
             
             // Get user value
@@ -196,8 +194,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         // Scroll images automatically with the interval of 3 seconds
         self.mainScrollView.auk.startAutoScroll(delaySeconds: Double(TIME_DELAY_SLIDESHOW))
-        
-        
         // Scroll images automatically with the interval of 3 seconds
         self.mainScrollView.auk.startAutoScroll(delaySeconds: Double(TIME_DELAY_SLIDE_SHOW))
     }
@@ -236,8 +232,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         return self.NUMBERSECTION_RETURNED
     }
     
-
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         if HomeViewController.searchController.isActive && HomeViewController.searchController.searchBar.text != "" {
@@ -247,8 +241,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             return Films.count
         }
     }
-    
-
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
@@ -294,7 +286,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
         tableView.reloadData()
     }
-    
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == IDENTIFIER_DETAILTABLEVIEWCELL {
